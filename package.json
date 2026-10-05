@@ -13,7 +13,8 @@
     "style:check": "biome ci .",
     "architecture": "depcruise --config .dependency-cruiser.cjs apps/web/src",
     "docs:check": "node tools/check-docs.mjs",
-    "check": "pnpm style:check && pnpm typecheck && pnpm architecture && pnpm docs:check && pnpm build"
+    "design:check": "node tools/check-design-tokens.mjs",
+    "check": "pnpm style:check && pnpm typecheck && pnpm architecture && pnpm docs:check && pnpm design:check && pnpm build"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.15",

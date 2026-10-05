@@ -1,15 +1,73 @@
 @import "tailwindcss";
+@import "./design-system/tokens.css";
 
 :root {
-  font-family: system-ui, sans-serif;
-  color-scheme: light;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
 }
 
 body {
+  min-width: 20rem;
+  min-height: 100vh;
   margin: 0;
+  background: var(--fi-canvas);
+  color: var(--fi-foreground);
 }
 
-main {
-  max-width: 64rem;
-  padding: 2rem;
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 3px solid var(--fi-focus);
+  outline-offset: 3px;
+}
+
+@layer components {
+  .fi-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: 1px solid currentColor;
+    border-radius: 999px;
+    padding: 0.25rem 0.625rem;
+    background: var(--fi-status-bg);
+    color: var(--fi-status-text);
+    font-size: 0.75rem;
+    font-weight: 650;
+    line-height: 1.25rem;
+    white-space: nowrap;
+  }
+
+  .fi-status-badge__mark {
+    display: inline-block;
+    width: 0.375rem;
+    height: 0.375rem;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  .fi-status-badge--nominal {
+    --fi-status-bg: var(--fi-status-nominal-bg);
+    --fi-status-text: var(--fi-status-nominal);
+  }
+
+  .fi-status-badge--warning {
+    --fi-status-bg: var(--fi-status-warning-bg);
+    --fi-status-text: var(--fi-status-warning);
+  }
+
+  .fi-status-badge--critical {
+    --fi-status-bg: var(--fi-status-critical-bg);
+    --fi-status-text: var(--fi-status-critical);
+  }
+
+  .fi-status-badge--unknown {
+    --fi-status-bg: var(--fi-status-unknown-bg);
+    --fi-status-text: var(--fi-status-unknown);
+  }
 }
