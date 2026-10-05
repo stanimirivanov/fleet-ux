@@ -1,0 +1,6 @@
+packages:
+  - apps/*
+  - packages/*
+minimumReleaseAgeExclude:
+  - '@effect/atom-solid@4.0.1'
+  - effect@4.0.1

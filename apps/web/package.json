@@ -1,0 +1,25 @@
+{
+  "name": "@fleetiq/web",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "typecheck": "tsc --noEmit",
+    "build": "pnpm typecheck && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@effect/atom-solid": "4.0.1",
+    "@solidjs/router": "1.0.0",
+    "effect": "4.0.1",
+    "solid-js": "1.9.15"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "4.3.3",
+    "tailwindcss": "4.3.3",
+    "typescript": "6.0.3",
+    "vite": "8.3.2",
+    "vite-plugin-solid": "2.11.12"
+  }
+}
