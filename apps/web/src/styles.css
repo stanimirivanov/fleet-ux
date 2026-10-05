@@ -71,3 +71,53 @@ textarea {
     --fi-status-text: var(--fi-status-unknown);
   }
 }
+
+@layer components {
+  .fi-skip-link {
+    position: fixed;
+    top: 0.75rem;
+    left: 0.75rem;
+    z-index: 50;
+    transform: translateY(-150%);
+    border-radius: 0.5rem;
+    padding: 0.625rem 0.875rem;
+    background: var(--fi-accent);
+    color: var(--fi-on-accent);
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+
+  .fi-skip-link:focus {
+    transform: translateY(0);
+  }
+
+  .fi-nav-link {
+    display: inline-flex;
+    min-height: 2.75rem;
+    flex-shrink: 0;
+    align-items: center;
+    border: 1px solid transparent;
+    border-radius: 0.625rem;
+    padding: 0.625rem 0.875rem;
+    color: var(--fi-muted);
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.25rem;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .fi-nav-link:hover {
+    background: var(--fi-canvas);
+    color: var(--fi-foreground);
+  }
+
+  .fi-nav-link--active,
+  .fi-nav-link--active:hover {
+    box-shadow: inset 3px 0 var(--fi-accent);
+    border-color: var(--fi-outline);
+    background: var(--fi-canvas);
+    color: var(--fi-accent);
+    font-weight: 650;
+  }
+}

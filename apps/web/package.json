@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "typecheck": "tsc --noEmit",
+    "test": "node --test tests/theme-preference.test.mjs",
     "build": "pnpm typecheck && vite build",
     "preview": "vite preview"
   },

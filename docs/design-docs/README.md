@@ -6,3 +6,5 @@ consequences, and alternatives.
 
 - [0001 - Operational visual language](0001-operational-visual-language.md):
   light-first operator console, semantic themes, and explicit status states.
+- [0002 - Persistent shell and theme preference](0002-persistent-shell-theme.md):
+  stable router layout and one Light/Dark/System icon control.

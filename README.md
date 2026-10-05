@@ -1,9 +1,8 @@
 # FleetIQ UX
 
-FleetIQ's SolidJS operator web application. The current slice turns the
-approved visual direction into a reviewable light/dark design foundation.
-Product screens, API contracts, and live data follow as separate PR-sized
-changes.
+FleetIQ's SolidJS operator web application. The persistent shell now provides
+stable navigation and a Light/Dark/System theme control. Fleet data is not
+connected yet; the overview and asset routes state that explicitly.
 
 ## Start
 
@@ -14,14 +13,21 @@ pnpm install --frozen-lockfile
 pnpm dev
 ```
 
-Open the URL printed by Vite. The root route is a design specimen with
-synthetic status examples. It makes no backend requests and reports the
-connection as unconfigured. Run pnpm check before proposing a change.
+Open the URL printed by Vite. The available routes are:
+
+- / — unconfigured fleet overview
+- /assets — unconfigured asset workspace
+- /design-system — synthetic light/dark design specimen
+
+The theme icon in the top bar cycles Light → Dark → System and saves the
+preference when browser storage is available. No tenant or fleet data is
+fabricated. Run pnpm check before proposing a change.
 
 ## Documentation
 
 Start with [AGENTS.md](AGENTS.md) for the working agreement and
 [docs/README.md](docs/README.md) for the documentation map. The
 [architecture](ARCHITECTURE.md) explains the boundaries, the
-[visual language decision](docs/design-docs/0001-operational-visual-language.md)
-records the design rules, and [docs/PLANS.md](docs/PLANS.md) tracks sequencing.
+[visual-language decision](docs/design-docs/0001-operational-visual-language.md)
+and [shell decision](docs/design-docs/0002-persistent-shell-theme.md) record
+the design rules, and [docs/PLANS.md](docs/PLANS.md) tracks sequencing.

@@ -2,17 +2,19 @@
 
 ## TL;DR
 
-FleetIQ UX is a SolidJS web-only operator console. The scaffold has no backend
-requests or product screens yet. The app layer composes routes and providers;
-features own their model, transport adapter, and UI. Effect v4 is the async and
-granular-state foundation. The accepted visual language is implemented as
-semantic light/dark tokens; the application shell follows in a later slice.
+FleetIQ UX is a SolidJS web-only operator console. Solid Router's root layout
+keeps the shell mounted across routes. The app layer composes routes and
+providers; features own their model, transport adapter, and UI. Effect v4 is
+the async and granular-state foundation. The current routes contain honest
+unconfigured states and a synthetic design specimen; no backend requests
+exist yet.
 
 ## Structure
 
 - apps/web: Vite application, Solid router, Effect Atom registry, Tailwind.
-- apps/web/src/app: application composition and route-owned pages.
-- apps/web/src/design-system: semantic theme tokens.
+- apps/web/src/app: router root layout, route-owned pages, and the small theme
+  preference lifecycle.
+- apps/web/src/design-system: semantic light/dark theme tokens.
 - apps/web/src/features/<capability>: capability code, added as features
   arrive. Prefer model, api, and ui only when each has a real purpose.
 - apps/web/src/shared: reusable web code without feature imports.
@@ -31,20 +33,24 @@ behavior and trust boundaries.
 
 ## State and effects
 
-Solid signals, memos, and stores own local and derived view state. The URL
-owns shareable navigation and selection. Effect v4 owns complex async work,
-including future telemetry connection lifetimes and retry policy. The official
-@effect/atom-solid binding connects Effect atoms to Solid at the app boundary.
+Solid signals, memos, and stores own local and derived view state. The app
+theme uses a signal, a versioned browser preference, and a media-query
+listener. The URL owns navigation and future shareable selection/filter state.
+Effect v4 owns complex async work, including future telemetry connection
+lifetimes and retry policy. The official @effect/atom-solid binding remains at
+the app boundary; a theme button does not need an Effect runtime.
+
 The first API feature will decide snapshot caching and mock transport using a
 concrete contract, avoiding duplicate caches.
 
 ## Visual foundation and limits
 
 The [operational visual language](docs/design-docs/0001-operational-visual-language.md)
-records the approved direction. Semantic CSS tokens map into Tailwind
-utilities, while shared UI primitives remain domain-neutral. The current
-specimen demonstrates styling and explicit status labels; it is not a product
-dashboard.
+and [shell/theme decision](docs/design-docs/0002-persistent-shell-theme.md)
+record the approved direction. Semantic CSS tokens map into Tailwind
+utilities, while shared UI primitives remain domain-neutral. The persistent
+shell has a stable top bar and desktop left navigation; its main content
+changes within one route outlet.
 
 The application has no backend endpoint, mock server, map renderer, tile
 service, or mobile application. See [FRONTEND.md](docs/FRONTEND.md) for the
