@@ -1,0 +1,58 @@
+/* Semantic roles are the public styling API. The palette is deliberately small
+ * so abnormal conditions remain easy to find in a dense operator workspace. */
+@theme inline {
+  --color-canvas: var(--fi-canvas);
+  --color-surface: var(--fi-surface);
+  --color-foreground: var(--fi-foreground);
+  --color-muted: var(--fi-muted);
+  --color-outline: var(--fi-outline);
+  --color-accent: var(--fi-accent);
+  --color-on-accent: var(--fi-on-accent);
+  --color-status-nominal: var(--fi-status-nominal);
+  --color-status-warning: var(--fi-status-warning);
+  --color-status-critical: var(--fi-status-critical);
+  --color-status-unknown: var(--fi-status-unknown);
+  --radius-panel: 0.875rem;
+}
+
+:root {
+  color-scheme: light;
+  --fi-canvas: #f4f7fa;
+  --fi-surface: #ffffff;
+  --fi-foreground: #142235;
+  --fi-muted: #475569;
+  --fi-outline: #d7e0e8;
+  --fi-control-outline: #64748b;
+  --fi-accent: #006b8f;
+  --fi-on-accent: #ffffff;
+  --fi-focus: #006b8f;
+  --fi-status-nominal: #1d684d;
+  --fi-status-nominal-bg: #e8f5ee;
+  --fi-status-warning: #825700;
+  --fi-status-warning-bg: #fff4d9;
+  --fi-status-critical: #a62c35;
+  --fi-status-critical-bg: #fdebec;
+  --fi-status-unknown: #5e6a78;
+  --fi-status-unknown-bg: #ecf1f5;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --fi-canvas: #101b2a;
+  --fi-surface: #18273a;
+  --fi-foreground: #f1f7fc;
+  --fi-muted: #b8c8d7;
+  --fi-outline: #314357;
+  --fi-control-outline: #9db2c4;
+  --fi-accent: #7ad3ed;
+  --fi-on-accent: #101b2a;
+  --fi-focus: #7ad3ed;
+  --fi-status-nominal: #69d6ae;
+  --fi-status-nominal-bg: #123d35;
+  --fi-status-warning: #f5c777;
+  --fi-status-warning-bg: #473716;
+  --fi-status-critical: #ff8087;
+  --fi-status-critical-bg: #4d2730;
+  --fi-status-unknown: #b8c8d7;
+  --fi-status-unknown-bg: #2b3c4f;
+}

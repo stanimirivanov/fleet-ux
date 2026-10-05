@@ -1,6 +1,8 @@
 # Design decisions
 
-Record durable product and engineering decisions here when their rationale
-will matter to later changes. Use a numbered file with context, decision,
-consequences, and alternatives. The visual language will be agreed in the
-next task; this scaffold does not choose one.
+Durable product and engineering decisions live here when their rationale
+matters to later changes. Each numbered record captures context, decision,
+consequences, and alternatives.
+
+- [0001 - Operational visual language](0001-operational-visual-language.md):
+  light-first operator console, semantic themes, and explicit status states.
