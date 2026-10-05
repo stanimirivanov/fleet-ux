@@ -15,7 +15,8 @@
   --radius-panel: 0.875rem;
 }
 
-:root {
+:root,
+[data-theme="light"] {
   color-scheme: light;
   --fi-canvas: #f4f7fa;
   --fi-surface: #ffffff;

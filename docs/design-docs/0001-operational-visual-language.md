@@ -33,12 +33,11 @@ tabular numerals for measured values. Readings pair a value with a unit, time,
 quality, and source as soon as the contract supplies them.
 
 Light is the initial application theme. A dark theme uses the same hierarchy,
-content, and interactions with adjusted contrast. A later application-shell
-slice will provide a single accessible button to cycle Light, Dark, and System.
-The first slice exposes both palettes as a design specimen without implying
-that an application-wide theme preference is implemented.
+content, and interactions with adjusted contrast. The application shell provides
+one accessible icon button that cycles Light, Dark, and System. The design
+specimen still exposes both palettes for review.
 
-The future shell has a stable top bar, left navigation, and content origin.
+The shell has a stable top bar, left navigation, and content origin.
 Moving from an asset list to an asset detail must preserve that frame. A map
 pairs with an equivalent list. An alert links to evidence and a deliberate
 action. Any task-adaptive layout must be predictable and user-controlled.

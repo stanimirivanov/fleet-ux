@@ -9,6 +9,12 @@ const stylesheet = readFileSync(
 );
 const errors = [];
 
+if (!/:root\s*,\s*\[data-theme="light"\]\s*\{/u.test(stylesheet)) {
+  errors.push(
+    'Light tokens must apply to both the root and an explicit light specimen.',
+  );
+}
+
 function readTheme(selector) {
   const start = stylesheet.indexOf(`${selector} {`);
   if (start < 0) {
@@ -69,7 +75,7 @@ const pairs = [
 ];
 
 for (const [name, tokens] of [
-  ['light', readTheme(':root')],
+  ['light', readTheme('[data-theme="light"]')],
   ['dark', readTheme('[data-theme="dark"]')],
 ]) {
   for (const [foregroundName, backgroundName, minimum] of pairs) {

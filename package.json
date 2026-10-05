@@ -14,7 +14,8 @@
     "architecture": "depcruise --config .dependency-cruiser.cjs apps/web/src",
     "docs:check": "node tools/check-docs.mjs",
     "design:check": "node tools/check-design-tokens.mjs",
-    "check": "pnpm style:check && pnpm typecheck && pnpm architecture && pnpm docs:check && pnpm design:check && pnpm build"
+    "test": "pnpm --filter @fleetiq/web test",
+    "check": "pnpm style:check && pnpm typecheck && pnpm architecture && pnpm docs:check && pnpm design:check && pnpm test && pnpm build"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.15",

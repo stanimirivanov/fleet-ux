@@ -4,20 +4,21 @@
 
 Use SolidJS for rendering and fine-grained local reactivity, Effect v4 for
 complex async work and Atom-backed granular shared state, and the router URL
-for shareable state. The design foundation now supplies semantic light/dark
-tokens and a status specimen. The scaffold still has no API client, mock
-server, product shell, or live data.
+for shareable state. The root layout now supplies stable navigation and the
+Light/Dark/System preference. The application still has no API client, mock
+server, map, or live fleet data.
 
 ## Selected foundation
 
 | Concern | Choice |
 | --- | --- |
 | Web runtime | SolidJS 1.x, Vite, strict TypeScript |
-| Routing | @solidjs/router |
+| Routing | @solidjs/router root layout and route links |
 | Local state | Solid signals, memos, stores |
 | Shared granular state | Effect v4 Atom with @effect/atom-solid |
 | Async workflows | Effect v4 services, streams, scopes when required |
 | Styling | Tailwind CSS v4 with semantic light/dark CSS tokens |
+| Theme choice | One Light → Dark → System button, versioned browser preference |
 | HTTP contract | Contract-first OpenAPI and runtime validation in a later slice |
 | Mocking | Explicit development preview adapter in a later slice |
 | Map | MapLibre adapter and tile delivery in later slices |
@@ -28,19 +29,22 @@ the application root. Introduce layers and runtime services with the first
 actual transport workflow rather than a demonstration-only service.
 
 The [visual-language decision](design-docs/0001-operational-visual-language.md)
-defines hierarchy and status semantics. The semantic token sheet in
-apps/web/src/design-system/tokens.css is the styling source of truth.
-The design:check script verifies selected token contrast pairs. Component
-contrast, focus, charts, map overlays, and screen-reader behavior still
-require rendered review. The light and dark specimens are synthetic examples;
-they are not a theme-preference control or fleet feature.
+defines hierarchy and status semantics. The [shell decision](design-docs/0002-persistent-shell-theme.md)
+defines persistent navigation and preference behavior. The semantic token
+sheet in apps/web/src/design-system/tokens.css is the styling source of
+truth. The design:check script verifies selected token contrast pairs.
+Component contrast, focus, charts, map overlays, and screen-reader behavior
+still require rendered review.
 
-The future API layer will keep wire DTOs separate from validated client models.
-Mock and live transports must implement the same feature-facing interface.
-Mock mode must be explicit in development and unavailable in production.
-Server snapshot caching should have one owner; telemetry streams should not
-cause whole-screen reactive updates.
+The available routes show only real shell content or clearly labeled
+unconfigured/synthetic states. The future API layer will keep wire DTOs
+separate from validated client models. Mock and live transports must
+implement the same feature-facing interface. Mock mode must be explicit in
+development and unavailable in production. Server snapshot caching should
+have one owner; telemetry streams should not cause whole-screen reactive
+updates.
 
-Browser performance must be measured with representative asset counts, update
-rates, pan/zoom behavior, input latency, and memory before claims are made.
-Mobile work is deferred and will be native Android and Apple development.
+Browser performance must be measured with representative asset counts,
+update rates, pan/zoom behavior, input latency, and memory before claims are
+made. Mobile work is deferred and will be native Android and Apple
+development.
