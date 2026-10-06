@@ -1,7 +1,14 @@
 {
   "$schema": "https://biomejs.dev/schemas/2.5.15/schema.json",
   "files": {
-    "includes": ["**", "!**/dist", "!**/pnpm-lock.yaml", "!**/LICENSE"]
+    "includes": [
+      "**",
+      "!**/dist",
+      "!**/playwright-report",
+      "!**/test-results",
+      "!**/pnpm-lock.yaml",
+      "!**/LICENSE"
+    ]
   },
   "formatter": {
     "indentStyle": "space",

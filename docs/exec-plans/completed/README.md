@@ -6,3 +6,4 @@ evidence and material limitations for future reviewers.
 - [Solid web scaffold](2026-10-solid-web-scaffold.md)
 - [Design language foundation](2026-10-design-language-foundation.md)
 - [Persistent application shell and theme preference](2026-10-application-shell-theme.md)
+- [Solid testing and executable user guide](2026-10-solid-testing-and-executable-guide.md)

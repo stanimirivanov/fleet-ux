@@ -38,6 +38,7 @@ handoff. Mobile development is deferred and will use native platforms.
 
 ## Evidence
 
-Run focused checks during development and `pnpm check` before handoff. A
-skipped check is not a pass. Document the repository, milestone, copy-ready
+Run focused checks during development, then `pnpm check` and `pnpm e2e`
+for browser changes before handoff. A skipped check is not a pass. Document
+the repository, milestone, copy-ready
 issue, and exact pass/fail/not-run status per [CONTRIBUTING.md](CONTRIBUTING.md).
