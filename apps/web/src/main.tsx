@@ -3,7 +3,8 @@ import { Route, Router } from '@solidjs/router';
 import { render } from 'solid-js/web';
 import { AppShell } from './app/AppShell';
 import { DesignSystemPage } from './app/DesignSystemPage';
-import { AssetsPage, NotFoundPage, OverviewPage } from './app/WorkspacePages';
+import { NotFoundPage, OverviewPage } from './app/WorkspacePages';
+import { AssetsPage } from './features/assets/ui/AssetsPage';
 import './styles.css';
 
 const root = document.getElementById('root');

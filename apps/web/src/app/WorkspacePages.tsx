@@ -48,29 +48,6 @@ export function OverviewPage() {
   );
 }
 
-export function AssetsPage() {
-  return (
-    <div class="max-w-6xl">
-      <p class="text-xs font-semibold uppercase tracking-[0.14em] text-accent">
-        Workspace
-      </p>
-      <h1 id="page-title" class="mt-2 text-3xl font-semibold tracking-tight">
-        Assets
-      </h1>
-      <p class="mt-3 max-w-2xl text-base leading-7 text-muted">
-        The catalogue will support equipment-neutral assets and their
-        relationships to components and monitoring devices.
-      </p>
-      <ConnectionNotice
-        heading="The asset catalogue is not connected"
-        description="A tenant-scoped catalogue contract is available, but this browser has
-          no approved identity connection or asset data source. This is a
-          connection state, not a claim that the fleet contains no assets."
-      />
-    </div>
-  );
-}
-
 export function NotFoundPage() {
   return (
     <div class="max-w-3xl">

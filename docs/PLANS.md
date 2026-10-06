@@ -1,8 +1,9 @@
 # Execution plans
 
 FleetIQ UX follows the existing numbered milestone convention. The scaffold,
-visual-language foundation, persistent shell, testing harness, and pinned
-asset-catalogue contract belong to **M02 - Product Foundation**.
+visual-language foundation, persistent shell, testing harness, pinned
+asset-catalogue contract, and development sample preview belong to
+**M02 - Product Foundation**.
 
 - [Active plans](exec-plans/active/README.md)
 - [Completed plans](exec-plans/completed/README.md)
@@ -13,7 +14,8 @@ asset-catalogue contract belong to **M02 - Product Foundation**.
 
 Each plan records its status, goal, scope, acceptance evidence, and decisions.
 Move a plan to completed only after its required checks pass or limitations
-are explicitly recorded. The next PR-sized slice should render an explicitly
-labeled development asset catalogue through the fixture reader, with loading,
-empty, and error states. Live protected reads wait for browser-safe identity.
-Location and signal read models wait for backend-owned contract revisions.
+are explicitly recorded. The completed slice adds an explicitly labelled
+[development asset catalogue preview](exec-plans/completed/2026-10-development-asset-catalogue-preview.md)
+with loading, empty, and error states. Live protected reads wait for
+browser-safe identity. Location and signal read models wait for backend-owned
+contract revisions.

@@ -5,9 +5,9 @@
 FleetIQ UX is a SolidJS web-only operator console. Solid Router's root layout
 keeps the shell mounted across routes. The app layer composes routes and
 providers; features own their model, transport adapter, and UI. Effect v4 is
-the async and granular-state foundation. The current routes contain honest
-unconfigured states and a synthetic design specimen; no backend requests
-exist yet.
+the async and granular-state foundation. The asset workspace has an explicit
+development-only sample preview; the default and production routes remain
+unconfigured because browser-safe backend access does not exist yet.
 
 ## Structure
 
@@ -43,9 +43,14 @@ lifetimes and retry policy. The official @effect/atom-solid binding remains at
 the app boundary; a theme button does not need an Effect runtime.
 
 The pinned asset-catalogue contract has a validated feature boundary and an
-import-only fixture reader. It is not wired into a browser route. The first
-live API feature will decide snapshot caching and transport composition,
-avoiding duplicate caches.
+import-only fixture reader. `/assets?preview=sample` opts into a labelled
+catalogue preview only when served in Vite development mode. The sample flows
+through the same reader and validation boundary used by feature code. The
+ordinary `/assets` route remains unconfigured, and production output contains
+no fixture payload or preview activation path. Loading, empty, and error
+states describe the reader result rather than implying a live fleet status.
+The first live API feature will decide snapshot caching and transport
+composition, avoiding duplicate caches.
 
 ## Visual foundation and limits
 
@@ -57,7 +62,8 @@ shell has a stable top bar and desktop left navigation; its main content
 changes within one route outlet.
 
 The application has no live backend connection, mock server, map renderer,
-tile service, or mobile application. The pinned backend-owned contract is in
+tile service, or mobile application. The sample catalogue is fixture data, not
+an observed fleet. The pinned backend-owned contract is in
 [contracts/http](contracts/http/README.md); its current workload bearer secret
 is not a browser login mechanism. See [FRONTEND.md](docs/FRONTEND.md) for the
 selected stack and [PLANS.md](docs/PLANS.md) for sequencing.

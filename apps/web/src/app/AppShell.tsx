@@ -7,6 +7,10 @@ import { useThemePreference } from './theme/use-theme-preference';
 export function AppShell(props: ParentProps) {
   const theme = useThemePreference();
   const location = useLocation();
+  const showingSample = () =>
+    import.meta.env.DEV &&
+    location.pathname === '/assets' &&
+    new URLSearchParams(location.search).get('preview') === 'sample';
   let mainElement: HTMLElement | undefined;
 
   createEffect(() => {
@@ -25,7 +29,7 @@ export function AppShell(props: ParentProps) {
   // Announce client-side navigation through the newly titled main landmark.
   createEffect(
     on(
-      () => location.pathname,
+      () => location.pathname + location.search,
       () => queueMicrotask(() => mainElement?.focus()),
       { defer: true },
     ),
@@ -55,7 +59,9 @@ export function AppShell(props: ParentProps) {
           </A>
           <div class="flex items-center gap-3">
             <span class="hidden text-xs font-medium text-muted sm:inline">
-              Data source unconfigured
+              {showingSample()
+                ? 'Sample data · development'
+                : 'Data source unconfigured'}
             </span>
             <ThemeButton
               preference={theme.preference}
