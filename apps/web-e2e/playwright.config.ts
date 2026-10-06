@@ -4,7 +4,11 @@ import { browserScenarioMode } from './user-guide/guide-mode';
 
 const repositoryRoot = fileURLToPath(new URL('../../', import.meta.url));
 const userGuideMode = browserScenarioMode() === 'user-guide';
-const baseURL = 'http://127.0.0.1:4173';
+const port = Number(process.env.FLEETIQ_E2E_PREVIEW_PORT ?? 4173);
+if (!Number.isInteger(port) || port < 1 || port > 65535) {
+  throw new Error('Invalid FleetIQ Playwright port');
+}
+const baseURL = `http://127.0.0.1:${port}`;
 
 export default defineConfig({
   testDir: './e2e',
@@ -38,8 +42,7 @@ export default defineConfig({
   },
   projects: [{ name: 'chromium', use: { browserName: 'chromium' } }],
   webServer: {
-    command:
-      'pnpm --filter @fleetiq/web preview --host 127.0.0.1 --port 4173 --strictPort',
+    command: `pnpm --filter @fleetiq/web preview --host 127.0.0.1 --port ${port} --strictPort`,
     cwd: repositoryRoot,
     url: baseURL,
     reuseExistingServer: false,

@@ -11,3 +11,4 @@ evidence and material limitations for future reviewers.
 - [Effect OpenAPI generation](2026-10-effect-openapi-generation.md)
 - [Development asset catalogue preview](2026-10-development-asset-catalogue-preview.md)
 - [Development asset catalogue cursor navigation](2026-10-asset-catalogue-cursor-navigation.md)
+- [Frontend architecture hardening](2026-10-frontend-architecture-hardening.md)

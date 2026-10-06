@@ -1,8 +1,8 @@
-import { RegistryProvider } from '@effect/atom-solid';
 import { Route, Router } from '@solidjs/router';
 import { render } from 'solid-js/web';
 import { AppShell } from './app/AppShell';
 import { DesignSystemPage } from './app/DesignSystemPage';
+import { APP_ROUTES } from './app/route-metadata';
 import { NotFoundPage, OverviewPage } from './app/WorkspacePages';
 import { AssetsPage } from './features/assets/ui/AssetsPage';
 import './styles.css';
@@ -14,14 +14,12 @@ if (!root) {
 
 render(
   () => (
-    <RegistryProvider>
-      <Router root={AppShell}>
-        <Route path="/" component={OverviewPage} />
-        <Route path="/assets" component={AssetsPage} />
-        <Route path="/design-system" component={DesignSystemPage} />
-        <Route path="*" component={NotFoundPage} />
-      </Router>
-    </RegistryProvider>
+    <Router root={AppShell}>
+      <Route path={APP_ROUTES.overview.path} component={OverviewPage} />
+      <Route path={APP_ROUTES.assets.path} component={AssetsPage} />
+      <Route path={APP_ROUTES.designSystem.path} component={DesignSystemPage} />
+      <Route path="*" component={NotFoundPage} />
+    </Router>
   ),
   root,
 );

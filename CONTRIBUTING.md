@@ -13,13 +13,17 @@ Create a plan in `docs/exec-plans/active` for multi-step changes; move it to
 
 Use strict TypeScript and explicit boundaries. Keep Solid components small
 around one interaction, place pure rules in a feature model, and keep Effect
-programs behind named service or adapter interfaces. Prefer established
+programs behind named service or adapter interfaces. Use the
+[frontend structure guide](docs/development/frontend-structure.md) when
+reviewing component composition, reactivity, Effect lifetimes, and styling. Prefer established
 libraries when a real requirement appears. Avoid global state for local UI
 interactions and avoid app-wide abstractions for one feature.
 
 `pnpm check` runs formatting/lint, type checking, import architecture,
-documentation and pinned-contract checks, pure and Solid component tests,
-and a production build.
+`pnpm view:check` (page/root-view size policy and its tests), documentation
+and pinned-contract checks, pure and Solid component tests, and a production
+build. The 150-line gate is a review prompt with a documented exception;
+shorter pages still need structural review.
 
 For browser behavior, also run `pnpm e2e`; CI requires both jobs. Add focused
 behavioral tests when implementing behavior, without repeating static markup

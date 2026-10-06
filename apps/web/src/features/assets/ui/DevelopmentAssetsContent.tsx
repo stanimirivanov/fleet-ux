@@ -1,6 +1,12 @@
-import { A, useLocation } from '@solidjs/router';
-import { type JSX, Show } from 'solid-js';
-import { isValidAssetIdentifier } from '../model/asset-catalogue';
+import { useLocation } from '@solidjs/router';
+import { createMemo, type JSX, Show } from 'solid-js';
+import { ButtonLink } from '../../../shared/ui/ButtonLink';
+import { TextLink } from '../../../shared/ui/TextLink';
+import {
+  assetSamplePreviewHref,
+  isAssetSamplePreview,
+  readAssetPreviewCursor,
+} from '../model/asset-preview-url';
 import DevelopmentAssetCatalogue from './DevelopmentAssetCatalogue';
 
 /** Explicit URL opt-in; this whole module is excluded from production builds. */
@@ -9,42 +15,28 @@ export default function DevelopmentAssetsContent(props: {
 }) {
   const location = useLocation();
   const showingSample = () =>
-    new URLSearchParams(location.search).get('preview') === 'sample';
-  const cursorValues = () =>
-    new URLSearchParams(location.search).getAll('after');
-  const validCursor = () => {
-    const values = cursorValues();
-    return (
-      values.length <= 1 &&
-      (values.length === 0 || isValidAssetIdentifier(values[0] ?? ''))
-    );
+    isAssetSamplePreview(location.pathname, location.search);
+  const cursor = createMemo(() => readAssetPreviewCursor(location.search));
+  const after = () => {
+    const current = cursor();
+    return current.kind === 'page' ? current.after : undefined;
   };
-  const after = () => cursorValues()[0];
-
-  function previewHref(cursor?: string): string {
-    const params = new URLSearchParams({ preview: 'sample' });
-    if (cursor !== undefined) params.set('after', cursor);
-    return `/assets?${params.toString()}`;
-  }
 
   return (
     <Show
       when={showingSample()}
       fallback={
-        <>
+        <div class="grid max-w-3xl gap-4">
           {props.connectionNotice}
-          <A
-            href="/assets?preview=sample"
-            class="mt-4 inline-flex min-h-11 items-center text-sm font-semibold text-accent underline-offset-4 hover:underline"
-          >
+          <TextLink href={assetSamplePreviewHref()}>
             View sample catalogue
-          </A>
-        </>
+          </TextLink>
+        </div>
       }
     >
       <section
         aria-labelledby="sample-catalogue-heading"
-        class="mt-8 rounded-panel border border-outline bg-surface p-6 sm:p-8"
+        class="rounded-panel border border-outline bg-surface p-6 sm:p-8"
       >
         <div class="flex flex-wrap items-start justify-between gap-4">
           <div>
@@ -62,31 +54,26 @@ export default function DevelopmentAssetsContent(props: {
               examples, not connected fleet data.
             </p>
           </div>
-          <A
-            href="/assets"
-            class="inline-flex min-h-11 items-center text-sm font-semibold text-accent underline-offset-4 hover:underline"
-          >
-            Exit sample
-          </A>
+          <TextLink href="/assets">Exit sample</TextLink>
         </div>
         <Show
-          when={validCursor()}
+          when={cursor().kind !== 'invalid'}
           fallback={
             <div role="alert" class="mt-6 rounded-lg border border-outline p-5">
               <h3 class="text-base font-semibold">Invalid sample cursor</h3>
               <p class="mt-2 text-sm leading-6 text-muted">
                 This address cannot select a catalogue page.
               </p>
-              <A
-                href={previewHref()}
-                class="mt-4 inline-flex min-h-11 items-center text-sm font-semibold text-accent underline-offset-4 hover:underline"
-              >
+              <ButtonLink class="mt-4" href={assetSamplePreviewHref()}>
                 First page
-              </A>
+              </ButtonLink>
             </div>
           }
         >
-          <DevelopmentAssetCatalogue after={after()} pageHref={previewHref} />
+          <DevelopmentAssetCatalogue
+            after={after()}
+            pageHref={assetSamplePreviewHref}
+          />
         </Show>
       </section>
     </Show>

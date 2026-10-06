@@ -28,8 +28,47 @@
     }
   },
   "linter": {
+    "domains": {
+      "solid": "recommended"
+    },
     "rules": {
-      "preset": "recommended"
+      "preset": "recommended",
+      "correctness": {
+        "noSolidDestructuredProps": "error"
+      },
+      "performance": {
+        "useSolidForComponent": "error"
+      }
     }
-  }
+  },
+  "overrides": [
+    {
+      "includes": [
+        "apps/web/src/app/**/*.tsx",
+        "apps/web/src/features/**/ui/**/*.tsx",
+        "apps/web/src/shared/ui/**/*.tsx",
+        "!**/*.test.tsx"
+      ],
+      "linter": {
+        "rules": {
+          "style": {
+            "noRestrictedImports": {
+              "level": "error",
+              "options": {
+                "paths": {
+                  "effect": "View components must not execute Effect. Import feature-facing values from model or service modules."
+                },
+                "patterns": [
+                  {
+                    "group": ["effect/*"],
+                    "message": "View components must not import Effect runtime subpaths."
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
 }

@@ -23,9 +23,52 @@ export interface AssetPageRequest {
   readonly after?: string;
 }
 
+/** Optional transport cancellation owned by the caller. */
+export interface AssetReadOptions {
+  readonly signal?: AbortSignal;
+}
+
 /** The feature-facing read port shared by preview and future HTTP adapters. */
 export interface AssetCatalogueReader {
-  listPage(request: AssetPageRequest): Promise<AssetPage>;
+  listPage(
+    request: AssetPageRequest,
+    options?: AssetReadOptions,
+  ): Promise<AssetPage>;
+}
+
+/** A malformed request rejected before an adapter reads. */
+export class AssetPageRequestError extends RangeError {
+  override name = 'AssetPageRequestError';
+}
+
+/** Invalid or internally inconsistent data received at the catalogue boundary. */
+export class AssetPageContractError extends Error {
+  override name = 'AssetPageContractError';
+  constructor(
+    message: string,
+    readonly paths: readonly string[] = [],
+  ) {
+    super(message);
+  }
+}
+
+/** Failures that the catalogue can explain without exposing adapter internals. */
+export type AssetCatalogueLoadFailure =
+  | { readonly kind: 'invalid-request' }
+  | { readonly kind: 'invalid-response' }
+  | { readonly kind: 'unavailable' };
+
+/** Normalizes rejected adapter values into a safe presentation category. */
+export function classifyAssetCatalogueFailure(
+  cause: unknown,
+): AssetCatalogueLoadFailure {
+  if (cause instanceof AssetPageRequestError) {
+    return { kind: 'invalid-request' };
+  }
+  if (cause instanceof AssetPageContractError) {
+    return { kind: 'invalid-response' };
+  }
+  return { kind: 'unavailable' };
 }
 
 /**
@@ -36,19 +79,19 @@ export interface AssetCatalogueReader {
  */
 export function validateAssetPageRequest(request: AssetPageRequest): void {
   if (!isValidAssetIdentifier(request.tenantId)) {
-    throw new RangeError('Asset catalogue tenant ID is invalid');
+    throw new AssetPageRequestError('Asset catalogue tenant ID is invalid');
   }
   if (
     !Number.isInteger(request.limit) ||
     request.limit < 1 ||
     request.limit > 100
   ) {
-    throw new RangeError(
+    throw new AssetPageRequestError(
       'Asset catalogue page limit must be between 1 and 100',
     );
   }
   if (request.after !== undefined && !isValidAssetIdentifier(request.after)) {
-    throw new RangeError('Asset catalogue cursor is invalid');
+    throw new AssetPageRequestError('Asset catalogue cursor is invalid');
   }
 }
 

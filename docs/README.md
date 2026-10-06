@@ -8,6 +8,8 @@ homes rather than growing the root README.
 
 - [Architecture](../ARCHITECTURE.md): dependency and trust boundaries.
 - [Frontend](FRONTEND.md): selected stack and state ownership.
+- [Frontend structure](development/frontend-structure.md): component, Effect,
+  reactivity, and presentation review rules.
 - [Pinned HTTP contract](../contracts/http/README.md): backend revision,
   validation, and update process.
 - [Testing](development/testing.md): component and browser gates, page objects, and executable guides.
