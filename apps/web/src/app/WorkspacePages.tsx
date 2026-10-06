@@ -35,8 +35,8 @@ export function OverviewPage() {
         heading="Fleet data is not connected yet"
         description="The web application has no tenant or telemetry API
           configured. Asset counts, locations, conditions, and alerts will
-          appear only after their backend contracts and data-quality rules are
-          connected."
+          appear only after approved backend connections and data-quality rules
+          are in place."
       />
       <A
         href="/design-system"
@@ -62,10 +62,10 @@ export function AssetsPage() {
         relationships to components and monitoring devices.
       </p>
       <ConnectionNotice
-        heading="The asset catalogue is awaiting its API contract"
-        description="No assets are shown because this web application does not
-          yet have a tenant-scoped asset read model. This is a connection state,
-          not a claim that the fleet contains no assets."
+        heading="The asset catalogue is not connected"
+        description="A tenant-scoped catalogue contract is available, but this browser has
+          no approved identity connection or asset data source. This is a
+          connection state, not a claim that the fleet contains no assets."
       />
     </div>
   );

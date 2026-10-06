@@ -28,6 +28,9 @@ handoff. Mobile development is deferred and will use native platforms.
 - Use Solid signals, stores, and memos for local view state. Use Effect v4 and
   its official Solid Atom binding for granular shared state and complex async
   work where they add value. Do not introduce v3 APIs.
+- Pin backend-owned contracts at an exact revision. Validate unknown payloads
+  before constructing feature models; never use the platform workload bearer
+  secret in the browser.
 - Keep shareable filter and selection state in the URL. Keep server-owned data
   behind a validated API boundary; the backend remains authoritative for
   tenancy and permissions.

@@ -42,8 +42,10 @@ Effect v4 owns complex async work, including future telemetry connection
 lifetimes and retry policy. The official @effect/atom-solid binding remains at
 the app boundary; a theme button does not need an Effect runtime.
 
-The first API feature will decide snapshot caching and mock transport using a
-concrete contract, avoiding duplicate caches.
+The pinned asset-catalogue contract has a validated feature boundary and an
+import-only fixture reader. It is not wired into a browser route. The first
+live API feature will decide snapshot caching and transport composition,
+avoiding duplicate caches.
 
 ## Visual foundation and limits
 
@@ -54,6 +56,8 @@ utilities, while shared UI primitives remain domain-neutral. The persistent
 shell has a stable top bar and desktop left navigation; its main content
 changes within one route outlet.
 
-The application has no backend endpoint, mock server, map renderer, tile
-service, or mobile application. See [FRONTEND.md](docs/FRONTEND.md) for the
+The application has no live backend connection, mock server, map renderer,
+tile service, or mobile application. The pinned backend-owned contract is in
+[contracts/http](contracts/http/README.md); its current workload bearer secret
+is not a browser login mechanism. See [FRONTEND.md](docs/FRONTEND.md) for the
 selected stack and [PLANS.md](docs/PLANS.md) for sequencing.

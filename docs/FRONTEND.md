@@ -5,22 +5,23 @@
 Use SolidJS for rendering and fine-grained local reactivity, Effect v4 for
 complex async work and Atom-backed granular shared state, and the router URL
 for shareable state. The root layout now supplies stable navigation and the
-Light/Dark/System preference. The application still has no API client, mock
-server, map, or live fleet data.
+Light/Dark/System preference. The application pins an asset-catalogue
+contract and validates fixtures, but still has no live API client, activated
+sample view, map, or fleet data.
 
 ## Selected foundation
 
 | Concern | Choice |
 | --- | --- |
-| Web runtime | SolidJS 1.x, Vite, strict TypeScript |
+| Web runtime | SolidJS 1.x, Vite, strict TypeScript 7 |
 | Routing | @solidjs/router root layout and route links |
 | Local state | Solid signals, memos, stores |
 | Shared granular state | Effect v4 Atom with @effect/atom-solid |
 | Async workflows | Effect v4 services, streams, scopes when required |
 | Styling | Tailwind CSS v4 with semantic light/dark CSS tokens |
 | Theme choice | One Light → Dark → System button, versioned browser preference |
-| HTTP contract | Contract-first OpenAPI and runtime validation in a later slice |
-| Mocking | Explicit development preview adapter in a later slice |
+| HTTP contract | Pinned backend OpenAPI baseline; Effect v4 Schema runtime boundary |
+| Mocking | Deterministic fixture reader; explicit development preview in a later slice |
 | Map | MapLibre adapter and tile delivery in later slices |
 | Testing | Node pure tests, Vitest + Solid Testing Library, Playwright POM browser journeys |
 
@@ -38,7 +39,7 @@ Component contrast, focus, charts, map overlays, and screen-reader behavior
 still require rendered review.
 
 The available routes show only real shell content or clearly labeled
-unconfigured/synthetic states. The future API layer will keep wire DTOs
+unconfigured/synthetic states. The asset boundary keeps unknown wire payloads
 separate from validated client models. Mock and live transports must
 implement the same feature-facing interface. Mock mode must be explicit in
 development and unavailable in production. Server snapshot caching should
@@ -51,3 +52,10 @@ performance must be measured with representative asset counts,
 update rates, pan/zoom behavior, input latency, and memory before claims are
 made. Mobile work is deferred and will be native Android and Apple
 development.
+
+The [pinned backend contract](../contracts/http/README.md) is the source for
+asset catalogue fields and fixture examples. Its configured bearer credential
+is a workload secret, so this application does not use it for browser access.
+OpenAPI transport-type generation remains deferred: the current generator
+requires a programmatic TypeScript API absent from TypeScript 7. The maintained
+Effect Schema projection is checked with the published example and fixtures.
