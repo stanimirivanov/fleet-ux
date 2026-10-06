@@ -1,6 +1,4 @@
-import { ConnectionNotice } from '../shared/ui/ConnectionNotice';
-import { PageHeader } from '../shared/ui/PageHeader';
-import { TextLink } from '../shared/ui/TextLink';
+import { ConnectionNotice, PageHeader, TextLink } from '#shared/ui';
 import { APP_ROUTES } from './route-metadata';
 
 export function OverviewPage() {

@@ -1,10 +1,10 @@
 import { Route, Router } from '@solidjs/router';
 import { render } from 'solid-js/web';
+import { AssetsPage } from '#features/assets';
 import { AppShell } from './app/AppShell';
 import { DesignSystemPage } from './app/DesignSystemPage';
 import { APP_ROUTES } from './app/route-metadata';
 import { NotFoundPage, OverviewPage } from './app/WorkspacePages';
-import { AssetsPage } from './features/assets/ui/AssetsPage';
 import './styles.css';
 
 const root = document.getElementById('root');

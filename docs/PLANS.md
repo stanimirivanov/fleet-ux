@@ -7,6 +7,7 @@ navigation belong to
 **M02 - Product Foundation**.
 
 - [Active plans](exec-plans/active/README.md)
+- [Public import boundaries](exec-plans/completed/2026-10-public-import-boundaries.md)
 - [Completed plans](exec-plans/completed/README.md)
 - [Technical debt](exec-plans/tech-debt-tracker.md)
 - [Visual language decision](design-docs/0001-operational-visual-language.md)

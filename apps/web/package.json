@@ -3,6 +3,10 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "imports": {
+    "#shared/ui": "./src/shared/ui/index.ts",
+    "#features/assets": "./src/features/assets/index.ts"
+  },
   "scripts": {
     "dev": "vite",
     "typecheck": "tsc --noEmit",

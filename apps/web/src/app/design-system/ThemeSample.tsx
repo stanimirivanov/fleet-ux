@@ -1,5 +1,5 @@
 import { For } from 'solid-js';
-import { StatusBadge, type StatusTone } from '../../shared/ui/StatusBadge';
+import { StatusBadge, type StatusTone } from '#shared/ui';
 
 type PreviewTheme = 'light' | 'dark';
 

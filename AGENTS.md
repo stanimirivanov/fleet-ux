@@ -27,6 +27,9 @@ component, reactivity, and presentation review criteria.
   components depend on it, never the other way around.
 - `shared` contains small, product-neutral web utilities and components. It
   must not import features. Create a package only for a real stable boundary.
+- Cross-boundary imports use explicit public entries such as `#shared/ui` and
+  `#features/assets`; within an owner, import sibling files directly. The
+  package import map shortens paths but never bypasses dependency direction.
 - Use Solid signals, stores, and memos for local view state. Use Effect v4
   for complex async work where it adds value. Introduce Atom-backed shared
   state and its Solid binding with an actual use. Do not introduce v3 APIs.

@@ -13,7 +13,8 @@ Create a plan in `docs/exec-plans/active` for multi-step changes; move it to
 
 Use strict TypeScript and explicit boundaries. Keep Solid components small
 around one interaction, place pure rules in a feature model, and keep Effect
-programs behind named service or adapter interfaces. Use the
+programs behind named service or adapter interfaces. Import shared UI and
+features through explicit public entries across module boundaries. Use the
 [frontend structure guide](docs/development/frontend-structure.md) when
 reviewing component composition, reactivity, Effect lifetimes, and styling. Prefer established
 libraries when a real requirement appears. Avoid global state for local UI
