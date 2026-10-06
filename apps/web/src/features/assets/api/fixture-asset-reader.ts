@@ -1,6 +1,7 @@
 import {
   type AssetCatalogueReader,
   type AssetPageRequest,
+  type AssetReadOptions,
   type AssetSummary,
   validateAssetPageRequest,
 } from '../model/asset-catalogue';
@@ -53,7 +54,8 @@ export function createFixtureAssetReader(
   );
 
   return {
-    async listPage(request: AssetPageRequest) {
+    async listPage(request: AssetPageRequest, options?: AssetReadOptions) {
+      options?.signal?.throwIfAborted();
       validateAssetPageRequest(request);
       const matching = snapshot.filter(
         (asset) =>
@@ -64,6 +66,7 @@ export function createFixtureAssetReader(
       const nextAfter =
         matching.length > request.limit ? (assets.at(-1)?.id ?? null) : null;
 
+      options?.signal?.throwIfAborted();
       return parseAssetPage(
         {
           assets: assets.map((asset) => ({

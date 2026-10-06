@@ -4,14 +4,15 @@
 
 FleetIQ UX is a SolidJS web-only operator console. Solid Router's root layout
 keeps the shell mounted across routes. The app layer composes routes and
-providers; features own their model, transport adapter, and UI. Effect v4 is
-the async and granular-state foundation. The asset workspace has an explicit
+providers; features own their model, transport adapter, and UI. Effect v4
+supplies boundary schemas now and will own complex async workflows when
+needed. The asset workspace has an explicit
 development-only sample preview; the default and production routes remain
 unconfigured because browser-safe backend access does not exist yet.
 
 ## Structure
 
-- apps/web: Vite application, Solid router, Effect Atom registry, Tailwind.
+- apps/web: Vite application, Solid router, Tailwind.
 - apps/web/src/app: router root layout, route-owned pages, and the small theme
   preference lifecycle.
 - apps/web/src/design-system: semantic light/dark theme tokens.
@@ -29,18 +30,22 @@ API boundary. Models must not import UI, transport, browser globals, or map
 SDKs. External API payloads become trusted client values only after runtime
 validation. The backend remains the authority for tenant and permission checks.
 
-The import gate enforces cycles and basic inward direction. It cannot prove
-that a capability is correctly modelled; reviewers must still examine
-behavior and trust boundaries.
+The import gate enforces cycles, same-feature private imports, and basic
+inward direction. Biome checks Solid props/list rendering and keeps Effect
+imports out of presentation TSX. `pnpm view:check` flags oversized page and
+root-view files. These gates cannot prove a component has one responsibility;
+reviewers must still examine behavior, composition, layout, and trust boundaries.
+See the [frontend structure guide](docs/development/frontend-structure.md).
 
 ## State and effects
 
 Solid signals, memos, and stores own local and derived view state. The app
 theme uses a signal, a versioned browser preference, and a media-query
 listener. The URL owns navigation and future shareable selection/filter state.
-Effect v4 owns complex async work, including future telemetry connection
-lifetimes and retry policy. The official @effect/atom-solid binding remains at
-the app boundary; a theme button does not need an Effect runtime.
+Effect v4 defines the validated boundary and will own complex async work,
+including future telemetry connection lifetimes and retry policy. Introduce
+the official Solid Atom binding only when a real shared granular-state use
+requires it; the theme button does not need an Effect runtime.
 
 The pinned asset-catalogue contract has a validated feature boundary and an
 import-only fixture reader. `/assets?preview=sample` opts into a labelled
@@ -53,7 +58,11 @@ The preview keeps the reader's opaque exclusive cursor in the URL. A next-page
 link follows the returned cursor; a first-page link resets traversal, while
 browser history moves between visited pages. It makes no total-count or reverse
 pagination claim. Invalid cursor syntax never reaches the reader.
-The first live API feature will decide snapshot caching and transport
+The fixture reader currently keeps a small `Promise` and `AbortSignal` port;
+Effect v4 Schema validates boundary payloads and known failures are normalized
+before presentation. A live adapter will map generated Effect failures through
+a managed runtime and preserve cancellation when browser-safe identity exists.
+That first live API feature will decide snapshot caching and transport
 composition, avoiding duplicate caches.
 
 ## Visual foundation and limits

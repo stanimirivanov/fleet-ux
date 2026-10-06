@@ -13,6 +13,10 @@ import type {
   AssetPage,
   AssetPageRequest,
 } from '../model/asset-catalogue';
+import {
+  AssetPageContractError,
+  AssetPageRequestError,
+} from '../model/asset-catalogue';
 import { AssetCatalogueView } from './AssetCatalogueView';
 
 const firstPage: AssetPage = {
@@ -62,19 +66,19 @@ test('shows loading until the injected reader returns a bounded tenant page', as
 
   pending.resolve(firstPage);
 
-  const list = await screen.findByRole('list', { name: 'Sample assets' });
+  const list = await screen.findByRole('list', { name: 'Assets' });
   expect(within(list).getAllByRole('listitem')).toHaveLength(1);
   expect(within(list).getByText('Primary machine')).toBeTruthy();
   expect(within(list).getByText('asset-001')).toBeTruthy();
   expect(within(list).getByText('generic.machine')).toBeTruthy();
   expect(within(list).getByText('2')).toBeTruthy();
   expect(
-    screen.getByText('Additional entries exist beyond this first sample page.'),
+    screen.getByText('Additional entries exist beyond this page.'),
   ).toBeTruthy();
   expect(screen.queryByText('Loading catalogue entries…')).toBeNull();
 });
 
-test('explains that an empty sample page does not establish connected fleet state', async () => {
+test('renders the generic empty catalogue state', async () => {
   const reader: AssetCatalogueReader = {
     async listPage() {
       return { assets: [], nextAfter: null };
@@ -83,12 +87,12 @@ test('explains that an empty sample page does not establish connected fleet stat
 
   render(() => <AssetCatalogueView reader={reader} tenantId="tenant-a" />);
 
-  await screen.findByText(/No assets exist in this sample catalogue page/);
+  await screen.findByText(/No assets exist in this catalogue page/);
   const status = screen.getByRole('status');
   expect(status.textContent).toContain(
-    'This says nothing about a connected fleet.',
+    'No assets exist in this catalogue page.',
   );
-  expect(screen.queryByRole('list', { name: 'Sample assets' })).toBeNull();
+  expect(screen.queryByRole('list', { name: 'Assets' })).toBeNull();
 });
 
 test('offers retry after reader rejection and renders the recovered page', async () => {
@@ -106,22 +110,18 @@ test('offers retry after reader rejection and renders the recovered page', async
 
   const alert = await screen.findByRole('alert');
   expect(alert.textContent).toContain('Asset catalogue could not be loaded');
-  expect(screen.queryByRole('list', { name: 'Sample assets' })).toBeNull();
+  expect(screen.queryByRole('list', { name: 'Assets' })).toBeNull();
 
   await user.click(screen.getByRole('button', { name: 'Retry loading' }));
 
-  expect(
-    await screen.findByRole('list', { name: 'Sample assets' }),
-  ).toBeTruthy();
+  expect(await screen.findByRole('list', { name: 'Assets' })).toBeTruthy();
   expect(screen.queryByRole('alert')).toBeNull();
   expect(requests).toEqual([
     { tenantId: 'tenant-a', limit: 50 },
     { tenantId: 'tenant-a', limit: 50 },
   ]);
   expect(
-    screen.queryByText(
-      'Additional entries exist beyond this first sample page.',
-    ),
+    screen.queryByText('Additional entries exist beyond this page.'),
   ).toBeNull();
 });
 
@@ -218,4 +218,56 @@ test('ignores a previous page response after the URL cursor changes', async () =
     { tenantId: 'tenant-a', limit: 2 },
     { tenantId: 'tenant-a', limit: 2, after: 'asset-002' },
   ]);
+});
+
+test('aborts superseded reads and the active read on unmount', async () => {
+  const signals: AbortSignal[] = [];
+  const reader: AssetCatalogueReader = {
+    listPage(_request, options) {
+      if (!options?.signal) throw new Error('Missing read signal');
+      signals.push(options.signal);
+      return new Promise<AssetPage>(() => {});
+    },
+  };
+  const [after, setAfter] = createSignal<string | undefined>();
+  const view = render(() => (
+    <AssetCatalogueView reader={reader} tenantId="tenant-a" after={after()} />
+  ));
+
+  expect(signals).toHaveLength(1);
+  setAfter('asset-002');
+  await waitFor(() => expect(signals).toHaveLength(2));
+  expect(signals[0]?.aborted).toBe(true);
+  expect(signals[1]?.aborted).toBe(false);
+
+  view.unmount();
+  expect(signals[1]?.aborted).toBe(true);
+});
+
+test('shows a safe, typed fallback for an invalid adapter response', async () => {
+  const reader: AssetCatalogueReader = {
+    async listPage() {
+      throw new AssetPageContractError('Sensitive decoder details');
+    },
+  };
+
+  render(() => <AssetCatalogueView reader={reader} tenantId="tenant-a" />);
+
+  const alert = await screen.findByRole('alert');
+  expect(alert.textContent).toContain('invalid response');
+  expect(alert.textContent).not.toContain('Sensitive decoder details');
+});
+
+test('handles a synchronous adapter request error', async () => {
+  const reader: AssetCatalogueReader = {
+    listPage() {
+      throw new AssetPageRequestError('Invalid cursor');
+    },
+  };
+
+  render(() => <AssetCatalogueView reader={reader} tenantId="tenant-a" />);
+
+  expect((await screen.findByRole('alert')).textContent).toContain(
+    'request is invalid',
+  );
 });

@@ -88,3 +88,15 @@ describe('explicit fixture asset reader', () => {
     ).rejects.toThrow(RangeError);
   });
 });
+test('forwards an aborted invocation without producing a page', async () => {
+  const reader = createFixtureAssetReader(records);
+  const controller = new AbortController();
+  controller.abort();
+
+  await expect(
+    reader.listPage(
+      { tenantId: 'tenant-a', limit: 2 },
+      { signal: controller.signal },
+    ),
+  ).rejects.toHaveProperty('name', 'AbortError');
+});

@@ -7,7 +7,9 @@ independent, parse external data at the boundary, and run `pnpm check` before
 handoff. Mobile development is deferred and will use native platforms.
 
 [CONTRIBUTING.md](CONTRIBUTING.md) owns the contribution workflow. The
-[documentation map](docs/README.md) routes work to the relevant guide.
+[documentation map](docs/README.md) routes work to the relevant guide. The
+[frontend structure guide](docs/development/frontend-structure.md) defines
+component, reactivity, and presentation review criteria.
 
 ## Before changing code
 
@@ -25,9 +27,9 @@ handoff. Mobile development is deferred and will use native platforms.
   components depend on it, never the other way around.
 - `shared` contains small, product-neutral web utilities and components. It
   must not import features. Create a package only for a real stable boundary.
-- Use Solid signals, stores, and memos for local view state. Use Effect v4 and
-  its official Solid Atom binding for granular shared state and complex async
-  work where they add value. Do not introduce v3 APIs.
+- Use Solid signals, stores, and memos for local view state. Use Effect v4
+  for complex async work where it adds value. Introduce Atom-backed shared
+  state and its Solid binding with an actual use. Do not introduce v3 APIs.
 - Pin backend-owned contracts at an exact revision. Validate unknown payloads
   before constructing feature models; never use the platform workload bearer
   secret in the browser.
@@ -38,6 +40,11 @@ handoff. Mobile development is deferred and will use native platforms.
   empty, stale, offline, unauthorized, and error states where relevant.
 - Keep map SDK calls in a map adapter rather than scattering them through
   product features.
+- Pages compose named sections. Keep low-level interaction state with its
+  component; parent layouts own outer spacing and width. Apply the
+  [frontend review guide](docs/development/frontend-structure.md).
+- Presentation TSX never imports Effect runtime modules. Feature services
+  own execution, typed failures, and cancellation.
 
 ## Evidence
 

@@ -24,3 +24,7 @@ contract revisions.
 The completed [cursor-navigation slice](exec-plans/completed/2026-10-asset-catalogue-cursor-navigation.md)
 makes bounded sample pages reachable through URL state while live reads remain
 blocked on browser-safe identity.
+
+The completed [frontend architecture hardening](exec-plans/completed/2026-10-frontend-architecture-hardening.md)
+slice decomposes route and catalogue views, preserves categorized read failures and
+cancellation, and adds structural lint and review gates.

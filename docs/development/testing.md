@@ -2,8 +2,9 @@
 
 ## TL;DR
 
-`pnpm check` verifies types, architecture, styling, documentation, the pure
-rules, Solid component behavior, and a production build. `pnpm e2e` separately
+`pnpm check` verifies types, architecture, the page/root-view size policy,
+styling, documentation, the pure rules, Solid component behavior, and a
+production build. `pnpm e2e` separately
 runs production-preview and development-server Playwright suites. Both gates
 are required in CI. Selected production journeys can generate a user guide;
 ordinary e2e scenarios do not.
@@ -22,7 +23,7 @@ ordinary e2e scenarios do not.
   the narrative sequence. Prefer roles, labels, and retrying assertions over
   implementation selectors and arbitrary waits.
 
-Run `pnpm test:unit`, `pnpm test:component`, or `pnpm e2e` from the repository
+Run `pnpm view:check`, `pnpm test:unit`, `pnpm test:component`, or `pnpm e2e` from the repository
 root. `pnpm e2e` runs `e2e:production` then `e2e:development`: the first builds
 and serves the production Vite preview on 127.0.0.1:4173, while the second
 serves the Vite development app on 127.0.0.1:5173. Production scenarios prove
@@ -30,7 +31,9 @@ that `/assets?preview=sample` stays unconfigured; development scenarios
 exercise the opt-in fixture catalogue, direct cursor links, forward traversal,
 browser history, and invalid-cursor recovery. Each Playwright config refuses to
 reuse an existing server, so a busy port is an error rather than permission
-to test an unrelated process. Install Chromium once with
+to test an unrelated process. For local port collisions, set
+`FLEETIQ_E2E_PREVIEW_PORT` and/or `FLEETIQ_E2E_DEV_PORT` to free ports
+before running `pnpm e2e`; CI keeps defaults 4173 and 5173. Install Chromium once with
 `pnpm exec playwright install chromium`. `pnpm check` does not install or run
 a browser; the separate `browser` CI job runs both suites through `pnpm e2e`
 and retains failure traces/screenshots. Run both commands before handing off

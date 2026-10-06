@@ -20,10 +20,31 @@ module.exports = {
       to: { path: '^apps/web/src/app/' },
     },
     {
+      name: 'feature-cannot-import-another-feature-private-file',
+      severity: 'error',
+      from: { path: '^apps/web/src/features/([^/]+)/' },
+      to: {
+        path: '^apps/web/src/features/',
+        pathNot: '^apps/web/src/features/$1/',
+      },
+    },
+    {
       name: 'feature-model-cannot-import-ui-or-api',
       severity: 'error',
       from: { path: '^apps/web/src/features/[^/]+/model/' },
       to: { path: '^apps/web/src/features/[^/]+/(ui|api)/' },
+    },
+    {
+      name: 'feature-api-cannot-import-ui',
+      severity: 'error',
+      from: { path: '^apps/web/src/features/[^/]+/api/' },
+      to: { path: '^apps/web/src/features/[^/]+/ui/' },
+    },
+    {
+      name: 'feature-ui-cannot-import-generated-transport',
+      severity: 'error',
+      from: { path: '^apps/web/src/features/[^/]+/ui/' },
+      to: { path: '^apps/web/src/generated/' },
     },
     {
       name: 'packages-cannot-import-app',

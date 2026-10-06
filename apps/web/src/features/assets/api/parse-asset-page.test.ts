@@ -107,3 +107,29 @@ describe('asset page contract boundary', () => {
     ).toThrow(RangeError);
   });
 });
+test('retains redacted decoder paths without retaining input values', () => {
+  const privateValue = 'secret-sensor-value-987';
+  let failure: unknown;
+  try {
+    parseAssetPage(
+      {
+        assets: [
+          {
+            ...exampleAsset,
+            name: { unexpected_private_key: privateValue },
+          },
+        ],
+        next_after: null,
+      },
+      request,
+    );
+  } catch (cause) {
+    failure = cause;
+  }
+
+  expect(failure).toBeInstanceOf(AssetPageContractError);
+  if (!(failure instanceof AssetPageContractError)) return;
+  expect(failure.paths).toContain('$.assets[0].name');
+  expect(JSON.stringify(failure.paths)).not.toContain(privateValue);
+  expect(JSON.stringify(failure.paths)).not.toContain('unexpected_private_key');
+});

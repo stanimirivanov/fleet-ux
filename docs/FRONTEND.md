@@ -3,8 +3,8 @@
 ## TL;DR
 
 Use SolidJS for rendering and fine-grained local reactivity, Effect v4 for
-complex async work and Atom-backed granular shared state, and the router URL
-for shareable state. The root layout supplies stable navigation and the
+boundary schemas and future complex async work, and the router URL for
+shareable state. The root layout supplies stable navigation and the
 Light/Dark/System preference. The asset catalogue can be inspected with
 `/assets?preview=sample` on the development server; normal and production
 routes remain unconfigured without browser-safe backend access.
@@ -16,7 +16,7 @@ routes remain unconfigured without browser-safe backend access.
 | Web runtime | SolidJS 1.x, Vite, strict TypeScript 7 |
 | Routing | @solidjs/router root layout and route links |
 | Local state | Solid signals, memos, stores |
-| Shared granular state | Effect v4 Atom with @effect/atom-solid |
+| Shared granular state | Add Effect v4 Atom and its Solid binding with the first real use |
 | Async workflows | Effect v4 services, streams, scopes when required |
 | Styling | Tailwind CSS v4 with semantic light/dark CSS tokens |
 | Theme choice | One Light → Dark → System button, versioned browser preference |
@@ -25,10 +25,10 @@ routes remain unconfigured without browser-safe backend access.
 | Map | MapLibre adapter and tile delivery in later slices |
 | Testing | Node pure tests, Vitest + Solid Testing Library, Playwright POM browser journeys |
 
-Effect core and its Solid binding are pinned to the same 4.0.1 release. No
-Effect v3 compatibility layer is planned. The Atom provider is installed at
-the application root. Introduce layers and runtime services with the first
-actual transport workflow rather than a demonstration-only service.
+Effect v4 is pinned for generated boundary schemas. No Effect v3
+compatibility layer is planned. Introduce the Solid Atom binding, layers, and
+runtime services with an actual shared-state or transport workflow rather
+than installing an idle provider.
 
 The [visual-language decision](design-docs/0001-operational-visual-language.md)
 defines hierarchy and status semantics. The [shell decision](design-docs/0002-persistent-shell-theme.md)
@@ -56,11 +56,18 @@ transport schemas and a client from the pinned contract; the feature boundary
 still checks tenant identity and pagination invariants.
 
 Mock and live transports must implement the same feature-facing interface.
-The generated HTTP client is not a live browser adapter until a browser-safe
-identity flow exists. Server snapshot caching should have one owner; telemetry
+The development fixture reader intentionally uses a `Promise` port with an
+`AbortSignal` and normalizes known request, contract, and unavailable failures
+for presentation. Effect v4 Schema validates external payloads now. Once
+browser-safe identity exists, the live HTTP adapter will map the generated
+Effect error channel into feature failures and run under a managed,
+interruptible runtime. The generated HTTP client is not a live browser
+adapter until that identity flow exists. Server snapshot caching should have one owner; telemetry
 streams should not cause whole-screen reactive updates.
 
-The [testing guide](development/testing.md) defines the separate static/component
+The [frontend structure guide](development/frontend-structure.md) defines the
+component, reactivity, Effect, and styling review criteria. The
+[testing guide](development/testing.md) defines the separate static/component
 and browser gates and the guide-producing scenario convention. Production
 E2E continues to run against a built Vite preview and checks that the sample
 query cannot activate. A separate development-server Playwright suite checks

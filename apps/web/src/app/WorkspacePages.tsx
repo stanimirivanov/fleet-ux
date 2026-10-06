@@ -1,71 +1,34 @@
-import { A } from '@solidjs/router';
-import { StatusBadge } from '../shared/ui/StatusBadge';
-
-function ConnectionNotice(props: { heading: string; description: string }) {
-  return (
-    <section
-      aria-labelledby="connection-heading"
-      class="mt-8 max-w-3xl rounded-panel border border-outline bg-surface p-6 sm:p-8"
-    >
-      <StatusBadge label="Unconfigured" tone="unknown" />
-      <h2 id="connection-heading" class="mt-5 text-xl font-semibold">
-        {props.heading}
-      </h2>
-      <p class="mt-2 max-w-2xl text-sm leading-7 text-muted">
-        {props.description}
-      </p>
-    </section>
-  );
-}
+import { ConnectionNotice } from '../shared/ui/ConnectionNotice';
+import { PageHeader } from '../shared/ui/PageHeader';
+import { TextLink } from '../shared/ui/TextLink';
+import { APP_ROUTES } from './route-metadata';
 
 export function OverviewPage() {
   return (
-    <div class="max-w-6xl">
-      <p class="text-xs font-semibold uppercase tracking-[0.14em] text-accent">
-        Workspace
-      </p>
-      <h1 id="page-title" class="mt-2 text-3xl font-semibold tracking-tight">
-        Fleet overview
-      </h1>
-      <p class="mt-3 max-w-2xl text-base leading-7 text-muted">
+    <div class="flex max-w-6xl flex-col items-start gap-6">
+      <PageHeader eyebrow="Workspace" title={APP_ROUTES.overview.title}>
         This workspace will prioritize assets that need attention and show
         whether their latest evidence can be trusted.
-      </p>
-      <ConnectionNotice
-        heading="Fleet data is not connected yet"
-        description="The web application has no tenant or telemetry API
-          configured. Asset counts, locations, conditions, and alerts will
-          appear only after approved backend connections and data-quality rules
-          are in place."
-      />
-      <A
-        href="/design-system"
-        class="mt-6 inline-flex min-h-11 items-center text-sm font-semibold text-accent underline-offset-4 hover:underline"
-      >
-        Review the design foundations
-      </A>
+      </PageHeader>
+      <div class="w-full max-w-3xl">
+        <ConnectionNotice heading="Fleet data is not connected yet">
+          The web application has no tenant or telemetry API configured. Asset
+          counts, locations, conditions, and alerts will appear only after
+          approved backend connections and data-quality rules are in place.
+        </ConnectionNotice>
+      </div>
+      <TextLink href="/design-system">Review the design foundations</TextLink>
     </div>
   );
 }
 
 export function NotFoundPage() {
   return (
-    <div class="max-w-3xl">
-      <p class="text-xs font-semibold uppercase tracking-[0.14em] text-accent">
-        Navigation
-      </p>
-      <h1 id="page-title" class="mt-2 text-3xl font-semibold tracking-tight">
-        Page not found
-      </h1>
-      <p class="mt-3 text-base leading-7 text-muted">
+    <div class="flex max-w-3xl flex-col items-start gap-6">
+      <PageHeader eyebrow="Navigation" title="Page not found">
         This address does not match an available FleetIQ workspace.
-      </p>
-      <A
-        href="/"
-        class="mt-6 inline-flex min-h-11 items-center text-sm font-semibold text-accent underline-offset-4 hover:underline"
-      >
-        Return to fleet overview
-      </A>
+      </PageHeader>
+      <TextLink href="/">Return to fleet overview</TextLink>
     </div>
   );
 }

@@ -1,15 +1,50 @@
-import { Schema } from 'effect';
+import { Result, Schema, SchemaIssue } from 'effect';
 import { AssetPage as WireAssetPage } from '../../../generated/fleetiq-api';
 import {
   type AssetPage,
+  AssetPageContractError,
   type AssetPageRequest,
   isValidAssetIdentifier,
   validateAssetPageRequest,
 } from '../model/asset-catalogue';
 
-/** Invalid or internally inconsistent data received at the catalogue boundary. */
-export class AssetPageContractError extends Error {
-  override name = 'AssetPageContractError';
+export { AssetPageContractError } from '../model/asset-catalogue';
+
+const allowedFields = new Set([
+  'assets',
+  'id',
+  'tenant_id',
+  'name',
+  'asset_type',
+  'version',
+  'next_after',
+]);
+
+/**
+ * Retains only schema property paths, never decoder messages or input values.
+ * Unknown property names are redacted because they may originate in payloads.
+ */
+function redactedIssuePaths(issue: SchemaIssue.Issue): readonly string[] {
+  const formatted = SchemaIssue.makeFormatterStandardSchemaV1()(issue);
+  return [
+    ...new Set(
+      formatted.issues.map((entry) => {
+        let path = '$';
+        for (const segment of entry.path ?? []) {
+          const key = typeof segment === 'object' ? segment.key : segment;
+          if (typeof key === 'number') {
+            path +=
+              Number.isSafeInteger(key) && key >= 0 ? `[${key}]` : '[index]';
+          } else if (typeof key === 'string') {
+            path += `.${allowedFields.has(key) ? key : '[field]'}`;
+          } else {
+            path += '.[field]';
+          }
+        }
+        return path;
+      }),
+    ),
+  ].slice(0, 10);
 }
 
 /**
@@ -29,17 +64,19 @@ export function parseAssetPage(
 ): AssetPage {
   validateAssetPageRequest(request);
 
-  let wire: typeof WireAssetPage.Type;
-  try {
-    wire = Schema.decodeUnknownSync(WireAssetPage)(input);
-  } catch {
-    // Schema errors can include the input; avoid exposing tenant data in logs.
-    throw new AssetPageContractError('Invalid asset catalogue response');
+  const decoded = Schema.decodeUnknownResult(WireAssetPage)(input);
+  if (Result.isFailure(decoded)) {
+    throw new AssetPageContractError(
+      'Invalid asset catalogue response',
+      redactedIssuePaths(decoded.failure.issue),
+    );
   }
+  const wire = decoded.success;
 
   if (wire.assets.length > request.limit) {
     throw new AssetPageContractError(
       'Asset catalogue page exceeds requested limit',
+      ['$.assets'],
     );
   }
 
@@ -55,6 +92,7 @@ export function parseAssetPage(
     ) {
       throw new AssetPageContractError(
         'Asset catalogue contains an invalid asset identity',
+        ['$.assets'],
       );
     }
     seen.add(asset.id);
@@ -68,6 +106,7 @@ export function parseAssetPage(
   ) {
     throw new AssetPageContractError(
       'Asset catalogue contains an invalid next cursor',
+      ['$.next_after'],
     );
   }
 

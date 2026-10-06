@@ -2,7 +2,11 @@ import { fileURLToPath } from 'node:url';
 import { defineConfig, devices } from '@playwright/test';
 
 const repositoryRoot = fileURLToPath(new URL('../../', import.meta.url));
-const baseURL = 'http://127.0.0.1:5173';
+const port = Number(process.env.FLEETIQ_E2E_DEV_PORT ?? 5173);
+if (!Number.isInteger(port) || port < 1 || port > 65535) {
+  throw new Error('Invalid FleetIQ Playwright port');
+}
+const baseURL = `http://127.0.0.1:${port}`;
 
 /** Development-only preview checks run against Vite's dev server. */
 export default defineConfig({
@@ -38,8 +42,7 @@ export default defineConfig({
   },
   projects: [{ name: 'chromium', use: { browserName: 'chromium' } }],
   webServer: {
-    command:
-      'pnpm --filter @fleetiq/web dev --host 127.0.0.1 --port 5173 --strictPort',
+    command: `pnpm --filter @fleetiq/web dev --host 127.0.0.1 --port ${port} --strictPort`,
     cwd: repositoryRoot,
     url: baseURL,
     reuseExistingServer: false,
