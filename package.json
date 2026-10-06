@@ -14,7 +14,8 @@
     "architecture": "depcruise --config .dependency-cruiser.cjs apps/web/src",
     "docs:check": "node tools/check-docs.mjs",
     "design:check": "node tools/check-design-tokens.mjs",
-    "contract:check": "node tools/check-asset-contract.mjs",
+    "contract:generate": "node tools/check-asset-contract.mjs && node tools/generate-asset-contract.mjs",
+    "contract:check": "node tools/check-asset-contract.mjs && node tools/generate-asset-contract.mjs --check",
     "test:unit": "pnpm --filter @fleetiq/web test:unit",
     "test:component": "pnpm --filter @fleetiq/web test:component",
     "test": "pnpm test:unit && pnpm test:component",
@@ -25,6 +26,8 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.15",
+    "@effect/openapi-generator": "4.0.1",
+    "@effect/platform-node": "4.0.1",
     "@playwright/test": "1.63.0",
     "@types/node": "24.19.1",
     "dependency-cruiser": "18.5.0",
