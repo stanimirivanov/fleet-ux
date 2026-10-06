@@ -41,8 +41,13 @@ still require rendered review.
 The default route shows the honest unconfigured state. Development mode alone
 recognizes `/assets?preview=sample`, clearly labels its fixture data, and
 renders loading, populated, empty, and error results through the
-feature-facing reader. The preview query is a local inspection switch, not a
-product data source or a browser authentication mechanism. A production
+feature-facing reader. The preview uses a bounded two-record page and places
+the opaque exclusive after cursor in the URL. Next page follows the reader's
+returned cursor; First page clears it. Direct links and browser history work
+without claiming a total count or reverse pagination. Invalid cursor syntax
+offers a first-page recovery before a read is attempted. The preview query is
+a local inspection switch, not a product data source or a browser
+authentication mechanism. A production
 build must not include fixture payloads or activate preview mode. Neither
 route may present sample records as live assets, locations, health, or
 telemetry. The asset boundary keeps unknown wire payloads separate from

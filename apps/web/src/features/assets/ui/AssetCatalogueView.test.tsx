@@ -168,3 +168,54 @@ test('ignores a previous tenant response after the selected tenant changes', asy
     { tenantId: 'tenant-b', limit: 50 },
   ]);
 });
+
+test('ignores a previous page response after the URL cursor changes', async () => {
+  const first = deferredPage();
+  const second = deferredPage();
+  const requests: AssetPageRequest[] = [];
+  const reader: AssetCatalogueReader = {
+    listPage(request) {
+      requests.push(request);
+      return request.after === undefined ? first.promise : second.promise;
+    },
+  };
+  const [after, setAfter] = createSignal<string | undefined>(undefined);
+
+  render(() => (
+    <AssetCatalogueView
+      reader={reader}
+      tenantId="tenant-a"
+      after={after()}
+      limit={2}
+    />
+  ));
+  setAfter('asset-002');
+  await waitFor(() => {
+    expect(requests).toHaveLength(2);
+  });
+
+  first.resolve(firstPage);
+  await first.promise;
+  expect(screen.getByRole('status').textContent).toContain(
+    'Loading catalogue entries',
+  );
+  expect(screen.queryByText('Primary machine')).toBeNull();
+
+  second.resolve({
+    assets: [
+      {
+        id: 'asset-003',
+        tenantId: 'tenant-a',
+        name: 'Monitoring gateway',
+        assetType: { id: 'generic.gateway', version: 1 },
+      },
+    ],
+    nextAfter: null,
+  });
+  expect(await screen.findByText('Monitoring gateway')).toBeTruthy();
+  expect(screen.queryByText('Primary machine')).toBeNull();
+  expect(requests).toEqual([
+    { tenantId: 'tenant-a', limit: 2 },
+    { tenantId: 'tenant-a', limit: 2, after: 'asset-002' },
+  ]);
+});

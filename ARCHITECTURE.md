@@ -49,6 +49,10 @@ through the same reader and validation boundary used by feature code. The
 ordinary `/assets` route remains unconfigured, and production output contains
 no fixture payload or preview activation path. Loading, empty, and error
 states describe the reader result rather than implying a live fleet status.
+The preview keeps the reader's opaque exclusive cursor in the URL. A next-page
+link follows the returned cursor; a first-page link resets traversal, while
+browser history moves between visited pages. It makes no total-count or reverse
+pagination claim. Invalid cursor syntax never reaches the reader.
 The first live API feature will decide snapshot caching and transport
 composition, avoiding duplicate caches.
 

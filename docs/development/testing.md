@@ -27,7 +27,8 @@ root. `pnpm e2e` runs `e2e:production` then `e2e:development`: the first builds
 and serves the production Vite preview on 127.0.0.1:4173, while the second
 serves the Vite development app on 127.0.0.1:5173. Production scenarios prove
 that `/assets?preview=sample` stays unconfigured; development scenarios
-exercise the opt-in fixture catalogue. Each Playwright config refuses to
+exercise the opt-in fixture catalogue, direct cursor links, forward traversal,
+browser history, and invalid-cursor recovery. Each Playwright config refuses to
 reuse an existing server, so a busy port is an error rather than permission
 to test an unrelated process. Install Chromium once with
 `pnpm exec playwright install chromium`. `pnpm check` does not install or run
