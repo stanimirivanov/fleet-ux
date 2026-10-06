@@ -1,28 +1,11 @@
 import { Schema } from 'effect';
+import { AssetPage as WireAssetPage } from '../../../generated/fleetiq-api';
 import {
   type AssetPage,
   type AssetPageRequest,
   isValidAssetIdentifier,
   validateAssetPageRequest,
 } from '../model/asset-catalogue';
-
-const WireIdentifier = Schema.String.check(Schema.isMinLength(1));
-const WireAssetType = Schema.Struct({
-  id: WireIdentifier,
-  version: Schema.Int.check(
-    Schema.isBetween({ minimum: 1, maximum: 4_294_967_295 }),
-  ),
-});
-const WireAssetSummary = Schema.Struct({
-  id: WireIdentifier,
-  tenant_id: WireIdentifier,
-  name: Schema.String.check(Schema.isMinLength(1)),
-  asset_type: WireAssetType,
-});
-const WireAssetPage = Schema.Struct({
-  assets: Schema.Array(WireAssetSummary).check(Schema.isMaxLength(100)),
-  next_after: Schema.NullOr(WireIdentifier),
-});
 
 /** Invalid or internally inconsistent data received at the catalogue boundary. */
 export class AssetPageContractError extends Error {
@@ -32,7 +15,7 @@ export class AssetPageContractError extends Error {
 /**
  * Converts an untrusted HTTP or fixture response into the feature model.
  *
- * Effect Schema checks required fields and primitive bounds. Semantic checks
+ * The generated Effect Schema checks required fields and primitive bounds. Semantic checks
  * then enforce the selected tenant, requested page size, distinct identities,
  * and a cursor that cannot repeat the request. Extra wire fields are ignored
  * so additive backend fields do not silently enter trusted feature state.

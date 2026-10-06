@@ -19,12 +19,18 @@ fixtures, logs, or test media.
    editing the response shapes, examples, or security declarations. The pinned
    JSON is exempt from Biome formatting so its bytes match the source.
 3. Update `source.json` with that commit and this file's SHA-256.
-4. Reconcile `tools/check-asset-contract.mjs`, the asset boundary schemas,
-   and fixtures with any changed version or response shape. Runtime schemas
-   are maintained code, not generated types.
-5. Run `pnpm contract:check`, `pnpm check`, and browser checks for affected UI.
+4. Run `pnpm contract:generate` to regenerate the Effect v4 transport schema
+   and HTTP client in `apps/web/src/generated/fleetiq-api.ts`.
+5. Reconcile `tools/check-asset-contract.mjs`, the asset feature boundary,
+   and fixtures with any changed version or response shape. Generated schemas
+   validate wire fields; request-specific tenant, page-size, and cursor checks
+   remain in maintained feature code.
+6. Run `pnpm contract:check`, `pnpm check`, and browser checks for affected UI.
+   The contract check also rejects generated-output drift.
 
 The baseline currently supports version discovery and a bounded, tenant-scoped
 asset catalogue. It does not describe location or signal snapshots. Unknown
 additive response fields should remain compatible, but required fields and
-cross-tenant responses must fail validation before reaching the UI.
+cross-tenant responses must fail validation before reaching the UI. The
+generated HTTP client is not connected to the browser while the backend
+requires a workload bearer secret.

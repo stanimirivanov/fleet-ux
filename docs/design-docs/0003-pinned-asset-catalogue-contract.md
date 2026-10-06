@@ -1,6 +1,6 @@
 # ADR 0003: Pin the backend asset catalogue contract before rendering it
 
-Status: accepted, 6 October 2026
+Status: accepted, amended 6 October 2026
 
 ## Context
 
@@ -9,37 +9,48 @@ a bounded tenant asset catalogue. FleetIQ UX needs stable test payloads while
 the backend and web app evolve in parallel. The protected route currently uses
 a single-principal workload bearer secret, not a browser-safe sign-in flow.
 
-TypeScript 7 is the workspace compiler. The currently established
-`openapi-typescript` generator requires a programmatic TypeScript compiler API
-that TypeScript 7 does not yet provide.
+TypeScript 7.0 does not provide the programmatic compiler API required by
+`openapi-typescript`. That limitation is specific to that generator:
+`@effect/openapi-generator` 4.0.1 can generate Effect v4 code from the pinned
+specification without that API, and its output typechecks with TypeScript 7.0.2.
 
 ## Decision
 
+The initial slice used a maintained Effect Schema projection. This amendment
+adopts generation after verifying the official Effect generator with TypeScript
+7.0.2; the original implementation is recorded in the
+[completed contract plan](../exec-plans/completed/2026-10-asset-contract-typescript-7.md).
+The [generator follow-up](../exec-plans/completed/2026-10-effect-openapi-generation.md)
+records the amendment implementation and checks.
+
 Pin the exact backend contract artifact and revision in `contracts/http`.
-Keep its wire shape separate from the asset feature model. Effect v4 Schema
-validates unknown page payloads at the boundary; cross-field checks enforce
-the requested tenant and bounded cursor semantics. The published 200 response
-example and deterministic fixtures must pass the same boundary tests.
+Generate a schema-backed Effect HTTP client and wire types from that snapshot
+into `apps/web/src/generated/fleetiq-api.ts`. The generated `AssetPage` schema
+validates unknown page payloads at the transport boundary. Maintain
+feature-specific cross-field checks for the requested tenant, unique assets,
+page size, and advancing cursor before building the asset feature model. The
+published 200 response example and deterministic fixtures must pass the same
+boundary tests.
 
 Expose a feature-facing catalogue reader and an import-only fixture adapter.
 The default application continues to show an unconnected state. A later PR
-may opt into explicitly labeled development sample mode. A live browser
-adapter waits for an approved identity flow and never embeds the workload
-bearer secret.
+may opt into explicitly labeled development sample mode. The generated HTTP
+client is not wired to the browser until an approved identity flow exists; it
+must never embed the workload bearer secret.
 
 ## Consequences
 
-Contract changes require an explicit snapshot update and reconciliation of
-the maintained runtime schema and tests. No generated wire types are claimed.
-When a TypeScript 7-compatible generator exists, generation can be added
-without changing the trusted feature model or reader port. The current UI
-cannot claim asset locations, health, telemetry, or a complete fleet count;
-none is available in this contract.
+Contract changes require an explicit snapshot update, regeneration, a
+deterministic generated-output check, and reconciliation of feature-level
+validation and tests. Generated schemas cover wire shape, but cannot enforce
+request-specific tenancy or pagination rules. The current UI cannot claim
+asset locations, health, telemetry, or a complete fleet count; none is
+available in this contract.
 
 ## Alternatives considered
 
 Using the workload bearer in a browser would expose a server credential and
 misrepresent the authentication model. Hand-writing a live HTTP adapter now
-would leave that problem unresolved. Installing the current OpenAPI generator
-against TypeScript 7 would require a parallel older compiler solely for its
-AST API; this small baseline does not justify that toolchain yet.
+would leave that problem unresolved. `openapi-typescript` would require an
+older compiler for its AST API, and maintaining duplicate handwritten wire
+schemas would create unnecessary contract drift.

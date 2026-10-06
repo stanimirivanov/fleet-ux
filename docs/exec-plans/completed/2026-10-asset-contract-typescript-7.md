@@ -27,10 +27,9 @@ boundary while moving the whole workspace to the stable TypeScript 7 compiler.
 The current backend bearer secret is a single-principal workload credential,
 not a browser login. No live browser adapter, credential injection, or fixture
 mode is activated in this PR. The OpenAPI file is a pinned source snapshot;
-Effect Schema is a manually maintained runtime projection. The current
-`openapi-typescript` generator requires the old TypeScript compiler API, which
-TypeScript 7 does not yet expose, so generated wire types are deferred rather
-than installing an incompatible toolchain.
+Effect Schema was a manually maintained runtime projection in this slice.
+The evaluated `openapi-typescript` generator required a programmatic compiler
+API absent from TypeScript 7.0, so this slice deferred generated wire types.
 
 ## Acceptance evidence
 
@@ -52,3 +51,10 @@ than installing an incompatible toolchain.
 
 Catalogue rendering, live HTTP and browser authentication, location and signal
 read models, telemetry, maps, and native mobile clients.
+
+## Post-completion correction
+
+The TypeScript 7.0 limitation above applies to `openapi-typescript`, not to
+OpenAPI generation generally. The official Effect v4 generator works with this
+workspace and is integrated in the [Effect OpenAPI generation follow-up](2026-10-effect-openapi-generation.md).
+The original scope and acceptance evidence remain recorded above.
