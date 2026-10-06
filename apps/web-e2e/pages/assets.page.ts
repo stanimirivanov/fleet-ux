@@ -11,6 +11,9 @@ export class AssetsPage {
   readonly samplePreview: Locator;
   readonly viewSampleLink: Locator;
   readonly exitSampleLink: Locator;
+  readonly firstPageLink: Locator;
+  readonly nextPageLink: Locator;
+  readonly invalidCursorAlert: Locator;
 
   constructor(
     page: Page,
@@ -27,6 +30,11 @@ export class AssetsPage {
       name: 'View sample catalogue',
     });
     this.exitSampleLink = page.getByRole('link', { name: 'Exit sample' });
+    this.firstPageLink = page.getByRole('link', { name: 'First page' });
+    this.nextPageLink = page.getByRole('link', { name: 'Next page' });
+    this.invalidCursorAlert = page.getByRole('alert').filter({
+      hasText: 'Invalid sample cursor',
+    });
   }
 
   async document(): Promise<void> {

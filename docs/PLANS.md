@@ -2,7 +2,8 @@
 
 FleetIQ UX follows the existing numbered milestone convention. The scaffold,
 visual-language foundation, persistent shell, testing harness, pinned
-asset-catalogue contract, and development sample preview belong to
+asset-catalogue contract, development sample preview, and cursor
+navigation belong to
 **M02 - Product Foundation**.
 
 - [Active plans](exec-plans/active/README.md)
@@ -19,3 +20,7 @@ are explicitly recorded. The completed slice adds an explicitly labelled
 with loading, empty, and error states. Live protected reads wait for
 browser-safe identity. Location and signal read models wait for backend-owned
 contract revisions.
+
+The completed [cursor-navigation slice](exec-plans/completed/2026-10-asset-catalogue-cursor-navigation.md)
+makes bounded sample pages reachable through URL state while live reads remain
+blocked on browser-safe identity.

@@ -8,7 +8,7 @@ test('sample preview query never exposes synthetic assets in production', async 
   const shell = new ShellPage(page);
   const assets = new AssetsPage(page);
 
-  await shell.open('/assets?preview=sample');
+  await shell.open('/assets?preview=sample&after=asset-002');
   await expect(assets.heading).toBeVisible();
   await expect(assets.connectionNotice).toBeVisible();
   await expect(page.getByRole('banner')).toContainText(
