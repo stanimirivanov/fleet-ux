@@ -8,6 +8,9 @@ import {
 export class AssetsPage {
   readonly heading: Locator;
   readonly connectionNotice: Locator;
+  readonly samplePreview: Locator;
+  readonly viewSampleLink: Locator;
+  readonly exitSampleLink: Locator;
 
   constructor(
     page: Page,
@@ -17,6 +20,13 @@ export class AssetsPage {
     this.connectionNotice = page.getByRole('region', {
       name: 'The asset catalogue is not connected',
     });
+    this.samplePreview = page.getByRole('region', {
+      name: 'Sample asset catalogue',
+    });
+    this.viewSampleLink = page.getByRole('link', {
+      name: 'View sample catalogue',
+    });
+    this.exitSampleLink = page.getByRole('link', { name: 'Exit sample' });
   }
 
   async document(): Promise<void> {
