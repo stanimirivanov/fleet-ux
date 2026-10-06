@@ -43,7 +43,7 @@ test('orient in the FleetIQ console and choose appearance', {
       await shell.goToAssets();
       await expect(assets.heading).toBeVisible();
       await expect(assets.connectionNotice).toContainText(
-        'does not yet have a tenant-scoped asset read model',
+        'no approved identity connection or asset data source',
       );
       await expect(shell.assetsLink).toHaveAttribute('aria-current', 'page');
       await assets.document();

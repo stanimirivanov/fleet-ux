@@ -2,7 +2,9 @@
 
 FleetIQ's SolidJS operator web application. The persistent shell now provides
 stable navigation and a Light/Dark/System theme control. Fleet data is not
-connected yet; the overview and asset routes state that explicitly.
+connected yet; the overview and asset routes state that explicitly. The
+[backend asset-catalogue contract](contracts/http/README.md) is pinned and
+validated before the catalogue UI is built.
 
 ## Start
 
