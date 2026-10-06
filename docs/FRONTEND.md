@@ -22,6 +22,7 @@ server, map, or live fleet data.
 | HTTP contract | Contract-first OpenAPI and runtime validation in a later slice |
 | Mocking | Explicit development preview adapter in a later slice |
 | Map | MapLibre adapter and tile delivery in later slices |
+| Testing | Node pure tests, Vitest + Solid Testing Library, Playwright POM browser journeys |
 
 Effect core and its Solid binding are pinned to the same 4.0.1 release. No
 Effect v3 compatibility layer is planned. The Atom provider is installed at
@@ -44,7 +45,9 @@ development and unavailable in production. Server snapshot caching should
 have one owner; telemetry streams should not cause whole-screen reactive
 updates.
 
-Browser performance must be measured with representative asset counts,
+The [testing guide](development/testing.md) defines the separate static/component
+and browser gates and the guide-producing scenario convention. Browser
+performance must be measured with representative asset counts,
 update rates, pan/zoom behavior, input latency, and memory before claims are
 made. Mobile work is deferred and will be native Android and Apple
 development.

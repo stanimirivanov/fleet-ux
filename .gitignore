@@ -5,3 +5,6 @@ coverage/
 .env.*.local
 .idea/
 .DS_Store
+playwright-report/
+test-results/
+.playwright/

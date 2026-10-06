@@ -21,7 +21,16 @@ Open the URL printed by Vite. The available routes are:
 
 The theme icon in the top bar cycles Light → Dark → System and saves the
 preference when browser storage is available. No tenant or fleet data is
-fabricated. Run pnpm check before proposing a change.
+fabricated.
+
+## Verify
+
+Run `pnpm check` for static and Solid component checks. Install Chromium once
+with `pnpm exec playwright install chromium`, then run `pnpm e2e` for the
+production-build browser suite. `pnpm guide:generate` records the tagged
+operator journey and creates an ignored static guide under `dist/user-guide`.
+See the [testing guide](docs/development/testing.md) for the separate CI gates
+and guide publication behavior.
 
 ## Documentation
 

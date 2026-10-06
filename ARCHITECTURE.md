@@ -20,7 +20,9 @@ exist yet.
 - apps/web/src/shared: reusable web code without feature imports.
 - packages: future stable contract or design-token packages. This directory
   is deliberately empty until a real cross-application boundary exists.
-- tools: deterministic repository checks, including token contrast.
+- apps/web-e2e: Playwright page objects, scenario assertions, and optional
+  user-guide narration; it depends on the running web app, never the reverse.
+- tools: deterministic repository checks and guide assembly.
 
 The dependency direction is app composition → feature UI → feature model and
 API boundary. Models must not import UI, transport, browser globals, or map

@@ -1,8 +1,8 @@
 # Execution plans
 
 FleetIQ UX follows the existing numbered milestone convention. The scaffold,
-visual-language foundation, and persistent shell belong to **M02 - Product
-Foundation**. The next work is a contract-backed slice with the backend.
+visual-language foundation, persistent shell, and testing harness belong to
+**M02 - Product Foundation**. Contract-backed feature work follows.
 
 - [Active plans](exec-plans/active/README.md)
 - [Completed plans](exec-plans/completed/README.md)
@@ -12,5 +12,5 @@ Foundation**. The next work is a contract-backed slice with the backend.
 
 Each plan records its status, goal, scope, acceptance evidence, and decisions.
 Move a plan to completed only after its required checks pass or limitations
-are explicitly recorded. After the shell, agree the asset/location/signal
+are explicitly recorded. After the test harness, agree the asset/location/signal
 read-model contract and development fixtures before building the catalogue.

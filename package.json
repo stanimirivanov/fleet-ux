@@ -9,16 +9,24 @@
   "scripts": {
     "dev": "pnpm --filter @fleetiq/web dev",
     "build": "pnpm --filter @fleetiq/web build",
-    "typecheck": "pnpm --filter @fleetiq/web typecheck",
+    "typecheck": "pnpm --filter @fleetiq/web typecheck && pnpm exec tsc --noEmit -p apps/web-e2e/tsconfig.json",
     "style:check": "biome ci .",
     "architecture": "depcruise --config .dependency-cruiser.cjs apps/web/src",
     "docs:check": "node tools/check-docs.mjs",
     "design:check": "node tools/check-design-tokens.mjs",
-    "test": "pnpm --filter @fleetiq/web test",
+    "test:unit": "pnpm --filter @fleetiq/web test:unit",
+    "test:component": "pnpm --filter @fleetiq/web test:component",
+    "test": "pnpm test:unit && pnpm test:component",
+    "e2e": "pnpm build && pnpm exec playwright test --config apps/web-e2e/playwright.config.ts",
+    "guide:generate": "node tools/user-guide/generate.mjs",
+    "guide:preview": "node tools/user-guide/preview.mjs",
     "check": "pnpm style:check && pnpm typecheck && pnpm architecture && pnpm docs:check && pnpm design:check && pnpm test && pnpm build"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.15",
-    "dependency-cruiser": "18.5.0"
+    "@playwright/test": "1.63.0",
+    "@types/node": "24.19.1",
+    "dependency-cruiser": "18.5.0",
+    "typescript": "6.0.3"
   }
 }
