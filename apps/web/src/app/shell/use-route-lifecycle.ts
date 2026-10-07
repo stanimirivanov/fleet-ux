@@ -10,14 +10,19 @@ export function useDocumentTitle(): void {
   });
 }
 
-/** Move keyboard focus to the main landmark after client-side navigation. */
+/**
+ * Move focus after a route change, leaving query-backed controls undisturbed.
+ *
+ * Search, filters, tabs, and selected inspector nodes update the URL without
+ * replacing the page. Refocusing main on those edits steals keyboard focus.
+ */
 export function useRouteFocus(
   mainElement: () => HTMLElement | undefined,
 ): void {
   const location = useLocation();
   createEffect(
     on(
-      () => location.pathname + location.search,
+      () => location.pathname,
       () => {
         let cancelled = false;
         queueMicrotask(() => {

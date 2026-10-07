@@ -48,6 +48,7 @@ test('development overview discloses every sample panel and supports local disco
   await expect(overview.assetDiscovery).toContainText('Freshness');
 
   await overview.searchFor('Power system');
+  await expect(overview.searchAssets).toBeFocused();
   await expect(page).toHaveURL(/q=Power/u);
   await expect(overview.assetDiscovery).toContainText('Power system');
   await expect(overview.assetDiscovery).not.toContainText('Primary machine');

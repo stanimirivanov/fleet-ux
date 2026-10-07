@@ -27,7 +27,7 @@ test('sample catalogue uses shareable forward cursors and browser history', asyn
   ).toHaveCount(0);
   await expect(assets.nextPageLink).toBeVisible();
   await expect(assets.firstPageLink).toHaveCount(0);
-  await expect(shell.main).toBeFocused();
+  await expect(shell.main).not.toBeFocused();
 
   await assets.nextPageLink.click();
   await expect(page).toHaveURL('/assets?preview=sample&after=asset-002');
@@ -39,7 +39,7 @@ test('sample catalogue uses shareable forward cursors and browser history', asyn
   );
   await expect(assets.firstPageLink).toBeVisible();
   await expect(assets.nextPageLink).toBeVisible();
-  await expect(shell.main).toBeFocused();
+  await expect(shell.main).not.toBeFocused();
 
   await page.goBack();
   await expect(page).toHaveURL('/assets?preview=sample');

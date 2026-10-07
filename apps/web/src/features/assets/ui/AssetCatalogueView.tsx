@@ -1,5 +1,8 @@
 import { createMemo, Match, Switch } from 'solid-js';
-import type { AssetCatalogueReader } from '../model/asset-catalogue';
+import type {
+  AssetCatalogueReader,
+  AssetSummary,
+} from '../model/asset-catalogue';
 import { AssetCatalogueList } from './AssetCatalogueList';
 import { CatalogueError, CatalogueLoading } from './AssetCatalogueStates';
 import {
@@ -15,6 +18,7 @@ export function AssetCatalogueView(props: {
   readonly after?: string;
   readonly limit?: number;
   readonly pageHref?: (after?: string) => string;
+  readonly assetHref?: (asset: AssetSummary) => string;
   readonly copy?: AssetCatalogueCopy;
 }) {
   const catalogue = useAssetCatalogue(props);
@@ -49,6 +53,7 @@ export function AssetCatalogueView(props: {
               page={current()}
               after={props.after}
               pageHref={props.pageHref}
+              assetHref={props.assetHref}
               copy={copy()}
             />
           )}

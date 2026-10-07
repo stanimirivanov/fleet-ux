@@ -1,4 +1,4 @@
-import { useSearchParams } from '@solidjs/router';
+import { A, useSearchParams } from '@solidjs/router';
 import { createMemo, For, Show } from 'solid-js';
 import { StatusBadge, type StatusTone, TextLink } from '#shared/ui';
 import type {
@@ -6,6 +6,7 @@ import type {
   DemoCondition,
   DemoFleetOverview,
 } from '../../demo/overview-fixture';
+import { assetInspectorSampleHref } from '../../model/asset-preview-url';
 import { SamplePanel } from './SamplePanel';
 
 function conditionTone(condition: DemoCondition): StatusTone {
@@ -21,9 +22,13 @@ function AssetRow(props: { readonly row: DemoAssetRow }) {
   return (
     <tr class="border-t border-outline text-xs">
       <th scope="row" class="px-4 py-2 text-left font-normal">
-        <span class="block font-semibold text-foreground">
+        <A
+          href={assetInspectorSampleHref(props.row.asset.id)}
+          aria-label={`Inspect ${props.row.asset.name}`}
+          class="block font-semibold text-accent underline-offset-2 hover:underline focus-visible:underline"
+        >
           {props.row.asset.name}
-        </span>
+        </A>
         <span class="font-mono text-[11px] text-muted">
           {props.row.asset.id}
         </span>

@@ -1,4 +1,5 @@
 import { createFixtureAssetReader } from '../api/fixture-asset-reader';
+import { assetInspectorSampleHref } from '../model/asset-preview-url';
 import { AssetCatalogueView } from './AssetCatalogueView';
 import {
   type AssetCatalogueCopy,
@@ -33,6 +34,7 @@ export default function DevelopmentAssetCatalogue(props: {
       after={props.after}
       limit={2}
       pageHref={props.pageHref}
+      assetHref={(asset) => assetInspectorSampleHref(asset.id)}
       copy={sampleCatalogueCopy}
     />
   );
