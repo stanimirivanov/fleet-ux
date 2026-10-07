@@ -1,6 +1,6 @@
 # ADR 0003: Pin the backend asset catalogue contract before rendering it
 
-Status: accepted, amended 6 October 2026
+Status: accepted, amended 7 October 2026
 
 ## Context
 
@@ -33,9 +33,11 @@ published 200 response example and deterministic fixtures must pass the same
 boundary tests.
 
 Expose a feature-facing catalogue reader and an import-only fixture adapter.
-The default application continues to show an unconnected state. A later PR
-may opt into explicitly labeled development sample mode. The generated HTTP
-client is not wired to the browser until an approved identity flow exists; it
+The production application remains unconnected. Local development now uses
+explicitly labelled sample mode: the overview shows a separate synthetic
+operational projection by default, and the asset catalogue requires
+`?preview=sample`. Contract-shaped catalogue pages still use the validated
+reader. Generated HTTP access waits for an approved browser identity flow and
 must never embed the workload bearer secret.
 
 ## Consequences

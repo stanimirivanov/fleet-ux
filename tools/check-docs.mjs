@@ -3,7 +3,15 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const ignored = new Set(['.git', 'node_modules', 'dist', 'coverage']);
+const ignored = new Set([
+  '.git',
+  'node_modules',
+  'dist',
+  'coverage',
+  'playwright-report',
+  'test-results',
+  '.playwright',
+]);
 const required = [
   'AGENTS.md',
   'ARCHITECTURE.md',

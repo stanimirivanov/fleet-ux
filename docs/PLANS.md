@@ -1,31 +1,26 @@
 # Execution plans
 
-FleetIQ UX follows the existing numbered milestone convention. The scaffold,
-visual-language foundation, persistent shell, testing harness, pinned
-asset-catalogue contract, development sample preview, and cursor
-navigation belong to
-**M02 - Product Foundation**.
+FleetIQ UX follows the existing numbered milestones. Scaffold, visual-language
+foundation, shell, testing, contract, and architectural hardening work belong
+to **M02 - Product Foundation**. The first complete visual workspace belongs
+to **M04 - Semantic Twin and Live UI**.
 
 - [Active plans](exec-plans/active/README.md)
-- [Public import boundaries](exec-plans/completed/2026-10-public-import-boundaries.md)
 - [Completed plans](exec-plans/completed/README.md)
 - [Technical debt](exec-plans/tech-debt-tracker.md)
 - [Visual language decision](design-docs/0001-operational-visual-language.md)
 - [Shell and theme decision](design-docs/0002-persistent-shell-theme.md)
 - [Asset contract decision](design-docs/0003-pinned-asset-catalogue-contract.md)
 
-Each plan records its status, goal, scope, acceptance evidence, and decisions.
-Move a plan to completed only after its required checks pass or limitations
-are explicitly recorded. The completed slice adds an explicitly labelled
-[development asset catalogue preview](exec-plans/completed/2026-10-development-asset-catalogue-preview.md)
-with loading, empty, and error states. Live protected reads wait for
-browser-safe identity. Location and signal read models wait for backend-owned
-contract revisions.
+Each plan records its status, goal, scope, decisions, acceptance criteria, and
+evidence. Move a plan to completed only after required checks pass or material
+limitations are explicitly recorded.
 
-The completed [cursor-navigation slice](exec-plans/completed/2026-10-asset-catalogue-cursor-navigation.md)
-makes bounded sample pages reachable through URL state while live reads remain
-blocked on browser-safe identity.
-
-The completed [frontend architecture hardening](exec-plans/completed/2026-10-frontend-architecture-hardening.md)
-slice decomposes route and catalogue views, preserves categorized read failures and
-cancellation, and adds structural lint and review gates.
+The [completed fleet overview and asset discovery slice](exec-plans/completed/2026-10-fleet-overview-asset-discovery.md)
+uses clearly labelled synthetic operational data for local design review. The
+published backend contract currently provides bounded asset identity pages;
+live protected reads wait for browser-safe identity, and location, status,
+alerts, and signal views wait for backend-owned read models. Existing
+[cursor navigation](exec-plans/completed/2026-10-asset-catalogue-cursor-navigation.md)
+keeps sample pages reachable without inventing a fleet total or server-side
+search.

@@ -5,9 +5,10 @@
 Use SolidJS for rendering and fine-grained local reactivity, Effect v4 for
 boundary schemas and future complex async work, and the router URL for
 shareable state. The root layout supplies stable navigation and the
-Light/Dark/System preference. The asset catalogue can be inspected with
-`/assets?preview=sample` on the development server; normal and production
-routes remain unconfigured without browser-safe backend access.
+Light/Dark/System preference. Local development shows a labelled sample fleet
+overview by default and offers the contract-shaped asset catalogue at
+`/assets?preview=sample`. Production and the ordinary asset route remain
+unconfigured without browser-safe backend access.
 
 ## Selected foundation
 
@@ -21,8 +22,8 @@ routes remain unconfigured without browser-safe backend access.
 | Styling | Tailwind CSS v4 with semantic light/dark CSS tokens |
 | Theme choice | One Light → Dark → System button, versioned browser preference |
 | HTTP contract | Pinned backend OpenAPI baseline; generated Effect v4 transport schemas |
-| Mocking | Deterministic fixture reader behind an explicit development-only preview |
-| Map | MapLibre adapter and tile delivery in later slices |
+| Mocking | Deterministic development-only asset reader plus a separate sample operational projection |
+| Map | Accessible static overview preview now; MapLibre adapter and tile delivery after a location contract |
 | Testing | Node pure tests, Vitest + Solid Testing Library, Playwright POM browser journeys |
 
 Effect v4 is pinned for generated boundary schemas. No Effect v3
@@ -38,22 +39,32 @@ truth. The design:check script verifies selected token contrast pairs.
 Component contrast, focus, charts, map overlays, and screen-reader behavior
 still require rendered review.
 
-The default route shows the honest unconfigured state. Development mode alone
-recognizes `/assets?preview=sample`, clearly labels its fixture data, and
-renders loading, populated, empty, and error results through the
-feature-facing reader. The preview uses a bounded two-record page and places
-the opaque exclusive after cursor in the URL. Next page follows the reader's
-returned cursor; First page clears it. Direct links and browser history work
-without claiming a total count or reverse pagination. Invalid cursor syntax
-offers a first-page recovery before a read is attempted. The preview query is
-a local inspection switch, not a product data source or a browser
-authentication mechanism. A production
-build must not include fixture payloads or activate preview mode. Neither
-route may present sample records as live assets, locations, health, or
-telemetry. The asset boundary keeps unknown wire payloads separate from
-validated client models. The official Effect v4 OpenAPI generator derives
-transport schemas and a client from the pinned contract; the feature boundary
-still checks tenant identity and pagination invariants.
+Local development renders the approved overview layout from a deterministic,
+development-only sample projection. Each synthetic section carries a visible
+"Sample data" label and a quiet border/tint so its source remains evident
+without dominating the screen. Sample location, condition, connectivity,
+freshness, alerts, and trends live outside the backend-shaped asset identity
+model. A static map preview is spatial scaffolding, not observed positions.
+The production overview stays unconfigured.
+
+The ordinary `/assets` route also remains unconfigured. In development,
+the sidebar Assets destination opens the labelled sample catalogue so the
+sample overview journey stays coherent. Development mode
+alone recognizes `/assets?preview=sample` and renders contract-shaped pages
+through the feature-facing reader. The preview uses a bounded two-record page
+and places the opaque exclusive after cursor in the URL. Next page follows
+the reader's returned cursor; First page clears it. Direct links and browser
+history work without claiming a total count or reverse pagination. Invalid
+cursor syntax offers a first-page recovery before a read is attempted.
+Overview search, type, condition, and connectivity filters live in the URL
+and apply to the local sample set only;
+they do not claim server-side search. The preview query is a local inspection
+switch, not a product data source or browser authentication. A production
+build must not include fixture payloads or activate sample mode. The asset
+boundary keeps unknown wire payloads separate from validated client models.
+The official Effect v4 OpenAPI generator derives transport schemas and a
+client from the pinned contract; the feature boundary still checks tenant
+identity and pagination invariants.
 
 Mock and live transports must implement the same feature-facing interface.
 The development fixture reader intentionally uses a `Promise` port with an
@@ -69,9 +80,10 @@ The [frontend structure guide](development/frontend-structure.md) defines the
 component, reactivity, Effect, and styling review criteria. The
 [testing guide](development/testing.md) defines the separate static/component
 and browser gates and the guide-producing scenario convention. Production
-E2E continues to run against a built Vite preview and checks that the sample
-query cannot activate. A separate development-server Playwright suite checks
-the explicit sample route and its user-visible states. The production user
+E2E continues to run against a built Vite preview and checks that sample
+routes cannot activate. A separate development-server Playwright suite checks
+the default sample overview and explicit asset preview, including narrow
+layout and local filters. The production user
 guide remains based on verifiable production behavior. Browser performance
 must be measured with representative asset counts, update rates, pan/zoom
 behavior, input latency, and memory before claims are made. Mobile work is

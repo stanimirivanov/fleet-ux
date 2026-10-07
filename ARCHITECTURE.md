@@ -6,9 +6,9 @@ FleetIQ UX is a SolidJS web-only operator console. Solid Router's root layout
 keeps the shell mounted across routes. The app layer composes routes and
 providers; features own their model, transport adapter, and UI. Effect v4
 supplies boundary schemas now and will own complex async workflows when
-needed. The asset workspace has an explicit
-development-only sample preview; the default and production routes remain
-unconfigured because browser-safe backend access does not exist yet.
+needed. Local development renders a labelled sample overview by default and offers
+an explicit asset catalogue preview. Production and the ordinary asset route
+remain unconfigured because browser-safe backend access does not exist yet.
 
 ## Structure
 
@@ -54,12 +54,15 @@ the official Solid Atom binding only when a real shared granular-state use
 requires it; the theme button does not need an Effect runtime.
 
 The pinned asset-catalogue contract has a validated feature boundary and an
-import-only fixture reader. `/assets?preview=sample` opts into a labelled
-catalogue preview only when served in Vite development mode. The sample flows
-through the same reader and validation boundary used by feature code. The
-ordinary `/assets` route remains unconfigured, and production output contains
-no fixture payload or preview activation path. Loading, empty, and error
-states describe the reader result rather than implying a live fleet status.
+import-only fixture reader. Local development's default overview composes
+asset identities with a separate sample operational projection keyed by asset
+ID; it does not add synthetic fields to the backend model. Each synthetic
+panel discloses its source. `/assets?preview=sample` opts into a labelled,
+bounded catalogue preview only in Vite development. Contract-shaped pages flow
+through the reader and validation boundary. The ordinary `/assets` route and
+both production routes remain unconfigured; production output contains no
+fixture payload or sample activation path. Loading, empty, and error states
+describe the reader result rather than implying a live fleet status.
 The preview keeps the reader's opaque exclusive cursor in the URL. A next-page
 link follows the returned cursor; a first-page link resets traversal, while
 browser history moves between visited pages. It makes no total-count or reverse
@@ -80,9 +83,10 @@ utilities, while shared UI primitives remain domain-neutral. The persistent
 shell has a stable top bar and desktop left navigation; its main content
 changes within one route outlet.
 
-The application has no live backend connection, mock server, map renderer,
-tile service, or mobile application. The sample catalogue is fixture data, not
-an observed fleet. The pinned backend-owned contract is in
+The application has no live backend connection, map renderer, tile service,
+or mobile application. Its static overview map is sample spatial scaffolding,
+and its sample catalogue is fixture data, not an observed fleet. The pinned
+backend-owned contract is in
 [contracts/http](contracts/http/README.md); its current workload bearer secret
 is not a browser login mechanism. See [FRONTEND.md](docs/FRONTEND.md) for the
 selected stack and [PLANS.md](docs/PLANS.md) for sequencing.

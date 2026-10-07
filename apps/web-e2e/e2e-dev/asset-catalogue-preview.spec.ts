@@ -38,7 +38,7 @@ test('sample catalogue uses shareable forward cursors and browser history', asyn
     0,
   );
   await expect(assets.firstPageLink).toBeVisible();
-  await expect(assets.nextPageLink).toHaveCount(0);
+  await expect(assets.nextPageLink).toBeVisible();
   await expect(shell.main).toBeFocused();
 
   await page.goBack();
@@ -49,6 +49,18 @@ test('sample catalogue uses shareable forward cursors and browser history', asyn
   await expect(
     assets.samplePreview.getByText('Monitoring gateway'),
   ).toBeVisible();
+
+  await assets.nextPageLink.click();
+  await expect(page).toHaveURL('/assets?preview=sample&after=asset-004');
+  await expect(
+    assets.samplePreview.getByText('Diesel locomotive 206'),
+  ).toBeVisible();
+  await assets.nextPageLink.click();
+  await expect(page).toHaveURL('/assets?preview=sample&after=asset-006');
+  await expect(
+    assets.samplePreview.getByText('Refrigerated trailer 11'),
+  ).toBeVisible();
+  await expect(assets.nextPageLink).toHaveCount(0);
 
   await assets.firstPageLink.click();
   await expect(page).toHaveURL('/assets?preview=sample');
