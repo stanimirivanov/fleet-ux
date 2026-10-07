@@ -16,6 +16,12 @@ Each plan records its status, goal, scope, decisions, acceptance criteria, and
 evidence. Move a plan to completed only after required checks pass or material
 limitations are explicitly recorded.
 
+The [completed schematic map workbench slice](exec-plans/completed/2026-10-map-workbench.md)
+pairs a filtered asset list with an illustrative site canvas and in-place
+asset context. Positions remain development-only sample evidence until the
+backend publishes browser-safe, geodetic location reads with timestamps and
+quality.
+
 The [completed asset inspector slice](exec-plans/completed/2026-10-asset-inspector.md)
 extends asset discovery into a topology-and-evidence workspace. Its readings,
 history, and provenance are development-only sample projections until the

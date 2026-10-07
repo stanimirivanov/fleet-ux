@@ -41,7 +41,7 @@ export const DEMO_ASSET_OPERATIONS: Readonly<
     connectivity: 'connected',
     freshness: 'current',
     lastObservationAt: '2026-10-06T09:54:00Z',
-    mapPosition: { xPercent: 18, yPercent: 42 },
+    mapPosition: { xPercent: 14, yPercent: 40 },
   },
   'asset-002': {
     siteLabel: 'North yard',
@@ -49,7 +49,7 @@ export const DEMO_ASSET_OPERATIONS: Readonly<
     connectivity: 'connected',
     freshness: 'current',
     lastObservationAt: '2026-10-06T09:52:00Z',
-    mapPosition: { xPercent: 20, yPercent: 46 },
+    mapPosition: { xPercent: 27, yPercent: 49 },
   },
   'asset-003': {
     siteLabel: 'North yard',
@@ -57,7 +57,7 @@ export const DEMO_ASSET_OPERATIONS: Readonly<
     connectivity: 'disconnected',
     freshness: 'stale',
     lastObservationAt: '2026-10-06T08:10:00Z',
-    mapPosition: { xPercent: 23, yPercent: 44 },
+    mapPosition: { xPercent: 37, yPercent: 38 },
   },
   'asset-004': {
     siteLabel: 'Central depot',

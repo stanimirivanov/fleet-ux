@@ -1,10 +1,11 @@
 # FleetIQ UX
 
-FleetIQ's SolidJS operator web application. The persistent shell now provides
-stable navigation and a Light/Dark/System theme control. Fleet data is not
-connected yet; the overview and asset routes state that explicitly. The
-[backend asset-catalogue contract](contracts/http/README.md) is pinned and
-validated before the catalogue UI is built.
+## TL;DR
+
+This SolidJS operator console has a stable shell, Light/Dark/System theme, and
+development-only sample workspaces for fleet overview, assets, asset inspection,
+and a schematic map. Production routes disclose that fleet data is not
+connected. The map has no geodetic location API, map SDK, or tile service yet.
 
 ## Start
 
@@ -15,24 +16,35 @@ pnpm install --frozen-lockfile
 pnpm dev
 ```
 
-Open the URL printed by Vite. The available routes are:
+Open the URL printed by Vite. Development navigation opens labelled sample
+workspaces; direct URLs also allow inspection:
 
-- / — unconfigured fleet overview
-- /assets — unconfigured asset workspace
-- /design-system — synthetic light/dark design specimen
+- `/` — sample fleet overview in development; unconfigured in production
+- `/map?preview=sample` — illustrative site layout and paired asset list
+- `/assets?preview=sample` — contract-shaped sample asset catalogue
+- `/assets/:assetId?preview=sample` — sample topology and evidence for
+  supported example assets
+- `/design-system` — synthetic light/dark design specimen
+
+The ordinary `/map`, `/assets`, and asset-detail routes remain unconfigured
+without browser-safe backend access. A production build does not activate
+sample previews even when the query parameter is present. The schematic map
+uses local percentage coordinates, not real geography or live tracking.
 
 The theme icon in the top bar cycles Light → Dark → System and saves the
-preference when browser storage is available. No tenant or fleet data is
-fabricated.
+preference when browser storage is available. The
+[backend asset-catalogue contract](contracts/http/README.md) is pinned and
+validated at the UI boundary; additional location and telemetry read models
+are still needed for connected operator views.
 
 ## Verify
 
 Run `pnpm check` for static and Solid component checks. Install Chromium once
-with `pnpm exec playwright install chromium`, then run `pnpm e2e` for the
-production-build browser suite. `pnpm guide:generate` records the tagged
-operator journey and creates an ignored static guide under `dist/user-guide`.
-See the [testing guide](docs/development/testing.md) for the separate CI gates
-and guide publication behavior.
+with `pnpm exec playwright install chromium`, then run `pnpm e2e` for both
+production and development browser suites. `pnpm guide:generate` records the
+tagged operator journey and creates an ignored static guide under
+`dist/user-guide`. See the [testing guide](docs/development/testing.md) for
+the separate CI gates and guide publication behavior.
 
 ## Documentation
 

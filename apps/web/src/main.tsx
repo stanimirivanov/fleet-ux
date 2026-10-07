@@ -3,6 +3,7 @@ import { render } from 'solid-js/web';
 import {
   AssetInspectorPage,
   AssetsPage,
+  FleetMapPage,
   FleetOverviewPage,
 } from '#features/assets';
 import { AppShell } from './app/AppShell';
@@ -20,6 +21,7 @@ render(
   () => (
     <Router root={AppShell}>
       <Route path={APP_ROUTES.overview.path} component={FleetOverviewPage} />
+      <Route path={APP_ROUTES.map.path} component={FleetMapPage} />
       <Route path={APP_ROUTES.assets.path} component={AssetsPage} />
       <Route
         path={APP_ROUTES.assetInspector.path}

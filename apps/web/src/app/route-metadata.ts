@@ -1,6 +1,7 @@
 /** Route and navigation copy is owned by the application composition layer. */
 export const APP_ROUTES = {
   overview: { path: '/', title: 'Fleet overview', navigationLabel: 'Overview' },
+  map: { path: '/map', title: 'Fleet map', navigationLabel: 'Map' },
   assets: { path: '/assets', title: 'Assets', navigationLabel: 'Assets' },
   assetInspector: { path: '/assets/:assetId', title: 'Asset inspector' },
   designSystem: {
@@ -16,7 +17,7 @@ export const PRIMARY_NAVIGATION = [
     heading: 'Workspace',
     items: [
       { kind: 'route', route: APP_ROUTES.overview, icon: 'overview' },
-      { kind: 'planned', label: 'Map', icon: 'map' },
+      { kind: 'route', route: APP_ROUTES.map, icon: 'map' },
       { kind: 'route', route: APP_ROUTES.assets, icon: 'assets' },
       { kind: 'planned', label: 'Alerts', icon: 'alerts' },
       { kind: 'planned', label: 'Insights', icon: 'insights' },

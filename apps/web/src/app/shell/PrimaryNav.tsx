@@ -1,5 +1,10 @@
 import { A, useLocation } from '@solidjs/router';
 import { For } from 'solid-js';
+import {
+  isAssetInspectorSamplePreview,
+  isAssetSamplePreview,
+  isMapSamplePreview,
+} from '#features/assets';
 import { APP_ROUTES, PRIMARY_NAVIGATION } from '../route-metadata';
 
 const ICON_PATHS = {
@@ -36,8 +41,9 @@ export function PrimaryNav() {
   const isSampleWorkspace = () =>
     import.meta.env.DEV &&
     (location.pathname === APP_ROUTES.overview.path ||
-      (location.pathname === APP_ROUTES.assets.path &&
-        new URLSearchParams(location.search).get('preview') === 'sample'));
+      isMapSamplePreview(location.pathname, location.search) ||
+      isAssetInspectorSamplePreview(location.pathname, location.search) ||
+      isAssetSamplePreview(location.pathname, location.search));
 
   return (
     <aside class="fi-sidebar min-w-0 border-b border-outline bg-surface md:border-r md:border-b-0">
@@ -59,7 +65,10 @@ export function PrimaryNav() {
                         item.route.path === APP_ROUTES.assets.path &&
                         import.meta.env.DEV
                           ? '/assets?preview=sample'
-                          : item.route.path
+                          : item.route.path === APP_ROUTES.map.path &&
+                              import.meta.env.DEV
+                            ? '/map?preview=sample'
+                            : item.route.path
                       }
                       end={item.route.path !== APP_ROUTES.assets.path}
                       class="fi-nav-link"

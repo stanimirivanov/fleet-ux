@@ -1,4 +1,6 @@
 import { For, Show } from 'solid-js';
+import { TextLink } from '#shared/ui';
+import type { DemoMapWorkbench } from '../../demo/map-fixture';
 import type { DemoFleetOverview } from '../../demo/overview-fixture';
 import { SamplePanel } from './SamplePanel';
 
@@ -23,11 +25,17 @@ function markerColor(condition: string): string {
 }
 
 /** Illustrative topology, with no geographic or live-position claim. */
-export function FleetMap(props: { readonly overview: DemoFleetOverview }) {
+export function FleetMap(props: {
+  readonly overview: DemoFleetOverview;
+  readonly map: DemoMapWorkbench;
+}) {
   return (
     <SamplePanel
       title="Fleet map"
       description="Illustrative site positions · not live tracking"
+      action={
+        <TextLink href="/map?preview=sample">Open map workbench</TextLink>
+      }
     >
       <div class="relative h-48 overflow-hidden bg-canvas sm:h-52">
         <svg
@@ -99,9 +107,9 @@ export function FleetMap(props: { readonly overview: DemoFleetOverview }) {
               </text>
             )}
           </For>
-          <For each={props.overview.assets}>
+          <For each={props.map.assets}>
             {(row) => (
-              <Show when={row.operations.mapPosition}>
+              <Show when={row.location.position}>
                 {(position) => (
                   <g>
                     <title>
@@ -109,16 +117,14 @@ export function FleetMap(props: { readonly overview: DemoFleetOverview }) {
                         ': ' +
                         row.operations.condition +
                         ', ' +
-                        row.operations.freshness}
+                        row.location.state}
                     </title>
                     <circle
                       cx={position().xPercent * 8}
                       cy={position().yPercent * 3}
                       r="13"
                       stroke-dasharray={
-                        row.operations.freshness === 'current'
-                          ? undefined
-                          : '3 3'
+                        row.location.state === 'recent' ? undefined : '3 3'
                       }
                       fill="var(--fi-surface)"
                       stroke="var(--fi-outline)"
@@ -155,8 +161,8 @@ export function FleetMap(props: { readonly overview: DemoFleetOverview }) {
           Critical
         </span>
         <span>
-          Dashed ring = stale or unknown · missing positions remain in the asset
-          list
+          Dashed ring = last-known position · missing positions remain in the
+          asset list
         </span>
       </div>
     </SamplePanel>

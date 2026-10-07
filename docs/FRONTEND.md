@@ -6,9 +6,10 @@ Use SolidJS for rendering and fine-grained local reactivity, Effect v4 for
 boundary schemas and future complex async work, and the router URL for
 shareable state. The root layout supplies stable navigation and the
 Light/Dark/System preference. Local development shows a labelled sample fleet
-overview by default and offers the contract-shaped asset catalogue at
-`/assets?preview=sample`. Production and the ordinary asset route remain
-unconfigured without browser-safe backend access.
+overview by default and offers a schematic map at `/map?preview=sample`,
+the contract-shaped catalogue at `/assets?preview=sample`, and example
+asset inspectors. Production routes remain unconfigured without browser-safe
+backend access.
 
 ## Selected foundation
 
@@ -23,7 +24,7 @@ unconfigured without browser-safe backend access.
 | Theme choice | One Light → Dark → System button, versioned browser preference |
 | HTTP contract | Pinned backend OpenAPI baseline; generated Effect v4 transport schemas |
 | Mocking | Deterministic development-only asset reader plus a separate sample operational projection |
-| Map | Accessible static overview preview now; MapLibre adapter and tile delivery after a location contract |
+| Map | Development-only schematic workbench with paired list; MapLibre and tiles wait for a geodetic location contract |
 | Testing | Node pure tests, Vitest + Solid Testing Library, Playwright POM browser journeys |
 
 Effect v4 is pinned for generated boundary schemas. No Effect v3
@@ -44,8 +45,17 @@ development-only sample projection. Each synthetic section carries a visible
 "Sample data" label and a quiet border/tint so its source remains evident
 without dominating the screen. Sample location, condition, connectivity,
 freshness, alerts, and trends live outside the backend-shaped asset identity
-model. A static map preview is spatial scaffolding, not observed positions.
-The production overview stays unconfigured.
+model. The overview's static map preview is spatial scaffolding, not observed
+positions. The production overview stays unconfigured.
+
+Development navigation also opens `/map?preview=sample`: a schematic site
+canvas, filtered asset list, and selected-asset context share URL-backed
+selection. Its separate synthetic position evidence carries observation and
+receipt times and an availability state; a general telemetry timestamp does
+not establish location freshness. Percentage canvas coordinates are not
+latitude/longitude. The map has no geodetic SDK, tile service, live location
+API, trails, or movement animation. The ordinary `/map` route and every
+production map route remain unconfigured.
 
 The ordinary `/assets` route also remains unconfigured. In development,
 the sidebar Assets destination opens the labelled sample catalogue so the
@@ -82,8 +92,8 @@ component, reactivity, Effect, and styling review criteria. The
 and browser gates and the guide-producing scenario convention. Production
 E2E continues to run against a built Vite preview and checks that sample
 routes cannot activate. A separate development-server Playwright suite checks
-the default sample overview and explicit asset preview, including narrow
-layout and local filters. The production user
+the default sample overview and explicit asset and map previews, including
+narrow layout, local filters, and list/map selection. The production user
 guide remains based on verifiable production behavior. Browser performance
 must be measured with representative asset counts, update rates, pan/zoom
 behavior, input latency, and memory before claims are made. Mobile work is
