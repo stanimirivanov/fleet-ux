@@ -1,3 +1,4 @@
+import type { DemoMapWorkbench } from '../../demo/map-fixture';
 import type { DemoFleetOverview } from '../../demo/overview-fixture';
 import { AssetDiscovery } from './AssetDiscovery';
 import { AttentionQueue } from './AttentionQueue';
@@ -9,12 +10,13 @@ import { Utilization } from './Utilization';
 /** The route-level dashboard composes complete, independently reviewable panels. */
 export function OverviewDashboard(props: {
   readonly overview: DemoFleetOverview;
+  readonly map: DemoMapWorkbench;
 }) {
   return (
     <div class="grid min-w-0 gap-3 xl:grid-cols-[minmax(0,1.65fr)_minmax(20rem,1fr)]">
       <div class="grid min-w-0 content-start gap-3">
         <FleetMetrics overview={props.overview} />
-        <FleetMap overview={props.overview} />
+        <FleetMap overview={props.overview} map={props.map} />
         <AssetDiscovery overview={props.overview} />
       </div>
       <div class="grid min-w-0 content-start gap-3">

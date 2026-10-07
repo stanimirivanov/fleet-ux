@@ -49,3 +49,11 @@ export function isAssetInspectorSamplePreview(
 export function assetInspectorSampleHref(assetId: string): string {
   return `/assets/${encodeURIComponent(assetId)}?preview=sample`;
 }
+
+/** The schematic map preview is an explicit development-only route state. */
+export function isMapSamplePreview(pathname: string, search: string): boolean {
+  return (
+    pathname === '/map' &&
+    new URLSearchParams(search).get('preview') === 'sample'
+  );
+}

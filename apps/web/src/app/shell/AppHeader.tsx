@@ -3,6 +3,7 @@ import { Show } from 'solid-js';
 import {
   isAssetInspectorSamplePreview,
   isAssetSamplePreview,
+  isMapSamplePreview,
 } from '#features/assets';
 import { APP_ROUTES } from '../route-metadata';
 import { ThemeButton } from '../theme/ThemeButton';
@@ -41,7 +42,8 @@ export function AppHeader() {
     import.meta.env.DEV &&
     (location.pathname === APP_ROUTES.overview.path ||
       isAssetSamplePreview(location.pathname, location.search) ||
-      isAssetInspectorSamplePreview(location.pathname, location.search));
+      isAssetInspectorSamplePreview(location.pathname, location.search) ||
+      isMapSamplePreview(location.pathname, location.search));
   const sourceStatus = () =>
     sampleMode() ? 'Sample data · development' : 'Data source unconfigured';
 

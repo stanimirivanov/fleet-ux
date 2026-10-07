@@ -4,6 +4,7 @@ import {
   assetSamplePreviewHref,
   isAssetInspectorSamplePreview,
   isAssetSamplePreview,
+  isMapSamplePreview,
   readAssetPreviewCursor,
 } from './asset-preview-url';
 
@@ -11,6 +12,13 @@ test('sample preview activation is scoped to the asset route', () => {
   expect(isAssetSamplePreview('/assets', '?preview=sample')).toBe(true);
   expect(isAssetSamplePreview('/assets', '?preview=other')).toBe(false);
   expect(isAssetSamplePreview('/', '?preview=sample')).toBe(false);
+});
+
+test('map preview activation requires the exact map path and opt-in', () => {
+  expect(isMapSamplePreview('/map', '?preview=sample')).toBe(true);
+  expect(isMapSamplePreview('/map', '?preview=other')).toBe(false);
+  expect(isMapSamplePreview('/assets', '?preview=sample')).toBe(false);
+  expect(isMapSamplePreview('/map/asset-001', '?preview=sample')).toBe(false);
 });
 
 test('cursor parsing preserves first and forward pages but rejects ambiguity', () => {

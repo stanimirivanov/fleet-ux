@@ -1,0 +1,37 @@
+import { expect, test } from '@playwright/test';
+import { MapPage } from '../pages/map.page';
+import { ShellPage } from '../pages/shell.page';
+
+test('production map cannot activate sample positions or selected asset evidence', async ({
+  page,
+}) => {
+  const shell = new ShellPage(page);
+  const map = new MapPage(page);
+
+  for (const path of [
+    '/map',
+    '/map?preview=sample&asset=asset-004&position=recent',
+  ]) {
+    await shell.open(path);
+    await expect(map.heading).toBeVisible();
+    await expect(map.connectionNotice).toBeVisible();
+    await expect(page.getByRole('banner')).toContainText(
+      'Data source unconfigured',
+    );
+    await expect(map.assetList).toHaveCount(0);
+    await expect(map.siteMap).toHaveCount(0);
+    await expect(map.selectedAsset).toHaveCount(0);
+    for (const synthetic of [
+      'Sample data',
+      'Electric locomotive 417',
+      'Illustrative position feed',
+      'Schematic · not to scale',
+    ]) {
+      await expect(page.getByText(synthetic, { exact: true })).toHaveCount(0);
+    }
+  }
+
+  await expect(
+    shell.primaryNavigation.getByRole('link', { name: 'Map', exact: true }),
+  ).toHaveAttribute('href', '/map');
+});
