@@ -30,9 +30,15 @@ API boundary. Models must not import UI, transport, browser globals, or map
 SDKs. External API payloads become trusted client values only after runtime
 validation. The backend remains the authority for tenant and permission checks.
 
-The import gate enforces cycles, same-feature private imports, and basic
-inward direction. Biome checks Solid props/list rendering and keeps Effect
-imports out of presentation TSX. `pnpm view:check` flags oversized page and
+App composition imports features through their public `index.ts` entry; app
+and feature code import shared UI through `#shared/ui`. Named exports keep
+those surfaces deliberate. Internal files import siblings directly to avoid
+barrel cycles. The package import map in `apps/web/package.json` removes
+relative path depth and names each public entry explicitly. TypeScript, Vite,
+and dependency-cruiser resolve that same map. The import gate enforces public
+entries, unresolved package imports, cycles, same-feature private imports, and
+basic inward direction. Biome checks Solid props/list rendering and keeps
+Effect imports out of presentation TSX. `pnpm view:check` flags oversized page and
 root-view files. These gates cannot prove a component has one responsibility;
 reviewers must still examine behavior, composition, layout, and trust boundaries.
 See the [frontend structure guide](docs/development/frontend-structure.md).

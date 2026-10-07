@@ -1,4 +1,4 @@
-import { PageHeader } from '../shared/ui/PageHeader';
+import { PageHeader } from '#shared/ui';
 import { ThemeSample } from './design-system/ThemeSample';
 import { APP_ROUTES } from './route-metadata';
 

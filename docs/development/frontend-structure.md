@@ -24,6 +24,23 @@ structural rules; reviewers assess composition, copy, state ownership, and layou
 - Pass state-specific copy to reusable views. Development sample language
   belongs in the development wrapper, not a live-ready catalogue view.
 
+## Import boundaries
+
+- Use `#shared/ui` for shared presentation primitives from app or feature
+  code. Add explicit named exports to `shared/ui/index.ts`; do not reach into
+  component files from outside that directory.
+- App composition imports a feature through `#features/<name>` when that
+  feature has a public entry. Export only the route or capability contract the
+  app needs. Register each new public feature in `apps/web/package.json`;
+  keep model, API, and UI files private by default.
+- Use direct relative imports between files owned by the same module. Avoid
+  importing an owner's own barrel, which can create cycles and obscure the
+  dependency graph. Add a barrel when a real cross-boundary consumer exists,
+  not for every directory.
+- The package import map shortens paths and names public entries; it does
+  not replace dependency direction. `pnpm architecture` checks resolved files
+  and rejects unresolved `#` imports.
+
 ## Solid and Effect
 
 - Read reactive props through `props.name` in tracked JSX or a memo. Do not

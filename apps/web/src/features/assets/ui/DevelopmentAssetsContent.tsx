@@ -1,7 +1,6 @@
 import { useLocation } from '@solidjs/router';
 import { createMemo, type JSX, Show } from 'solid-js';
-import { ButtonLink } from '../../../shared/ui/ButtonLink';
-import { TextLink } from '../../../shared/ui/TextLink';
+import { ButtonLink, TextLink } from '#shared/ui';
 import {
   assetSamplePreviewHref,
   isAssetSamplePreview,

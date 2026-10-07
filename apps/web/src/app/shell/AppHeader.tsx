@@ -1,5 +1,5 @@
 import { A, useLocation } from '@solidjs/router';
-import { isAssetSamplePreview } from '../../features/assets/model/asset-preview-url';
+import { isAssetSamplePreview } from '#features/assets';
 import { ThemeButton } from '../theme/ThemeButton';
 import { useThemePreference } from '../theme/use-theme-preference';
 

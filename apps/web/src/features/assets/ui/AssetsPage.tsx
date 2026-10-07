@@ -1,6 +1,5 @@
 import { lazy, Suspense } from 'solid-js';
-import { ConnectionNotice } from '../../../shared/ui/ConnectionNotice';
-import { PageHeader } from '../../../shared/ui/PageHeader';
+import { ConnectionNotice, PageHeader } from '#shared/ui';
 
 const DevelopmentAssetsContent = import.meta.env.DEV
   ? lazy(() => import('./DevelopmentAssetsContent'))

@@ -1,5 +1,5 @@
 import { Show } from 'solid-js';
-import { ButtonLink } from '../../../shared/ui/ButtonLink';
+import { ButtonLink } from '#shared/ui';
 import type { AssetPage } from '../model/asset-catalogue';
 import type { AssetCatalogueCopy } from './asset-catalogue-copy';
 
