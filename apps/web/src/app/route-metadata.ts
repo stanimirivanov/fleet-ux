@@ -2,6 +2,7 @@
 export const APP_ROUTES = {
   overview: { path: '/', title: 'Fleet overview', navigationLabel: 'Overview' },
   assets: { path: '/assets', title: 'Assets', navigationLabel: 'Assets' },
+  assetInspector: { path: '/assets/:assetId', title: 'Asset inspector' },
   designSystem: {
     path: '/design-system',
     title: 'Design system',
@@ -31,6 +32,9 @@ export const PRIMARY_NAVIGATION = [
 ] as const;
 
 export function routeTitle(pathname: string): string {
+  if (/^\/assets\/[^/]+$/u.test(pathname)) {
+    return APP_ROUTES.assetInspector.title;
+  }
   return (
     Object.values(APP_ROUTES).find((route) => route.path === pathname)?.title ??
     'Page not found'

@@ -61,7 +61,7 @@ export function PrimaryNav() {
                           ? '/assets?preview=sample'
                           : item.route.path
                       }
-                      end
+                      end={item.route.path !== APP_ROUTES.assets.path}
                       class="fi-nav-link"
                       activeClass="fi-nav-link--active"
                     >

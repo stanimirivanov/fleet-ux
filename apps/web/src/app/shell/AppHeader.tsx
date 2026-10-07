@@ -1,6 +1,9 @@
 import { A, useLocation } from '@solidjs/router';
 import { Show } from 'solid-js';
-import { isAssetSamplePreview } from '#features/assets';
+import {
+  isAssetInspectorSamplePreview,
+  isAssetSamplePreview,
+} from '#features/assets';
 import { APP_ROUTES } from '../route-metadata';
 import { ThemeButton } from '../theme/ThemeButton';
 import { useThemePreference } from '../theme/use-theme-preference';
@@ -37,7 +40,8 @@ export function AppHeader() {
   const sampleMode = () =>
     import.meta.env.DEV &&
     (location.pathname === APP_ROUTES.overview.path ||
-      isAssetSamplePreview(location.pathname, location.search));
+      isAssetSamplePreview(location.pathname, location.search) ||
+      isAssetInspectorSamplePreview(location.pathname, location.search));
   const sourceStatus = () =>
     sampleMode() ? 'Sample data · development' : 'Data source unconfigured';
 

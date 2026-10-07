@@ -1,14 +1,35 @@
+import { A } from '@solidjs/router';
 import { For, Show } from 'solid-js';
 import type { AssetPage, AssetSummary } from '../model/asset-catalogue';
 import { AssetCataloguePagination } from './AssetCataloguePagination';
 import { CatalogueEmpty } from './AssetCatalogueStates';
 import type { AssetCatalogueCopy } from './asset-catalogue-copy';
 
-function AssetCatalogueRow(props: { readonly asset: AssetSummary }) {
+function AssetCatalogueRow(props: {
+  readonly asset: AssetSummary;
+  readonly assetHref?: (asset: AssetSummary) => string;
+}) {
   return (
     <li class="grid min-w-0 gap-2 border-t border-outline px-4 py-3 text-xs sm:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)_5rem] sm:items-center">
       <div class="min-w-0">
-        <p class="truncate text-sm font-semibold">{props.asset.name}</p>
+        <Show
+          when={props.assetHref?.(props.asset)}
+          fallback={
+            <span class="block truncate text-sm font-semibold">
+              {props.asset.name}
+            </span>
+          }
+        >
+          {(href) => (
+            <A
+              href={href()}
+              aria-label={`Inspect ${props.asset.name}`}
+              class="block truncate text-sm font-semibold text-accent underline-offset-2 hover:underline focus-visible:underline"
+            >
+              {props.asset.name}
+            </A>
+          )}
+        </Show>
         <p class="break-all font-mono text-[11px] text-muted">
           {props.asset.id}
         </p>
@@ -26,6 +47,7 @@ export function AssetCatalogueList(props: {
   readonly page: AssetPage;
   readonly after?: string;
   readonly pageHref?: (after?: string) => string;
+  readonly assetHref?: (asset: AssetSummary) => string;
   readonly copy: AssetCatalogueCopy;
 }) {
   return (
@@ -49,7 +71,9 @@ export function AssetCatalogueList(props: {
           </div>
           <ul aria-label={props.copy.listLabel}>
             <For each={props.page.assets}>
-              {(asset) => <AssetCatalogueRow asset={asset} />}
+              {(asset) => (
+                <AssetCatalogueRow asset={asset} assetHref={props.assetHref} />
+              )}
             </For>
           </ul>
         </div>

@@ -16,6 +16,11 @@ Each plan records its status, goal, scope, decisions, acceptance criteria, and
 evidence. Move a plan to completed only after required checks pass or material
 limitations are explicitly recorded.
 
+The [completed asset inspector slice](exec-plans/completed/2026-10-asset-inspector.md)
+extends asset discovery into a topology-and-evidence workspace. Its readings,
+history, and provenance are development-only sample projections until the
+backend publishes browser-safe detail and signal read models.
+
 The [completed fleet overview and asset discovery slice](exec-plans/completed/2026-10-fleet-overview-asset-discovery.md)
 uses clearly labelled synthetic operational data for local design review. The
 published backend contract currently provides bounded asset identity pages;

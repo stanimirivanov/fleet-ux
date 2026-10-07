@@ -14,3 +14,4 @@ evidence and material limitations for future reviewers.
 - [Frontend architecture hardening](2026-10-frontend-architecture-hardening.md)
 - [Public import boundaries](2026-10-public-import-boundaries.md)
 - [Fleet overview and asset discovery design slice](2026-10-fleet-overview-asset-discovery.md)
+- [Asset inspector sample slice](2026-10-asset-inspector.md)

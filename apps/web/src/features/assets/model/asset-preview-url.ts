@@ -33,3 +33,19 @@ export function assetSamplePreviewHref(after?: string): string {
   if (after !== undefined) params.set('after', after);
   return `/assets?${params.toString()}`;
 }
+
+/** Development inspector activation requires both a detail path and opt-in. */
+export function isAssetInspectorSamplePreview(
+  pathname: string,
+  search: string,
+): boolean {
+  return (
+    /^\/assets\/[^/]+$/u.test(pathname) &&
+    new URLSearchParams(search).get('preview') === 'sample'
+  );
+}
+
+/** Encodes an asset identity without leaking sample mode into production URLs. */
+export function assetInspectorSampleHref(assetId: string): string {
+  return `/assets/${encodeURIComponent(assetId)}?preview=sample`;
+}
