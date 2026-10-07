@@ -16,3 +16,4 @@ evidence and material limitations for future reviewers.
 - [Fleet overview and asset discovery design slice](2026-10-fleet-overview-asset-discovery.md)
 - [Asset inspector sample slice](2026-10-asset-inspector.md)
 - [Schematic fleet map workbench](2026-10-map-workbench.md)
+- [Read-only asset registry and mapping review](2026-10-registry-mapping-review.md)

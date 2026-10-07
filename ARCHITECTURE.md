@@ -6,9 +6,10 @@ FleetIQ UX is a SolidJS web-only operator console. Solid Router's root layout
 keeps the shell mounted across routes. The app layer composes routes and
 providers; features own their model, transport adapter, and UI. Effect v4
 supplies boundary schemas now and will own complex async workflows when
-needed. Local development renders a labelled sample overview by default and offers
-an explicit asset catalogue preview. Production and the ordinary asset route
-remain unconfigured because browser-safe backend access does not exist yet.
+needed. Local development renders a labelled sample overview by default and
+offers explicit catalogue, inspector, schematic map, and read-only registry
+previews. Production remains unconfigured because browser-safe backend access
+does not exist yet.
 
 ## Structure
 
@@ -47,7 +48,7 @@ See the [frontend structure guide](docs/development/frontend-structure.md).
 
 Solid signals, memos, and stores own local and derived view state. The app
 theme uses a signal, a versioned browser preference, and a media-query
-listener. The URL owns navigation and future shareable selection/filter state.
+listener. The URL owns navigation and shareable selection/filter state.
 Effect v4 defines the validated boundary and will own complex async work,
 including future telemetry connection lifetimes and retry policy. Introduce
 the official Solid Atom binding only when a real shared granular-state use
@@ -83,9 +84,10 @@ utilities, while shared UI primitives remain domain-neutral. The persistent
 shell has a stable top bar and desktop left navigation; its main content
 changes within one route outlet.
 
-The application has no live backend connection, map renderer, tile service,
-or mobile application. Its static overview map is sample spatial scaffolding,
-and its sample catalogue is fixture data, not an observed fleet. The pinned
+The application has no live backend connection, geodetic map SDK, tile service,
+or mobile application. Its schematic maps are sample spatial scaffolding, and
+its catalogue, inspector, and registry previews are fixture data rather than
+observed fleet state. The pinned
 backend-owned contract is in
 [contracts/http](contracts/http/README.md); its current workload bearer secret
 is not a browser login mechanism. See [FRONTEND.md](docs/FRONTEND.md) for the

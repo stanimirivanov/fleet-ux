@@ -35,6 +35,9 @@ export class AssetInspectorPage {
 
   async openSample(assetId: string): Promise<void> {
     await this.page.goto(`/assets/${assetId}?preview=sample`);
+    // Vite may still be transforming the lazy inspector chunk after navigation.
+    await this.heading.waitFor({ state: 'visible', timeout: 20_000 });
+    await this.topology.waitFor({ state: 'visible', timeout: 20_000 });
   }
 
   node(name: string): Locator {

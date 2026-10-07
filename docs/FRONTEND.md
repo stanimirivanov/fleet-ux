@@ -7,8 +7,10 @@ boundary schemas and future complex async work, and the router URL for
 shareable state. The root layout supplies stable navigation and the
 Light/Dark/System preference. Local development shows a labelled sample fleet
 overview by default and offers a schematic map at `/map?preview=sample`,
-the contract-shaped catalogue at `/assets?preview=sample`, and example
-asset inspectors. Production routes remain unconfigured without browser-safe
+the contract-shaped catalogue at `/assets?preview=sample`, example asset
+inspectors, and read-only registry review at
+`/assets/registry/review?preview=sample`. Production routes remain unconfigured
+without browser-safe
 backend access.
 
 ## Selected foundation
@@ -23,7 +25,7 @@ backend access.
 | Styling | Tailwind CSS v4 with semantic light/dark CSS tokens |
 | Theme choice | One Light → Dark → System button, versioned browser preference |
 | HTTP contract | Pinned backend OpenAPI baseline; generated Effect v4 transport schemas |
-| Mocking | Deterministic development-only asset reader plus a separate sample operational projection |
+| Mocking | Deterministic development-only asset reader plus separate sample operational and registry projections |
 | Map | Development-only schematic workbench with paired list; MapLibre and tiles wait for a geodetic location contract |
 | Testing | Node pure tests, Vitest + Solid Testing Library, Playwright POM browser journeys |
 
@@ -54,8 +56,11 @@ selection. Its separate synthetic position evidence carries observation and
 receipt times and an availability state; a general telemetry timestamp does
 not establish location freshness. Percentage canvas coordinates are not
 latitude/longitude. The map has no geodetic SDK, tile service, live location
-API, trails, or movement animation. The ordinary `/map` route and every
-production map route remain unconfigured.
+API, trails, or movement animation. The ordinary `/map` route and every production map route remain unconfigured.
+The registry preview projects directed relationships and exact
+source-to-property bindings at explicit effective and known times. It remains
+read-only: protected metadata routes lack browser-safe identity and are not in
+the pinned UI OpenAPI contract.
 
 The ordinary `/assets` route also remains unconfigured. In development,
 the sidebar Assets destination opens the labelled sample catalogue so the

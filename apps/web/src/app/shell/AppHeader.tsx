@@ -4,6 +4,7 @@ import {
   isAssetInspectorSamplePreview,
   isAssetSamplePreview,
   isMapSamplePreview,
+  isRegistrySamplePreview,
 } from '#features/assets';
 import { APP_ROUTES } from '../route-metadata';
 import { ThemeButton } from '../theme/ThemeButton';
@@ -43,7 +44,8 @@ export function AppHeader() {
     (location.pathname === APP_ROUTES.overview.path ||
       isAssetSamplePreview(location.pathname, location.search) ||
       isAssetInspectorSamplePreview(location.pathname, location.search) ||
-      isMapSamplePreview(location.pathname, location.search));
+      isMapSamplePreview(location.pathname, location.search) ||
+      isRegistrySamplePreview(location.pathname, location.search));
   const sourceStatus = () =>
     sampleMode() ? 'Sample data · development' : 'Data source unconfigured';
 

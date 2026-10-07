@@ -11,6 +11,8 @@ const baseURL = `http://127.0.0.1:${port}`;
 /** Development-only preview checks run against Vite's dev server. */
 export default defineConfig({
   testDir: './e2e-dev',
+  // Long user journeys include Vite's first lazy-chunk transform on cold runs.
+  timeout: 60_000,
   outputDir: fileURLToPath(
     new URL('../../test-results/development/', import.meta.url),
   ),
