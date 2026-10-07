@@ -5,6 +5,7 @@ import {
   assetSamplePreviewHref,
   isAssetSamplePreview,
   readAssetPreviewCursor,
+  registrySampleHref,
 } from '../model/asset-preview-url';
 import DevelopmentAssetCatalogue from './DevelopmentAssetCatalogue';
 
@@ -53,7 +54,12 @@ export default function DevelopmentAssetsContent(props: {
               examples, not connected fleet data.
             </p>
           </div>
-          <TextLink href="/assets">Exit sample</TextLink>
+          <div class="flex flex-wrap gap-3">
+            <TextLink href={registrySampleHref()}>
+              Review sample registry
+            </TextLink>
+            <TextLink href="/assets">Exit sample</TextLink>
+          </div>
         </div>
         <Show
           when={cursor().kind !== 'invalid'}

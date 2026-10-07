@@ -57,3 +57,23 @@ export function isMapSamplePreview(pathname: string, search: string): boolean {
     new URLSearchParams(search).get('preview') === 'sample'
   );
 }
+
+/** The read-only registry sample requires an exact route and development opt-in. */
+export function isRegistrySamplePreview(
+  pathname: string,
+  search: string,
+): boolean {
+  const previews = new URLSearchParams(search).getAll('preview');
+  return (
+    pathname === '/assets/registry/review' &&
+    previews.length === 1 &&
+    previews[0] === 'sample'
+  );
+}
+
+/** Constructs a sample registry URL with an optional selected asset. */
+export function registrySampleHref(assetId?: string): string {
+  const parameters = new URLSearchParams({ preview: 'sample' });
+  if (assetId !== undefined) parameters.set('asset', assetId);
+  return `/assets/registry/review?${parameters.toString()}`;
+}

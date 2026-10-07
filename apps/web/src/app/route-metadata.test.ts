@@ -11,3 +11,7 @@ test('map workspace has a stable route title', () => {
   expect(routeTitle('/map')).toBe('Fleet map');
   expect(routeTitle('/map/asset-001')).toBe('Page not found');
 });
+
+test('registry review has a title distinct from the asset inspector', () => {
+  expect(routeTitle('/assets/registry/review')).toBe('Asset registry');
+});

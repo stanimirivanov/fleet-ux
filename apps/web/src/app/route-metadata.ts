@@ -4,6 +4,7 @@ export const APP_ROUTES = {
   map: { path: '/map', title: 'Fleet map', navigationLabel: 'Map' },
   assets: { path: '/assets', title: 'Assets', navigationLabel: 'Assets' },
   assetInspector: { path: '/assets/:assetId', title: 'Asset inspector' },
+  registry: { path: '/assets/registry/review', title: 'Asset registry' },
   designSystem: {
     path: '/design-system',
     title: 'Design system',

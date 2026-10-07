@@ -15,7 +15,8 @@ ordinary e2e scenarios do not.
   `*.test.tsx`. Exercise accessible names, actions, and reactive updates
   rather than duplicating static markup assertions.
 - Browser journeys use `apps/web-e2e/e2e` for production behavior and
-  `apps/web-e2e/e2e-dev` for development-only sample overview and catalogue.
+  `apps/web-e2e/e2e-dev` for development-only sample overview, catalogue,
+  map, inspector, and registry.
   Page objects in `apps/web-e2e/pages` own semantic locators and cohesive
   actions. Scenarios own policy assertions, route expectations, and narrative
   sequence. Prefer roles, labels, and retrying assertions over implementation
@@ -27,9 +28,9 @@ from the repository root. `pnpm e2e` runs `e2e:production` then
 on 127.0.0.1:4173, while the second serves the development app on
 127.0.0.1:5173. Production scenarios prove that the overview and
 `/assets?preview=sample` stay unconfigured; development scenarios exercise
-the disclosed overview, URL-backed local discovery filters, narrow layout,
-and the
-catalogue's cursor traversal, browser history, and invalid-cursor recovery.
+the disclosed overview, URL-backed discovery, map/inspector selection, registry
+cutoffs and attribution, narrow layout, catalogue cursor traversal, browser
+history, and invalid-cursor recovery.
 Each Playwright config refuses to reuse an existing server, so a busy port
 does not silently test an unrelated process. Set `FLEETIQ_E2E_PREVIEW_PORT`
 and/or `FLEETIQ_E2E_DEV_PORT` to free ports when needed. CI uses 4173 and

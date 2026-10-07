@@ -4,6 +4,7 @@ import {
   isAssetInspectorSamplePreview,
   isAssetSamplePreview,
   isMapSamplePreview,
+  isRegistrySamplePreview,
 } from '#features/assets';
 import { APP_ROUTES, PRIMARY_NAVIGATION } from '../route-metadata';
 
@@ -43,7 +44,8 @@ export function PrimaryNav() {
     (location.pathname === APP_ROUTES.overview.path ||
       isMapSamplePreview(location.pathname, location.search) ||
       isAssetInspectorSamplePreview(location.pathname, location.search) ||
-      isAssetSamplePreview(location.pathname, location.search));
+      isAssetSamplePreview(location.pathname, location.search) ||
+      isRegistrySamplePreview(location.pathname, location.search));
 
   return (
     <aside class="fi-sidebar min-w-0 border-b border-outline bg-surface md:border-r md:border-b-0">

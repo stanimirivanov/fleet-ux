@@ -1,6 +1,7 @@
 import { A } from '@solidjs/router';
-import { StatusBadge, type StatusTone } from '#shared/ui';
+import { StatusBadge, type StatusTone, TextLink } from '#shared/ui';
 import type { DemoInspector } from '../../demo/inspector-fixture';
+import { registrySampleHref } from '../../model/asset-preview-url';
 import { formatSampleTime } from './inspector-format';
 
 function conditionTone(
@@ -80,9 +81,14 @@ export function InspectorHeader(props: { readonly inspector: DemoInspector }) {
             {props.inspector.operations.siteLabel}
           </p>
         </div>
-        <p class="rounded-md border border-sample-outline bg-sample-surface px-3 py-1.5 text-xs text-muted">
-          Fixed sample snapshot · {formatSampleTime(props.inspector.asOf)}
-        </p>
+        <div class="grid justify-items-start gap-2 sm:justify-items-end">
+          <p class="rounded-md border border-sample-outline bg-sample-surface px-3 py-1.5 text-xs text-muted">
+            Fixed sample snapshot · {formatSampleTime(props.inspector.asOf)}
+          </p>
+          <TextLink href={registrySampleHref(props.inspector.asset.id)}>
+            Review registry mapping
+          </TextLink>
+        </div>
       </div>
       <div class="grid gap-2 sm:grid-cols-3">
         <div class="rounded-lg border border-sample-outline bg-sample-surface px-3 py-2">

@@ -35,3 +35,5 @@ alerts, and signal views wait for backend-owned read models. Existing
 [cursor navigation](exec-plans/completed/2026-10-asset-catalogue-cursor-navigation.md)
 keeps sample pages reachable without inventing a fleet total or server-side
 search.
+
+The [completed read-only registry and mapping review](exec-plans/completed/2026-10-registry-mapping-review.md) completes the agreed metadata workspace trio. It makes directed relationships and exact source-to-property bindings reviewable at explicit effective and known times, while production waits for browser-safe access and a published UI contract.

@@ -18,6 +18,8 @@ test('sample map keeps list, marker, selected evidence, and browser history in s
   await mapLink.click();
   await expect(page).toHaveURL('/map?preview=sample');
   await expect(map.heading).toBeVisible();
+  // Vite transforms the route's lazy sample module on first navigation.
+  await expect(map.assetList).toBeVisible({ timeout: 20_000 });
   for (const panel of [map.assetList, map.siteMap, map.selectedAsset]) {
     await expect(panel).toBeVisible();
     await expect(panel.getByText('Sample data', { exact: true })).toBeVisible();

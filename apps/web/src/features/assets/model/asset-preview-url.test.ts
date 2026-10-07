@@ -5,7 +5,9 @@ import {
   isAssetInspectorSamplePreview,
   isAssetSamplePreview,
   isMapSamplePreview,
+  isRegistrySamplePreview,
   readAssetPreviewCursor,
+  registrySampleHref,
 } from './asset-preview-url';
 
 test('sample preview activation is scoped to the asset route', () => {
@@ -58,5 +60,30 @@ test('inspector preview is restricted to an asset detail path and encodes IDs', 
   ).toBe(false);
   expect(assetInspectorSampleHref('asset 1')).toBe(
     '/assets/asset%201?preview=sample',
+  );
+});
+
+test('registry preview requires the exact route and one opt-in', () => {
+  expect(
+    isRegistrySamplePreview('/assets/registry/review', '?preview=sample'),
+  ).toBe(true);
+  expect(
+    isRegistrySamplePreview(
+      '/assets/registry/review',
+      '?preview=sample&preview=sample',
+    ),
+  ).toBe(false);
+  expect(
+    isRegistrySamplePreview('/assets/registry/review', '?preview=other'),
+  ).toBe(false);
+  expect(isRegistrySamplePreview('/assets/asset-004', '?preview=sample')).toBe(
+    false,
+  );
+});
+
+test('registry sample links encode asset selection', () => {
+  expect(registrySampleHref()).toBe('/assets/registry/review?preview=sample');
+  expect(registrySampleHref('asset 004')).toBe(
+    '/assets/registry/review?preview=sample&asset=asset+004',
   );
 });
