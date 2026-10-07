@@ -71,7 +71,7 @@ test('shows loading until the injected reader returns a bounded tenant page', as
   expect(within(list).getByText('Primary machine')).toBeTruthy();
   expect(within(list).getByText('asset-001')).toBeTruthy();
   expect(within(list).getByText('generic.machine')).toBeTruthy();
-  expect(within(list).getByText('2')).toBeTruthy();
+  expect(within(list).getByText('v2')).toBeTruthy();
   expect(
     screen.getByText('Additional entries exist beyond this page.'),
   ).toBeTruthy();

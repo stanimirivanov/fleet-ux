@@ -8,8 +8,12 @@ import {
 import { parseAssetPage } from './parse-asset-page';
 
 /**
- * Clearly synthetic, equipment-neutral records for explicit local preview.
+ * Clearly synthetic, equipment-neutral records for an explicit sample mode.
  * Importing this adapter never configures the application or production build.
+ *
+ * These entries intentionally contain only fields published by the bounded
+ * asset-catalogue contract. Sample condition, location, and alert data live in
+ * the separate demo projection, never in AssetSummary.
  */
 export const PREVIEW_ASSETS: readonly AssetSummary[] = [
   {
@@ -29,6 +33,36 @@ export const PREVIEW_ASSETS: readonly AssetSummary[] = [
     tenantId: 'tenant-a',
     name: 'Monitoring gateway',
     assetType: { id: 'generic.gateway', version: 1 },
+  },
+  {
+    id: 'asset-004',
+    tenantId: 'tenant-a',
+    name: 'Electric locomotive 417',
+    assetType: { id: 'rail.electric-locomotive', version: 1 },
+  },
+  {
+    id: 'asset-005',
+    tenantId: 'tenant-a',
+    name: 'Diesel locomotive 206',
+    assetType: { id: 'rail.diesel-locomotive', version: 1 },
+  },
+  {
+    id: 'asset-006',
+    tenantId: 'tenant-a',
+    name: 'Yard shunter 08',
+    assetType: { id: 'rail.shunter', version: 1 },
+  },
+  {
+    id: 'asset-007',
+    tenantId: 'tenant-a',
+    name: 'Service truck 22',
+    assetType: { id: 'road.truck', version: 1 },
+  },
+  {
+    id: 'asset-008',
+    tenantId: 'tenant-a',
+    name: 'Refrigerated trailer 11',
+    assetType: { id: 'road.refrigerated-trailer', version: 1 },
   },
 ];
 

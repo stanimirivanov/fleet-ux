@@ -8,6 +8,8 @@
   --color-outline: var(--fi-outline);
   --color-accent: var(--fi-accent);
   --color-on-accent: var(--fi-on-accent);
+  --color-sample-surface: var(--fi-sample-surface);
+  --color-sample-outline: var(--fi-sample-outline);
   --color-status-nominal: var(--fi-status-nominal);
   --color-status-warning: var(--fi-status-warning);
   --color-status-critical: var(--fi-status-critical);
@@ -27,6 +29,10 @@
   --fi-accent: #006b8f;
   --fi-on-accent: #ffffff;
   --fi-focus: #006b8f;
+  --fi-nav-active-bg: #e8f3f7;
+  --fi-nav-hover-bg: #f2f6f9;
+  --fi-sample-surface: #f8fcfe;
+  --fi-sample-outline: #bdd6e1;
   --fi-status-nominal: #1d684d;
   --fi-status-nominal-bg: #e8f5ee;
   --fi-status-warning: #825700;
@@ -48,6 +54,10 @@
   --fi-accent: #7ad3ed;
   --fi-on-accent: #101b2a;
   --fi-focus: #7ad3ed;
+  --fi-nav-active-bg: #193747;
+  --fi-nav-hover-bg: #203348;
+  --fi-sample-surface: #1a2d3d;
+  --fi-sample-outline: #45667b;
   --fi-status-nominal: #69d6ae;
   --fi-status-nominal-bg: #123d35;
   --fi-status-warning: #f5c777;

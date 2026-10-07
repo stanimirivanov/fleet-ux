@@ -9,9 +9,25 @@ export const APP_ROUTES = {
   },
 } as const;
 
+/** Unavailable destinations make the intended workspace shape visible without dead links. */
 export const PRIMARY_NAVIGATION = [
-  { heading: 'Workspaces', routes: [APP_ROUTES.overview, APP_ROUTES.assets] },
-  { heading: 'Reference', routes: [APP_ROUTES.designSystem] },
+  {
+    heading: 'Workspace',
+    items: [
+      { kind: 'route', route: APP_ROUTES.overview, icon: 'overview' },
+      { kind: 'planned', label: 'Map', icon: 'map' },
+      { kind: 'route', route: APP_ROUTES.assets, icon: 'assets' },
+      { kind: 'planned', label: 'Alerts', icon: 'alerts' },
+      { kind: 'planned', label: 'Insights', icon: 'insights' },
+    ],
+  },
+  {
+    heading: 'Settings',
+    items: [
+      { kind: 'planned', label: 'Admin', icon: 'admin' },
+      { kind: 'route', route: APP_ROUTES.designSystem, icon: 'design' },
+    ],
+  },
 ] as const;
 
 export function routeTitle(pathname: string): string {

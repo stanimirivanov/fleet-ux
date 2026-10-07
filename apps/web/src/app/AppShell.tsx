@@ -19,14 +19,14 @@ export function AppShell(props: ParentProps) {
       </a>
       <div class="min-h-screen bg-canvas text-foreground">
         <AppHeader />
-        <div class="grid min-h-[calc(100vh-4rem)] md:grid-cols-[15rem_minmax(0,1fr)]">
+        <div class="grid min-h-[calc(100vh-3.5rem)] min-w-0 md:grid-cols-[11rem_minmax(0,1fr)]">
           <PrimaryNav />
           <main
             ref={mainElement}
             id="main-content"
             tabindex="-1"
             aria-label={routeTitle(location.pathname)}
-            class="min-w-0 px-5 py-8 sm:px-8 lg:px-10"
+            class="min-w-0 px-4 py-4 sm:px-5"
           >
             {props.children}
           </main>

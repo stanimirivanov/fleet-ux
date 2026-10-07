@@ -100,3 +100,34 @@ test('forwards an aborted invocation without producing a page', async () => {
     ),
   ).rejects.toHaveProperty('name', 'AbortError');
 });
+
+test('default sample assets traverse in bounded tenant-scoped pages', async () => {
+  const reader = createFixtureAssetReader();
+  const ids: string[] = [];
+  let after: string | undefined;
+
+  for (let pageNumber = 0; pageNumber < 4; pageNumber += 1) {
+    const request =
+      after === undefined
+        ? { tenantId: 'tenant-a', limit: 3 }
+        : { tenantId: 'tenant-a', limit: 3, after };
+    const page = await reader.listPage(request);
+    ids.push(...page.assets.map((asset) => asset.id));
+    if (page.nextAfter === null) break;
+    after = page.nextAfter;
+  }
+
+  expect(ids).toEqual([
+    'asset-001',
+    'asset-002',
+    'asset-003',
+    'asset-004',
+    'asset-005',
+    'asset-006',
+    'asset-007',
+    'asset-008',
+  ]);
+  expect(
+    (await reader.listPage({ tenantId: 'tenant-b', limit: 3 })).assets,
+  ).toEqual([]);
+});

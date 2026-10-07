@@ -20,8 +20,8 @@ reading is current or that a disconnected gateway means the machine failed.
 
 The approved concept images in private offline design material establish the
 direction, not exact data, controls, or pixels. This record is the tracked
-decision for future implementation. The existing web application is still a
-scaffold with no backend connection.
+decision for implementation. The web application has no live backend
+connection; local development uses disclosed sample data for layout review.
 
 ## Decision
 
@@ -78,7 +78,12 @@ Use a 4 px spacing base and low-elevation panels. Prefer trends with a shared
 time window and normal band to decorative gauges. Avoid flashing or continuous
 motion; honor reduced-motion preferences when motion is later introduced.
 Empty, loading, stale, disconnected, forbidden, and error states belong in
-each product feature, not in a generic success-looking placeholder.
+each product feature, not in a generic success-looking placeholder. In local
+design previews, every synthetic panel displays a small "Sample data" label
+and a quiet border/tint. That source cue is textual as well as visual and
+belongs to the panel wrapper, so a real read model can replace the sample
+without changing its presentation hierarchy. Production cannot display
+synthetic operational values as if they were connected observations.
 
 ## Alternatives and consequences
 
