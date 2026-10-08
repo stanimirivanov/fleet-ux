@@ -17,3 +17,4 @@ evidence and material limitations for future reviewers.
 - [Asset inspector sample slice](2026-10-asset-inspector.md)
 - [Schematic fleet map workbench](2026-10-map-workbench.md)
 - [Read-only asset registry and mapping review](2026-10-registry-mapping-review.md)
+- [Development signal-stream playback and freshness](2026-10-live-signal-preview.md)

@@ -5,8 +5,8 @@
 FleetIQ UX is a SolidJS web-only operator console. Solid Router's root layout
 keeps the shell mounted across routes. The app layer composes routes and
 providers; features own their model, transport adapter, and UI. Effect v4
-supplies boundary schemas now and will own complex async workflows when
-needed. Local development renders a labelled sample overview by default and
+supplies boundary schemas and owns the scoped development signal playback.
+Local development renders a labelled sample overview by default and
 offers explicit catalogue, inspector, schematic map, and read-only registry
 previews. Production remains unconfigured because browser-safe backend access
 does not exist yet.
@@ -49,9 +49,14 @@ See the [frontend structure guide](docs/development/frontend-structure.md).
 Solid signals, memos, and stores own local and derived view state. The app
 theme uses a signal, a versioned browser preference, and a media-query
 listener. The URL owns navigation and shareable selection/filter state.
-Effect v4 defines the validated boundary and will own complex async work,
-including future telemetry connection lifetimes and retry policy. Introduce
-the official Solid Atom binding only when a real shared granular-state use
+Effect v4 defines validated boundaries and runs the finite sample signal
+stream, including interruption and bounded simulated reconnect. The pure
+signal projection handles revisions, duplicate and late events, resnapshot,
+and freshness at a virtual clock. Solid owns only local playback controls and
+fine-grained rendered state. Production telemetry connection lifetimes and
+retry policy still need browser-safe backend contracts.
+
+Introduce the official Solid Atom binding only when a real shared granular-state use
 requires it; the theme button does not need an Effect runtime.
 
 The pinned asset-catalogue contract has a validated feature boundary and an
@@ -85,9 +90,10 @@ shell has a stable top bar and desktop left navigation; its main content
 changes within one route outlet.
 
 The application has no live backend connection, geodetic map SDK, tile service,
-or mobile application. Its schematic maps are sample spatial scaffolding, and
-its catalogue, inspector, and registry previews are fixture data rather than
-observed fleet state. The pinned
+or mobile application. Inspector signal playback is a clearly labelled,
+development-only finite fixture, not a production signal feed. Schematic maps
+are sample spatial scaffolding, and catalogue, inspector, and registry previews
+are fixture data rather than observed fleet state. The pinned
 backend-owned contract is in
 [contracts/http](contracts/http/README.md); its current workload bearer secret
 is not a browser login mechanism. See [FRONTEND.md](docs/FRONTEND.md) for the

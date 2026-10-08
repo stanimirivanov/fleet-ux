@@ -4,8 +4,10 @@
 
 This SolidJS operator console has a stable shell, Light/Dark/System theme, and
 development-only sample workspaces for fleet overview, assets, asset inspection,
-a schematic map, and read-only registry mapping. Production routes disclose
-that fleet data is not connected. The map has no geodetic location API, map SDK, or tile service yet.
+a schematic map, and read-only registry mapping. The inspector includes a
+finite, synthetic signal playback for trying stream and freshness behavior.
+Production routes disclose that fleet data is not connected. The map has no
+geodetic location API, map SDK, or tile service yet.
 
 ## Start
 
@@ -23,7 +25,7 @@ workspaces; direct URLs also allow inspection:
 - `/map?preview=sample` — illustrative site layout and paired asset list
 - `/assets?preview=sample` — contract-shaped sample asset catalogue
 - `/assets/:assetId?preview=sample` — sample topology and evidence for
-  supported example assets
+  supported example assets, with optional signal playback in the Overview tab
 - `/assets/registry/review?preview=sample` — read-only relationship and
   signal-mapping review at effective and known times
 - `/design-system` — synthetic light/dark design specimen
@@ -31,7 +33,9 @@ workspaces; direct URLs also allow inspection:
 The ordinary `/map`, `/assets`, registry, and asset-detail routes remain
 unconfigured without browser-safe backend access. A production build does not activate
 sample previews even when the query parameter is present. The schematic map
-uses local percentage coordinates, not real geography or live tracking.
+uses local percentage coordinates, not real geography or live tracking. The
+inspector playback is a deterministic development example; it is not a fleet
+signal subscription.
 
 The theme icon in the top bar cycles Light → Dark → System and saves the
 preference when browser storage is available. The

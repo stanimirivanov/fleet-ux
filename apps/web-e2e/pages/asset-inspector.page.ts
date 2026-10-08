@@ -15,6 +15,7 @@ export class AssetInspectorPage {
   readonly topology: Locator;
   readonly componentEvidence: Locator;
   readonly context: Locator;
+  readonly playback: Locator;
 
   constructor(
     private readonly page: Page,
@@ -30,6 +31,9 @@ export class AssetInspectorPage {
     });
     this.context = page.getByRole('region', {
       name: 'Evidence and context',
+    });
+    this.playback = page.getByRole('region', {
+      name: 'Synthetic signal playback',
     });
   }
 
@@ -55,6 +59,30 @@ export class AssetInspectorPage {
       },
       () => target.click(),
     );
+  }
+
+  playbackReading(label: string): Locator {
+    return this.playback.getByRole('article').filter({
+      has: this.page.getByRole('heading', { name: label, exact: true }),
+    });
+  }
+
+  async startPlayback(): Promise<void> {
+    await this.playback
+      .getByRole('button', { name: 'Play', exact: true })
+      .click();
+  }
+
+  async stopPlayback(): Promise<void> {
+    await this.playback
+      .getByRole('button', { name: 'Stop', exact: true })
+      .click();
+  }
+
+  async replay(): Promise<void> {
+    await this.playback
+      .getByRole('button', { name: 'Replay', exact: true })
+      .click();
   }
 
   async documentEvidence(): Promise<void> {
