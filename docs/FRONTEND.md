@@ -25,12 +25,12 @@ backend access.
 | Styling | Tailwind CSS v4 with semantic light/dark CSS tokens |
 | Theme choice | One Light → Dark → System button, versioned browser preference |
 | HTTP contract | Pinned backend OpenAPI baseline; generated Effect v4 transport schemas |
-| Mocking | Deterministic development-only asset reader, sample operational and registry projections, and finite inspector signal playback |
+| Mocking | Deterministic development-only asset reader plus separate sample operational and registry projections |
 | Map | Development-only schematic workbench with paired list; MapLibre and tiles wait for a geodetic location contract |
 | Testing | Node pure tests, Vitest + Solid Testing Library, Playwright POM browser journeys |
 
-Effect v4 is pinned for generated boundary schemas and the scoped sample
-signal-playback service. No Effect v3 compatibility layer is planned. Introduce the Solid Atom binding, layers, and
+Effect v4 is pinned for generated boundary schemas. No Effect v3
+compatibility layer is planned. Introduce the Solid Atom binding, layers, and
 runtime services with an actual shared-state or transport workflow rather
 than installing an idle provider.
 
@@ -56,16 +56,7 @@ selection. Its separate synthetic position evidence carries observation and
 receipt times and an availability state; a general telemetry timestamp does
 not establish location freshness. Percentage canvas coordinates are not
 latitude/longitude. The map has no geodetic SDK, tile service, live location
-API, trails, or movement animation. The ordinary `/map` route and every
-production map route remain unconfigured.
-
-The sample inspector also offers a finite, explicitly synthetic signal
-playback. It tests revision, resnapshot, reconnect, and freshness presentation
-against deterministic events. Event time, receipt time, quality, and freshness
-remain separate. A fixed sample snapshot and its history remain independent
-from the playback. Production still needs a browser-safe asset-scoped signal
-read and stream contract before this interaction can connect to actual devices.
-
+API, trails, or movement animation. The ordinary `/map` route and every production map route remain unconfigured.
 The registry preview projects directed relationships and exact
 source-to-property bindings at explicit effective and known times. It remains
 read-only: protected metadata routes lack browser-safe identity and are not in
