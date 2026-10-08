@@ -1,3 +1,3 @@
 # Active execution plans
 
-No active plan.
+No active execution plans.

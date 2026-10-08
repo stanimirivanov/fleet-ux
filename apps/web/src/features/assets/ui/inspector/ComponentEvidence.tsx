@@ -5,6 +5,7 @@ import type {
 } from '../../demo/inspector-fixture';
 import { SamplePanel } from '../overview/SamplePanel';
 import { formatSampleTime } from './inspector-format';
+import { LiveSignalPreview } from './LiveSignalPreview';
 import { SignalCard } from './SignalCard';
 import { type HistoryWindow, SignalHistory } from './SignalHistory';
 
@@ -114,6 +115,7 @@ export function ComponentEvidence(props: {
               </div>
             }
           >
+            <h3 class="mb-2 text-xs font-semibold">Fixed sample snapshot</h3>
             <div class="grid gap-2 sm:grid-cols-2">
               <For each={signals()}>
                 {(signal) => (
@@ -127,6 +129,18 @@ export function ComponentEvidence(props: {
                   />
                 )}
               </For>
+            </div>
+            <div class="mt-4">
+              <Show when={props.node.id} keyed>
+                {(nodeId) => (
+                  <div data-selected-node={nodeId}>
+                    <LiveSignalPreview
+                      assetId={props.inspector.asset.id}
+                      signals={signals()}
+                    />
+                  </div>
+                )}
+              </Show>
             </div>
             <div class="mt-5 border-t border-outline pt-4">
               <SignalHistory

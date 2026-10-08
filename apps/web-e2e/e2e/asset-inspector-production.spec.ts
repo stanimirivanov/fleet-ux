@@ -21,6 +21,7 @@ test('production inspector cannot expose sample topology or readings', async ({
     await expect(inspector.topology).toHaveCount(0);
     await expect(inspector.componentEvidence).toHaveCount(0);
     await expect(inspector.context).toHaveCount(0);
+    await expect(inspector.playback).toHaveCount(0);
     for (const synthetic of [
       'Sample data',
       'Electric locomotive 417',

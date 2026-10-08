@@ -37,3 +37,5 @@ keeps sample pages reachable without inventing a fleet total or server-side
 search.
 
 The [completed read-only registry and mapping review](exec-plans/completed/2026-10-registry-mapping-review.md) completes the agreed metadata workspace trio. It makes directed relationships and exact source-to-property bindings reviewable at explicit effective and known times, while production waits for browser-safe access and a published UI contract.
+
+The [completed signal-stream preview](exec-plans/completed/2026-10-live-signal-preview.md) demonstrates inspector subscription lifecycle, recovery, and freshness with a deterministic development adapter. Production signal reads and streams remain gated by browser-safe identity and backend-owned contracts.
