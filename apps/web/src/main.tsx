@@ -1,5 +1,6 @@
 import { Route, Router } from '@solidjs/router';
 import { render } from 'solid-js/web';
+import { AlertsPage } from '#features/alerts';
 import {
   AssetInspectorPage,
   AssetRegistryPage,
@@ -24,6 +25,7 @@ render(
       <Route path={APP_ROUTES.overview.path} component={FleetOverviewPage} />
       <Route path={APP_ROUTES.map.path} component={FleetMapPage} />
       <Route path={APP_ROUTES.assets.path} component={AssetsPage} />
+      <Route path={APP_ROUTES.alerts.path} component={AlertsPage} />
       <Route path={APP_ROUTES.registry.path} component={AssetRegistryPage} />
       <Route
         path={APP_ROUTES.assetInspector.path}

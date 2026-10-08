@@ -8,10 +8,9 @@ shareable state. The root layout supplies stable navigation and the
 Light/Dark/System preference. Local development shows a labelled sample fleet
 overview by default and offers a schematic map at `/map?preview=sample`,
 the contract-shaped catalogue at `/assets?preview=sample`, example asset
-inspectors, and read-only registry review at
-`/assets/registry/review?preview=sample`. Production routes remain unconfigured
-without browser-safe
-backend access.
+inspectors, read-only registry review, and alert triage at
+`/assets/registry/review?preview=sample` and `/alerts?preview=sample`.
+Production routes remain unconfigured without browser-safe backend access.
 
 ## Selected foundation
 
@@ -61,6 +60,15 @@ The registry preview projects directed relationships and exact
 source-to-property bindings at explicit effective and known times. It remains
 read-only: protected metadata routes lack browser-safe identity and are not in
 the pinned UI OpenAPI contract.
+
+The Alerts development preview follows the approved summary/queue/evidence
+hierarchy. Its summary, searchable queue, selected trend/table, and timeline
+come from one deterministic synthetic model. URL parameters preserve filters
+and selection. The sample explicitly distinguishes alert severity, review
+state, signal quality, freshness, event time, and receipt time. There is no
+backend alert contract, lifecycle API, or browser authorization for mutations;
+acknowledgment, resolution, suppression, and work orders remain unavailable.
+The ordinary `/alerts` route and every production Alerts route are unconfigured.
 
 The ordinary `/assets` route also remains unconfigured. In development,
 the sidebar Assets destination opens the labelled sample catalogue so the

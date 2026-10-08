@@ -18,3 +18,4 @@ evidence and material limitations for future reviewers.
 - [Schematic fleet map workbench](2026-10-map-workbench.md)
 - [Read-only asset registry and mapping review](2026-10-registry-mapping-review.md)
 - [Development signal-stream playback and freshness](2026-10-live-signal-preview.md)
+- [Development alert triage and evidence](2026-10-alerts-triage-preview.md)

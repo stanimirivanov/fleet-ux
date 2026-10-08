@@ -5,7 +5,8 @@
   "type": "module",
   "imports": {
     "#shared/ui": "./src/shared/ui/index.ts",
-    "#features/assets": "./src/features/assets/index.ts"
+    "#features/assets": "./src/features/assets/index.ts",
+    "#features/alerts": "./src/features/alerts/index.ts"
   },
   "scripts": {
     "dev": "vite",
