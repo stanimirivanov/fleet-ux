@@ -1,12 +1,7 @@
 import { A, useLocation } from '@solidjs/router';
 import { For } from 'solid-js';
-import {
-  isAssetInspectorSamplePreview,
-  isAssetSamplePreview,
-  isMapSamplePreview,
-  isRegistrySamplePreview,
-} from '#features/assets';
 import { APP_ROUTES, PRIMARY_NAVIGATION } from '../route-metadata';
+import { isDevelopmentSampleRoute, navigationHref } from '../sample-route';
 
 const ICON_PATHS = {
   overview: 'M3 3h8v8H3z M13 3h8v5h-8z M13 10h8v11h-8z M3 13h8v8H3z',
@@ -40,12 +35,11 @@ function NavIcon(props: { name: keyof typeof ICON_PATHS }) {
 export function PrimaryNav() {
   const location = useLocation();
   const isSampleWorkspace = () =>
-    import.meta.env.DEV &&
-    (location.pathname === APP_ROUTES.overview.path ||
-      isMapSamplePreview(location.pathname, location.search) ||
-      isAssetInspectorSamplePreview(location.pathname, location.search) ||
-      isAssetSamplePreview(location.pathname, location.search) ||
-      isRegistrySamplePreview(location.pathname, location.search));
+    isDevelopmentSampleRoute(
+      location.pathname,
+      location.search,
+      import.meta.env.DEV,
+    );
 
   return (
     <aside class="fi-sidebar min-w-0 border-b border-outline bg-surface md:border-r md:border-b-0">
@@ -63,15 +57,10 @@ export function PrimaryNav() {
                 {(item) =>
                   item.kind === 'route' ? (
                     <A
-                      href={
-                        item.route.path === APP_ROUTES.assets.path &&
-                        import.meta.env.DEV
-                          ? '/assets?preview=sample'
-                          : item.route.path === APP_ROUTES.map.path &&
-                              import.meta.env.DEV
-                            ? '/map?preview=sample'
-                            : item.route.path
-                      }
+                      href={navigationHref(
+                        item.route.path,
+                        import.meta.env.DEV,
+                      )}
                       end={item.route.path !== APP_ROUTES.assets.path}
                       class="fi-nav-link"
                       activeClass="fi-nav-link--active"

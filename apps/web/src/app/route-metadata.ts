@@ -3,6 +3,11 @@ export const APP_ROUTES = {
   overview: { path: '/', title: 'Fleet overview', navigationLabel: 'Overview' },
   map: { path: '/map', title: 'Fleet map', navigationLabel: 'Map' },
   assets: { path: '/assets', title: 'Assets', navigationLabel: 'Assets' },
+  alerts: {
+    path: '/alerts',
+    title: 'Alerts & evidence',
+    navigationLabel: 'Alerts',
+  },
   assetInspector: { path: '/assets/:assetId', title: 'Asset inspector' },
   registry: { path: '/assets/registry/review', title: 'Asset registry' },
   designSystem: {
@@ -20,7 +25,7 @@ export const PRIMARY_NAVIGATION = [
       { kind: 'route', route: APP_ROUTES.overview, icon: 'overview' },
       { kind: 'route', route: APP_ROUTES.map, icon: 'map' },
       { kind: 'route', route: APP_ROUTES.assets, icon: 'assets' },
-      { kind: 'planned', label: 'Alerts', icon: 'alerts' },
+      { kind: 'route', route: APP_ROUTES.alerts, icon: 'alerts' },
       { kind: 'planned', label: 'Insights', icon: 'insights' },
     ],
   },

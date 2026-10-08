@@ -39,3 +39,5 @@ search.
 The [completed read-only registry and mapping review](exec-plans/completed/2026-10-registry-mapping-review.md) completes the agreed metadata workspace trio. It makes directed relationships and exact source-to-property bindings reviewable at explicit effective and known times, while production waits for browser-safe access and a published UI contract.
 
 The [completed signal-stream preview](exec-plans/completed/2026-10-live-signal-preview.md) demonstrates inspector subscription lifecycle, recovery, and freshness with a deterministic development adapter. Production signal reads and streams remain gated by browser-safe identity and backend-owned contracts.
+
+The [completed Alerts triage preview](exec-plans/completed/2026-10-alerts-triage-preview.md) completes visual coverage of the fifth approved workspace with explicitly synthetic evidence. Connected asset discovery and semantic review follow once the backend provides browser-safe identity and published UI contracts; the full user-guide slice follows all three UI slices.

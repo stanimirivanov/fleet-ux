@@ -7,8 +7,9 @@ keeps the shell mounted across routes. The app layer composes routes and
 providers; features own their model, transport adapter, and UI. Effect v4
 supplies boundary schemas and owns the scoped development signal playback.
 Local development renders a labelled sample overview by default and
-offers explicit catalogue, inspector, schematic map, and read-only registry
-previews. Production remains unconfigured because browser-safe backend access
+offers explicit catalogue, inspector, schematic map, read-only registry, and
+alert triage previews. Production remains unconfigured because browser-safe
+backend access
 does not exist yet.
 
 ## Structure
@@ -88,6 +89,15 @@ record the approved direction. Semantic CSS tokens map into Tailwind
 utilities, while shared UI primitives remain domain-neutral. The persistent
 shell has a stable top bar and desktop left navigation; its main content
 changes within one route outlet.
+
+The development-only Alerts preview keeps queue filtering and selection in the
+URL.
+A pure alert model derives summary counts and evidence presentation from a
+separate synthetic fixture. Event and receipt times, severity, workflow state,
+quality, and freshness stay distinct. No backend alert read/lifecycle contract
+or browser-safe identity exists, so the preview has no acknowledge, resolve,
+or work-order mutation. The production route stays unconfigured and contains
+no sample payload.
 
 The application has no live backend connection, geodetic map SDK, tile service,
 or mobile application. Inspector signal playback is a clearly labelled,
