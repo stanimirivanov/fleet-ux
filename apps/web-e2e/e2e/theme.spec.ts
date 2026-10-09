@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from '../fixtures/production-test';
 import { ShellPage } from '../pages/shell.page';
 
 test('theme preference cycles and survives a reload', async ({ page }) => {

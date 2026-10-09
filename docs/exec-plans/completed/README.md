@@ -20,3 +20,5 @@ evidence and material limitations for future reviewers.
 - [Development signal-stream playback and freshness](2026-10-live-signal-preview.md)
 - [Development alert triage and evidence](2026-10-alerts-triage-preview.md)
 - [Complete FleetIQ web user guide](2026-10-complete-user-guide.md)
+
+- [Connected browser-safe semantic metadata](2026-10-connected-semantic-metadata.md) — M04.

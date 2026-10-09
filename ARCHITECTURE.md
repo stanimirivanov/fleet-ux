@@ -2,109 +2,105 @@
 
 ## TL;DR
 
-FleetIQ UX is a SolidJS web-only operator console. Solid Router's root layout
-keeps the shell mounted across routes. The app layer composes routes and
-providers; features own their model, transport adapter, and UI. Effect v4
-supplies boundary schemas and owns the scoped development signal playback.
-Local development renders a labelled sample overview by default and
-offers explicit catalogue, inspector, schematic map, read-only registry, and
-alert triage previews. Production remains unconfigured because browser-safe
-backend access
-does not exist yet.
+FleetIQ UX is a SolidJS web console. App composition owns routing and one managed
+Effect v4 HTTP runtime. Independent features own pure models, validated adapters,
+and reactive presentation. Operator sessions gate the connected catalogue,
+inspector, and registry. Explicit development previews remain separate from
+production evidence.
 
-## Structure
+## Boundaries
 
-- apps/web: Vite application, Solid router, Tailwind.
-- apps/web/src/app: router root layout, route-owned pages, and the small theme
-  preference lifecycle.
-- apps/web/src/design-system: semantic light/dark theme tokens.
-- apps/web/src/features/<capability>: capability code, added as features
-  arrive. Prefer model, api, and ui only when each has a real purpose.
-- apps/web/src/shared: reusable web code without feature imports.
-- packages: future stable contract or design-token packages. This directory
-  is deliberately empty until a real cross-application boundary exists.
-- apps/web-e2e: Playwright page objects, scenario assertions, and optional
-  user-guide narration; it depends on the running web app, never the reverse.
-- tools: deterministic repository checks and guide assembly.
+```mermaid
+flowchart TD
+  App[App composition and persistent shell] --> Identity[Identity feature]
+  App --> Assets[Assets feature]
+  App --> Alerts[Alerts feature]
+  App --> Runtime[Shared managed browser HTTP runtime]
+  Identity --> Runtime
+  Assets --> Runtime
+  Runtime --> Generated[Generated Effect client and wire schemas]
+  Runtime --> API[Same-origin /api/v1]
+  Assets --> Model[Pure asset models and read ports]
+  Assets --> UI[Shared presentation primitives]
+  Identity --> Failures[Shared safe failure categories]
+```
 
-The dependency direction is app composition → feature UI → feature model and
-API boundary. Models must not import UI, transport, browser globals, or map
-SDKs. External API payloads become trusted client values only after runtime
-validation. The backend remains the authority for tenant and permission checks.
+- `apps/web/src/app`: persistent layout, route gates, runtime/provider composition.
+- `features/<capability>/model`: pure values, read ports, URL and projection rules.
+- `features/<capability>/api`: validated transport adapters and Effect workflows.
+- `features/<capability>/ui`: resource-owning controllers and focused presentation.
+- `shared/api`: product-neutral managed HTTP runtime and transport failure mapping.
+- `shared/model`: product-neutral failure values with no transport dependencies.
+- `shared/ui`: presentation primitives; `design-system` owns semantic CSS tokens.
+- `generated`: deterministic output of the pinned backend-owned OpenAPI bundle.
+- `apps/web-e2e`: page objects, test-only HTTP fixtures, browser journeys and narration.
+- `tools`: repository checks, contract generation, and user-guide assembly.
 
-App composition imports features through their public `index.ts` entry; app
-and feature code import shared UI through `#shared/ui`. Named exports keep
-those surfaces deliberate. Internal files import siblings directly to avoid
-barrel cycles. The package import map in `apps/web/package.json` removes
-relative path depth and names each public entry explicitly. TypeScript, Vite,
-and dependency-cruiser resolve that same map. The import gate enforces public
-entries, unresolved package imports, cycles, same-feature private imports, and
-basic inward direction. Biome checks Solid props/list rendering and keeps
-Effect imports out of presentation TSX. `pnpm view:check` flags oversized page and
-root-view files. These gates cannot prove a component has one responsibility;
-reviewers must still examine behavior, composition, layout, and trust boundaries.
+Models never import transport, generated wire schemas, UI, or app composition.
+Features do not import one another. The app injects the assets reader and a session
+invalidation callback; assets need no identity implementation import. App and
+shared consumers use deliberate public barrels and the package import map.
+Internal files import siblings directly to avoid barrel cycles.
+
+Dependency-cruiser enforces inward direction, public entries, unresolved imports,
+and cycles. Biome enforces selected Solid rules and excludes Effect imports from
+presentation TSX. The view gate limits route/page orchestrators to 150 production
+lines. Review still assesses responsibility, reactivity, scope, and visual hierarchy.
 See the [frontend structure guide](docs/development/frontend-structure.md).
 
-## State and effects
+## State and lifetimes
 
-Solid signals, memos, and stores own local and derived view state. The app
-theme uses a signal, a versioned browser preference, and a media-query
-listener. The URL owns navigation and shareable selection/filter state.
-Effect v4 defines validated boundaries and runs the finite sample signal
-stream, including interruption and bounded simulated reconnect. The pure
-signal projection handles revisions, duplicate and late events, resnapshot,
-and freshness at a virtual clock. Solid owns only local playback controls and
-fine-grained rendered state. Production telemetry connection lifetimes and
-retry policy still need browser-safe backend contracts.
+The URL owns tenant, current-page filters, selection, review cutoffs, and independent
+catalogue/relationship/target/source cursors. Solid memos derive view state; child
+components own local interaction. Resource controllers clear superseded evidence,
+abort on scope change/unmount, and ignore late results even if an adapter ignores
+cancellation. No snapshot cache or automatic retry policy is introduced.
 
-Introduce the official Solid Atom binding only when a real shared granular-state use
-requires it; the theme button does not need an Effect runtime.
+App composition creates one browser runtime for session and metadata adapters;
+cleanup disposes it and interrupts work. Generated Effect programs run only through
+that runtime, with scopes, a bounded response body, and a whole-operation timeout.
+The feature-facing ports remain `Promise` plus `AbortSignal`, allowing independent
+Solid controller tests without coupling presentation to Effect.
 
-The pinned asset-catalogue contract has a validated feature boundary and an
-import-only fixture reader. Local development's default overview composes
-asset identities with a separate sample operational projection keyed by asset
-ID; it does not add synthetic fields to the backend model. Each synthetic
-panel discloses its source. `/assets?preview=sample` opts into a labelled,
-bounded catalogue preview only in Vite development. Contract-shaped pages flow
-through the reader and validation boundary. The ordinary `/assets` route and
-both production routes remain unconfigured; production output contains no
-fixture payload or sample activation path. Loading, empty, and error states
-describe the reader result rather than implying a live fleet status.
-The preview keeps the reader's opaque exclusive cursor in the URL. A next-page
-link follows the returned cursor; a first-page link resets traversal, while
-browser history moves between visited pages. It makes no total-count or reverse
-pagination claim. Invalid cursor syntax never reaches the reader.
-The fixture reader currently keeps a small `Promise` and `AbortSignal` port;
-Effect v4 Schema validates boundary payloads and known failures are normalized
-before presentation. A live adapter will map generated Effect failures through
-a managed runtime and preserve cancellation when browser-safe identity exists.
-That first live API feature will decide snapshot caching and transport
-composition, avoiding duplicate caches.
+Identity owns session inspection, focus refresh, expiry, sign-in return context,
+and logout. Metadata 401 invalidates the session and unmounts protected evidence.
+Logout hides evidence immediately and reports failure without claiming revocation.
+Provider tokens and workload secrets never reach JavaScript. Backend authorization
+is authoritative on every request; a successful session does not imply tenant access.
+See [ADR 0004](docs/design-docs/0004-browser-safe-semantic-metadata.md).
 
-## Visual foundation and limits
+## Contract and evidence
 
-The [operational visual language](docs/design-docs/0001-operational-visual-language.md)
-and [shell/theme decision](docs/design-docs/0002-persistent-shell-theme.md)
-record the approved direction. Semantic CSS tokens map into Tailwind
-utilities, while shared UI primitives remain domain-neutral. The persistent
-shell has a stable top bar and desktop left navigation; its main content
-changes within one route outlet.
+The [pinned HTTP contract](contracts/http/README.md) provides bounded identities,
+exact definition versions, directed relationships, exact source/target bindings,
+and browser sessions. Generated schemas validate shape. Maintained adapter checks
+validate request scope, safe integer times, versions, decimal revisions, effective
+intervals, page size, uniqueness, and advancing cursors.
 
-The development-only Alerts preview keeps queue filtering and selection in the
-URL.
-A pure alert model derives summary counts and evidence presentation from a
-separate synthetic fixture. Event and receipt times, severity, workflow state,
-quality, and freshness stay distinct. No backend alert read/lifecycle contract
-or browser-safe identity exists, so the preview has no acknowledge, resolve,
-or work-order mutation. The production route stays unconfigured and contains
-no sample payload.
+The connected registry is a temporal metadata review, not a complete graph or a
+source inventory. Multiple reads share explicit cutoffs but do not promise one
+database snapshot. Asset identity and definition reads are current immutable
+metadata; the historical cutoffs apply to relationships and bindings.
 
-The application has no live backend connection, geodetic map SDK, tile service,
-or mobile application. Inspector signal playback is a clearly labelled,
-development-only finite fixture, not a production signal feed. Schematic maps
-are sample spatial scaffolding, and catalogue, inspector, and registry previews
-are fixture data rather than observed fleet state. The pinned
-backend-owned contract is in
-[contracts/http](contracts/http/README.md); its current workload bearer secret
-is not a browser login mechanism. See [FRONTEND.md](docs/FRONTEND.md) for the
-selected stack and [PLANS.md](docs/PLANS.md) for sequencing.
+## Visual foundation and remaining capabilities
+
+The [visual-language decision](docs/design-docs/0001-operational-visual-language.md)
+and [shell decision](docs/design-docs/0002-persistent-shell-theme.md) govern the
+persistent frame, dense panels, responsive grids, and semantic light/dark themes.
+Connected screens use the same hierarchy with honest unavailable operational data.
+
+Local Vite development retains the labelled sample overview, schematic map, asset
+inspector, finite signal playback, registry, and alert triage. These fixtures are
+separate from backend models and excluded from production output. The map uses
+percentage canvas positions, not observed geography. No production property state,
+telemetry stream, geodetic map SDK, tiles, alert lifecycle, or native mobile app
+exists yet. Introduce Effect Atom only with an actual shared granular-state need.
+
+[FRONTEND.md](docs/FRONTEND.md) details the selected stack;
+[PLANS.md](docs/PLANS.md) records sequencing and acceptance evidence.
+
+Protected component ownership is keyed by the authenticated actor ID. A focus
+refresh that discovers a different account disposes the previous account's reads
+and metadata before mounting the new account's views; same-actor expiry refresh
+preserves ordinary interaction. Native sign-in anchors opt out of Solid Router
+with `rel="external noreferrer"` so the server receives the login request.

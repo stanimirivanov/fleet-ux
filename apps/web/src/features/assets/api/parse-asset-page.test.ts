@@ -5,8 +5,8 @@ import { AssetPageContractError, parseAssetPage } from './parse-asset-page';
 
 const request: AssetPageRequest = { tenantId: 'tenant-a', limit: 50 };
 const contractExample =
-  contract.paths['/api/v1/tenants/{tenant_id}/assets'].get.responses['200']
-    .content['application/json'].example;
+  contract.components.responses['listAssets-200'].content['application/json']
+    .example;
 const exampleAsset = contractExample.assets[0];
 if (!exampleAsset)
   throw new Error('Pinned contract example must contain an asset');

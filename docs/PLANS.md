@@ -30,14 +30,29 @@ backend publishes browser-safe detail and signal read models.
 The [completed fleet overview and asset discovery slice](exec-plans/completed/2026-10-fleet-overview-asset-discovery.md)
 uses clearly labelled synthetic operational data for local design review. The
 published backend contract currently provides bounded asset identity pages;
-live protected reads wait for browser-safe identity, and location, status,
+location, status,
 alerts, and signal views wait for backend-owned read models. Existing
 [cursor navigation](exec-plans/completed/2026-10-asset-catalogue-cursor-navigation.md)
 keeps sample pages reachable without inventing a fleet total or server-side
 search.
 
-The [completed read-only registry and mapping review](exec-plans/completed/2026-10-registry-mapping-review.md) completes the agreed metadata workspace trio. It makes directed relationships and exact source-to-property bindings reviewable at explicit effective and known times, while production waits for browser-safe access and a published UI contract.
+The [completed read-only registry and mapping review](exec-plans/completed/2026-10-registry-mapping-review.md) completes the agreed metadata workspace trio. It makes directed relationships and exact source-to-property bindings reviewable at explicit effective and known times, with a separately connected metadata slice using the subsequently merged browser contract.
 
-The [completed signal-stream preview](exec-plans/completed/2026-10-live-signal-preview.md) demonstrates inspector subscription lifecycle, recovery, and freshness with a deterministic development adapter. Production signal reads and streams remain gated by browser-safe identity and backend-owned contracts.
+The [completed signal-stream preview](exec-plans/completed/2026-10-live-signal-preview.md) demonstrates inspector subscription lifecycle, recovery, and freshness with a deterministic development adapter. Production signal reads and streams still require their own backend-owned contracts.
 
-The [completed Alerts triage preview](exec-plans/completed/2026-10-alerts-triage-preview.md) completes visual coverage of the fifth approved workspace with explicitly synthetic evidence. The [completed user-guide slice](exec-plans/completed/2026-10-complete-user-guide.md) records a production shell orientation and five explicitly synthetic development walkthroughs. Connected asset discovery and semantic review still wait for browser-safe identity and an updated pinned UI contract.
+The [completed Alerts triage preview](exec-plans/completed/2026-10-alerts-triage-preview.md) completes visual coverage of the fifth approved workspace with explicitly synthetic evidence. The [completed user-guide slice](exec-plans/completed/2026-10-complete-user-guide.md) records a production shell orientation and five explicitly synthetic development walkthroughs. The connected metadata slice now uses the merged browser-safe identity and semantic contract.
+
+The [completed connected semantic metadata slice](exec-plans/completed/2026-10-connected-semantic-metadata.md)
+connects catalogue, inspector, and registry in **M04 - Semantic Twin and Live UI**.
+Its reads cover identity, pinned definitions, directed relationships, and exact
+source/target bindings. Live operational values, locations, and alert lifecycle
+remain separate backend-dependent work.
+
+The next agreed complete PR is the **connected operator user guide**, also in M04.
+It will cover sign-in/session/account/sign-out; explicit tenant selection and denied
+access; bounded catalogue/filter/cursor/history navigation; inspector identity,
+external IDs, type/property definitions and unavailable readings; registry selection,
+directed relationships, effective/known review times and scoped pages; exact-source
+binding candidates and pinned property definitions; empty/missing/error/retry states;
+and keyboard, narrow-layout, and theme use. Retain clear sample chapters only for
+capabilities without connected backend counterparts. Connected browser assertions are implemented; the new guide chapters remain pending.

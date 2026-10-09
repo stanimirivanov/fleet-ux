@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from '../fixtures/production-test';
 import { AlertsPage } from '../pages/alerts.page';
 
 test('production Alerts route cannot activate synthetic incidents', async ({
@@ -14,9 +14,7 @@ test('production Alerts route cannot activate synthetic incidents', async ({
   );
   await expect(alerts.queue).toHaveCount(0);
   await expect(alerts.selectedEvidence).toHaveCount(0);
-  await expect(page.getByRole('banner')).toContainText(
-    'Data source unconfigured',
-  );
+  await expect(page.getByRole('banner')).toContainText('Sign-in unavailable');
 
   await page.goto('/alerts');
   await expect(alerts.connectionNotice).toBeVisible();

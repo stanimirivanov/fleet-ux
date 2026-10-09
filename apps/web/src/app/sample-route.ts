@@ -25,7 +25,11 @@ export function isDevelopmentSampleRoute(
 }
 
 /** Primary navigation opts into available previews only in development. */
-export function navigationHref(pathname: string, development: boolean): string {
+export function navigationHref(
+  pathname: string,
+  development: boolean,
+  currentSearch = '',
+): string {
   if (
     development &&
     (pathname === APP_ROUTES.assets.path ||
@@ -33,6 +37,15 @@ export function navigationHref(pathname: string, development: boolean): string {
       pathname === APP_ROUTES.alerts.path)
   ) {
     return `${pathname}?preview=sample`;
+  }
+  if (pathname === APP_ROUTES.assets.path) {
+    const current = new URLSearchParams(currentSearch);
+    const context = new URLSearchParams();
+    for (const key of ['tenant', 'effective_at_ms', 'known_at_ms']) {
+      const value = current.get(key);
+      if (value !== null) context.set(key, value);
+    }
+    if (context.size > 0) return `${pathname}?${context}`;
   }
   return pathname;
 }

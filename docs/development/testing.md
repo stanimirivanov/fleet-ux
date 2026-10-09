@@ -27,7 +27,7 @@ from the repository root. `pnpm e2e` runs `e2e:production` then
 `e2e:development`: the first builds and serves the production Vite preview
 on 127.0.0.1:4173, while the second serves the development app on
 127.0.0.1:5173. Production scenarios prove that the overview and
-`/assets?preview=sample` stay unconfigured; development scenarios exercise
+`/assets?preview=sample` cannot activate sample mode; session failures remain explicit; development scenarios exercise
 the disclosed overview, URL-backed discovery, map/inspector selection, registry
 cutoffs and attribution, alert filters/selection/evidence and URL recovery,
 narrow layout, catalogue cursor traversal, browser history,
@@ -62,14 +62,40 @@ book to GitHub Pages. Repository administrators must select GitHub Actions
 as the Pages source before first deployment.
 
 The guide has six browser-verified parts. The production orientation teaches
-shell navigation, honest unconfigured states, status vocabulary, and appearance.
+shell navigation, unavailable sign-in and operational states, status vocabulary, and appearance.
 Five separately labelled development-sample chapters teach overview and bounded
 asset discovery, the schematic map, asset inspector and finite signal playback,
 registry relationship and signal mapping at effective/known times, and alert
 triage with quality and freshness evidence. The generator runs tagged journeys
 from both production and development suites and publishes only after every
 chapter succeeds. Sample walkthroughs are interaction examples, not production
-operator procedures: there is no browser-safe fleet connection, live position,
-telemetry stream, or alert lifecycle. As backend contracts and features arrive,
+operator procedures: their sample data is not a connected live position, telemetry stream, or alert lifecycle. As backend contracts and features arrive,
 replace sample chapters with browser-proven connected outcomes. Do not record
 secrets or one-time links.
+
+## Connected contract journeys
+
+Production scenarios use test-only HTTP interception in `apps/web-e2e/fixtures`.
+Successful responses derive from the pinned backend examples and are validated
+against generated Effect schemas before serving. These fixtures are never imported
+by product code. Default legacy shell scenarios explicitly intercept session 404;
+no Vite SPA fallback can masquerade as a successful session.
+
+POM journeys cover account/session/logout, catalogue pagination and local filters,
+inspector external IDs and exact definitions, temporal relationship/target/source
+pages, URL reload/history, invalid context blocking, 403 denial, 404 absence,
+malformed and cross-scope data, safe precision, retry, and narrow dark layout.
+Transport tests additionally prove same-origin-only cookies, no bearer/custom Origin,
+status categorization before error-body parsing, body/operation bounds, interruption,
+and runtime disposal. Solid tests prove stale response suppression and protected
+content removal; assertions must not be replaced with arbitrary timing waits.
+
+Connected scenarios currently run as ordinary E2E tests. Complete connected guide
+narration is the next planned slice. Existing six guide chapters must still generate.
+Contract interception is not deployment qualification: run a separate backend-backed
+journey to qualify the chosen provider, HTTPS proxy, session cookie, and permission
+configuration. Do not record provider tokens, credentials, or one-time callback URLs.
+
+Component tests retain per-file isolation and use at most two workers. This bounds
+concurrent jsdom/Effect environments on local machines and CI without extending
+interaction deadlines or relaxing assertions.

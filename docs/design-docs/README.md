@@ -10,3 +10,7 @@ consequences, and alternatives.
   stable router layout and one Light/Dark/System icon control.
 - [0003 - Pinned asset catalogue contract](0003-pinned-asset-catalogue-contract.md):
   validated read boundary and browser-auth deferral.
+
+- [0004 - Browser-safe semantic metadata](0004-browser-safe-semantic-metadata.md):
+  one managed runtime, independent feature ports, explicit tenant/cutoff/cursor
+  scope, and same-origin OIDC session ownership.

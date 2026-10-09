@@ -1,3 +1,5 @@
+import { RequestFailure, type RequestFailureKind } from '#shared/model';
+
 /** Asset catalogue values after the HTTP response has been validated. */
 export interface AssetTypeRef {
   readonly id: string;
@@ -53,15 +55,13 @@ export class AssetPageContractError extends Error {
 }
 
 /** Failures that the catalogue can explain without exposing adapter internals. */
-export type AssetCatalogueLoadFailure =
-  | { readonly kind: 'invalid-request' }
-  | { readonly kind: 'invalid-response' }
-  | { readonly kind: 'unavailable' };
+export type AssetCatalogueLoadFailure = { readonly kind: RequestFailureKind };
 
 /** Normalizes rejected adapter values into a safe presentation category. */
 export function classifyAssetCatalogueFailure(
   cause: unknown,
 ): AssetCatalogueLoadFailure {
+  if (cause instanceof RequestFailure) return { kind: cause.kind };
   if (cause instanceof AssetPageRequestError) {
     return { kind: 'invalid-request' };
   }

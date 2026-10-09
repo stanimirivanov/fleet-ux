@@ -23,7 +23,7 @@ export class AssetInspectorPage {
   ) {
     this.heading = page.getByRole('heading', { level: 1 });
     this.connectionNotice = page.getByRole('region', {
-      name: 'Asset inspector is not connected',
+      name: 'Sign-in unavailable',
     });
     this.topology = page.getByRole('region', { name: 'Asset topology' });
     this.componentEvidence = page.getByRole('region', {

@@ -12,6 +12,8 @@ homes rather than growing the root README.
   reactivity, and presentation review rules.
 - [Pinned HTTP contract](../contracts/http/README.md): backend revision,
   validation, and update process.
+- [Connected browser identity decision](design-docs/0004-browser-safe-semantic-metadata.md):
+  session ownership, managed transport, and temporal metadata limits.
 - [Testing](development/testing.md): component and browser gates, page objects, and executable guides.
 - [Plans](PLANS.md): reviewable work and milestone mapping.
 - [Design decisions](design-docs/README.md): durable choices and trade-offs.

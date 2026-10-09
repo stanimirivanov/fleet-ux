@@ -23,7 +23,7 @@ const modes = {
     label: 'Production shell',
     heading: 'Production console orientation',
     description:
-      'Verified production behavior. Fleet data remains unconfigured until a browser-safe backend connection is available.',
+      'Verified shell behavior in a deployment without configured operator sign-in. Connected metadata procedures will be documented separately.',
     note: 'This chapter covers the production shell. It does not imply that fleet assets or telemetry are connected.',
   },
   'development-sample': {

@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from '../fixtures/production-test';
 import { OverviewPage } from '../pages/overview.page';
 import { ShellPage } from '../pages/shell.page';
 
@@ -11,9 +11,7 @@ test('production overview does not present sample operations as live evidence', 
 
   await expect(overview.heading).toBeVisible();
   await expect(overview.connectionNotice).toBeVisible();
-  await expect(page.getByRole('banner')).toContainText(
-    'Data source unconfigured',
-  );
+  await expect(page.getByRole('banner')).toContainText('Sign-in unavailable');
   await expect(overview.metrics).toHaveCount(0);
   await expect(overview.map).toHaveCount(0);
   await expect(overview.assetDiscovery).toHaveCount(0);

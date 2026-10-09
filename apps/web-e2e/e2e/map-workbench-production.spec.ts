@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from '../fixtures/production-test';
 import { MapPage } from '../pages/map.page';
 import { ShellPage } from '../pages/shell.page';
 
@@ -15,9 +15,7 @@ test('production map cannot activate sample positions or selected asset evidence
     await shell.open(path);
     await expect(map.heading).toBeVisible();
     await expect(map.connectionNotice).toBeVisible();
-    await expect(page.getByRole('banner')).toContainText(
-      'Data source unconfigured',
-    );
+    await expect(page.getByRole('banner')).toContainText('Sign-in unavailable');
     await expect(map.assetList).toHaveCount(0);
     await expect(map.siteMap).toHaveCount(0);
     await expect(map.selectedAsset).toHaveCount(0);

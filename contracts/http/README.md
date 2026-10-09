@@ -2,35 +2,66 @@
 
 ## TL;DR
 
-This directory pins the backend-owned OpenAPI UI baseline from
-`fleetiq-platform` commit `4ba2528c5de068e1f1305e97b5130b8f35d1af53`.
-Its exact source path and SHA-256 are in [source.json](source.json). Run
-`pnpm contract:check` after updating it. This is a partial `/api/v1` contract,
-not a complete description of the backend.
+Pin the backend-owned OpenAPI 3.1.1 baseline `1.0.0-baseline.3` from merged
+`fleetiq-platform` commit `6015e46db42a078fce98241db5e6082e329a8e15`.
+Its artifact path and exact SHA-256 are in [source.json](source.json).
+`pnpm contract:check` validates provenance and deterministic client output.
+The bundled snapshot is a partial `/api/v1` contract, not the whole platform API.
 
-The current protected route uses a server-side workload bearer credential. It
-is not a browser authentication flow. Do not copy that secret into the web app,
-fixtures, logs, or test media.
+## Browser contract
+
+The published bundle supplies discovery, bounded tenant asset pages, asset detail,
+exact asset-type/property/relationship-type versions, directed relationship pages,
+target and exact-source binding pages, and four browser-authentication routes.
+
+- GET `/api/v1/auth/login`: native browser navigation to the configured OIDC provider.
+- GET `/api/v1/auth/callback`: backend-only provider exchange and fixed `/` landing.
+- GET `/api/v1/auth/session`: only actor ID and expiry; no provider tokens.
+- POST `/api/v1/auth/logout`: empty 204, `X-FleetIQ-CSRF: 1`, browser-managed Origin.
+
+Serve the UI and API under one public HTTPS origin. Same-origin cookies carry the
+session; no credentialed CORS or workload bearer is used by FleetIQ UX. The backend
+chooses/configures the provider at deployment. The browser cannot enumerate tenants;
+operators enter a tenant ID and the server checks permissions. An absent browser
+auth configuration returns session 404; UX reports unavailable sign-in. Standalone
+Vite has no API; use an explicitly configured development reverse proxy for actual
+connected reads. Production browser tests use interception, not a mock product server.
+
+Some metadata descriptions in the upstream baseline retain workload-bearer wording;
+the merged cookie security declaration and browser identity implementation define
+the connected flow. This vendored artifact remains byte-identical to upstream.
+
+## Validation and pagination
+
+Generated schemas check wire shape; maintained feature adapters check exact tenant,
+asset, definition version, source tuple, cutoffs, page limit, uniqueness,
+effective intervals, recorded knowledge time, and cursor advancement. Revisions are
+decimal strings to preserve u64. Signed millisecond times must be safe JS integers;
+unrepresentable values are rejected before display.
+
+Search and type filtering are local to the loaded catalogue page. There is no
+server filter/total endpoint, global definition list, source inventory, live property
+state, position, telemetry stream, or alert lifecycle in this baseline.
+
+An opaque `after` cursor is exclusive. Preserve tenant, resource/source, cutoffs,
+and limit on each corresponding next-page request. Relationship, target, and source
+cursors are independent. Shared effective/known cutoffs do not imply cross-request
+transactional consistency. Current asset identity/type metadata is not a historical
+read simply because the registry uses temporal cutoffs.
 
 ## Updating the snapshot
 
-1. Review and select a specific merged `fleetiq-platform` commit.
-2. Copy its `contracts/http/fleetiq-v1-ui-baseline.openapi.json` here without
-   editing the response shapes, examples, or security declarations. The pinned
-   JSON is exempt from Biome formatting so its bytes match the source.
-3. Update `source.json` with that commit and this file's SHA-256.
-4. Run `pnpm contract:generate` to regenerate the Effect v4 transport schema
-   and HTTP client in `apps/web/src/generated/fleetiq-api.ts`.
-5. Reconcile `tools/check-asset-contract.mjs`, the asset feature boundary,
-   and fixtures with any changed version or response shape. Generated schemas
-   validate wire fields; request-specific tenant, page-size, and cursor checks
-   remain in maintained feature code.
-6. Run `pnpm contract:check`, `pnpm check`, and browser checks for affected UI.
-   The contract check also rejects generated-output drift.
+1. Select a specific merged backend commit; inspect its contract changes.
+2. Copy `contracts/http/dist/openapi.json` from that commit to the local
+   `fleetiq-v1-ui-baseline.openapi.json` without modifying any bytes. The backend's
+   authored source is modular YAML; UX vendors its standalone downstream bundle.
+3. Update [source.json](source.json) with commit, artifact path, and SHA-256.
+4. Run `pnpm contract:generate` to regenerate
+   `apps/web/src/generated/fleetiq-api.ts`; never edit generated code manually.
+5. Reconcile expected operations, feature validators, fixtures, and browser scenarios.
+6. Run `pnpm contract:check`, `pnpm check`, and affected browser gates.
 
-The baseline currently supports version discovery and a bounded, tenant-scoped
-asset catalogue. It does not describe location or signal snapshots. Unknown
-additive response fields should remain compatible, but required fields and
-cross-tenant responses must fail validation before reaching the UI. The
-generated HTTP client is not connected to the browser while the backend
-requires a workload bearer secret.
+The snapshot is exempt from Biome formatting so its hash matches upstream. Additive
+unknown response fields remain compatible; missing required fields, unsafe numbers,
+and cross-scope responses fail validation. Do not relax invariants to accommodate a
+mock that does not match the published contract.
