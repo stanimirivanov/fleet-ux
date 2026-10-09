@@ -61,10 +61,15 @@ to main, or through a main-branch manual run. It publishes the generated
 book to GitHub Pages. Repository administrators must select GitHub Actions
 as the Pages source before first deployment.
 
-The initial guide teaches the available shell: navigation, honest unconfigured
-production data states, status vocabulary, and appearance. Guide generation
-runs the production suite only; the development sample overview and catalogue
-are not production operator journeys. The guide must not imply that fleet
-assets, telemetry, or backend workflows are already connected. As contracts
-and features arrive, add deterministic fixtures and guide only browser-proven
-outcomes. Do not record secrets or one-time links.
+The guide has six browser-verified parts. The production orientation teaches
+shell navigation, honest unconfigured states, status vocabulary, and appearance.
+Five separately labelled development-sample chapters teach overview and bounded
+asset discovery, the schematic map, asset inspector and finite signal playback,
+registry relationship and signal mapping at effective/known times, and alert
+triage with quality and freshness evidence. The generator runs tagged journeys
+from both production and development suites and publishes only after every
+chapter succeeds. Sample walkthroughs are interaction examples, not production
+operator procedures: there is no browser-safe fleet connection, live position,
+telemetry stream, or alert lifecycle. As backend contracts and features arrive,
+replace sample chapters with browser-proven connected outcomes. Do not record
+secrets or one-time links.

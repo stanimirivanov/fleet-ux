@@ -11,7 +11,10 @@ import type {
 import { browserScenarioMode } from './guide-mode';
 import type { GuideNarrator, GuideStepDefinition } from './guide-narrator';
 
+export type GuideDataMode = 'production-shell' | 'development-sample';
+
 interface GuideDefinition {
+  readonly dataMode: GuideDataMode;
   readonly order: number;
   readonly slug: string;
   readonly summary: string;
@@ -106,6 +109,7 @@ export class UserGuideSession implements GuideNarrator {
       context,
       page,
       {
+        dataMode: options.dataMode,
         order: options.order,
         slug: options.slug,
         summary: options.summary,
@@ -169,7 +173,7 @@ export class UserGuideSession implements GuideNarrator {
       path.join(this.directory, 'guide.json'),
       `${JSON.stringify(
         {
-          schemaVersion: 1,
+          schemaVersion: 2,
           ...this.definition,
           steps: this.steps,
           video: `assets/${videoName}`,

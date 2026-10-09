@@ -36,7 +36,7 @@ mkdirSync(outputRoot, { recursive: true });
 try {
   run('Building the application for guide verification', 'pnpm', ['build']);
   run(
-    'Recording tagged Playwright guides',
+    'Recording the production-shell guide',
     'pnpm',
     [
       'exec',
@@ -44,6 +44,20 @@ try {
       'test',
       '--config',
       'apps/web-e2e/playwright.config.ts',
+      '--grep',
+      '@user-guide',
+    ],
+    { ...process.env, FLEETIQ_E2E_MODE: 'user-guide' },
+  );
+  run(
+    'Recording development-sample guides',
+    'pnpm',
+    [
+      'exec',
+      'playwright',
+      'test',
+      '--config',
+      'apps/web-e2e/playwright.development.config.ts',
       '--grep',
       '@user-guide',
     ],

@@ -50,9 +50,11 @@ are still needed for connected operator views.
 
 Run `pnpm check` for static and Solid component checks. Install Chromium once
 with `pnpm exec playwright install chromium`, then run `pnpm e2e` for both
-production and development browser suites. `pnpm guide:generate` records the
-tagged operator journey and creates an ignored static guide under
-`dist/user-guide`. See the [testing guide](docs/development/testing.md) for
+production and development browser suites. `pnpm guide:generate` records six verified chapters: a production shell
+orientation plus development-only sample walkthroughs for overview and asset
+discovery, map, inspector, registry, and Alerts. It creates an ignored static
+guide under `dist/user-guide`; the sample chapters do not represent live fleet
+operations. See the [testing guide](docs/development/testing.md) for
 the separate CI gates and guide publication behavior.
 
 ## Documentation

@@ -185,3 +185,39 @@ footer {
     padding: 1rem 1.25rem;
   }
 }
+
+.nav-group + .nav-group {
+  border-top: 1px solid #d7e1e7;
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+}
+.nav-group .nav-label {
+  margin: 0 0 0.5rem;
+}
+.guide-group + .guide-group {
+  border-top: 1px solid #d7e1e7;
+  margin-top: 3rem;
+  padding-top: 2rem;
+}
+.guide-group > p:not(.eyebrow) {
+  max-width: 68ch;
+}
+.mode-note {
+  border: 1px solid #bed6dd;
+  border-radius: 0.8rem;
+  background: #eef7f8;
+  margin: 1.5rem 0;
+  padding: 1rem 1.25rem;
+  max-width: 68ch;
+}
+.mode-note--development-sample {
+  border-color: #e5cf8b;
+  background: #fff9e8;
+}
+.mode-note strong {
+  display: block;
+  margin-bottom: 0.25rem;
+}
+.mode-note p {
+  margin: 0;
+}
