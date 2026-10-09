@@ -70,9 +70,7 @@ test('sample catalogue uses shareable forward cursors and browser history', asyn
   await expect(page).toHaveURL('/assets');
   await expect(assets.connectionNotice).toBeVisible();
   await expect(assets.samplePreview).toHaveCount(0);
-  await expect(page.getByRole('banner')).toContainText(
-    'Data source unconfigured',
-  );
+  await expect(page.getByRole('banner')).toContainText('Sign-in unavailable');
 });
 
 test('direct later page remains usable at a narrow width', async ({ page }) => {

@@ -26,7 +26,8 @@ structural rules; reviewers assess composition, copy, state ownership, and layou
 
 ## Import boundaries
 
-- Use `#shared/ui` for shared presentation primitives from app or feature
+- Use `#shared/ui` for presentation, `#shared/model` for safe product-neutral
+  values, and `#shared/api` for the managed transport seam from app or feature
   code. Add explicit named exports to `shared/ui/index.ts`; do not reach into
   component files from outside that directory.
 - App composition imports a feature through `#features/<name>` when that
@@ -56,6 +57,12 @@ structural rules; reviewers assess composition, copy, state ownership, and layou
   runtime execution, retries, and interruption live in named services or
   adapters. If Atom-backed shared state becomes useful, install its Solid
   binding with the first real use and document the lifetime owner.
+- Feature models cannot import generated schemas or shared transport. Shared
+  models cannot import HTTP runtime or generated wire code. The app composes
+  independent identity/metadata capabilities and injects invalidation callbacks.
+- Abort superseded and unmounted reads; clear old scope evidence immediately and
+  ignore late completions even when an adapter does not honor cancellation.
+  Changing tenant, asset/source, or cutoffs resets its dependent cursor scopes.
 - Preserve typed failure categories across the adapter boundary. Render
   meaningful unauthorized, forbidden, invalid-request, unavailable, and
   contract-error states where the workflow can produce them. Log only
@@ -90,3 +97,9 @@ See the [Solid props guide](https://docs.solidjs.com/concepts/components/props),
 [Effect v4 runtime guide](https://effect.website/docs/v4/runtime), and
 [Biome Solid rules](https://biomejs.dev/linter/domains/) for the underlying
 framework behavior.
+
+Protected component ownership is keyed by the authenticated actor ID. A focus
+refresh that discovers a different account disposes the previous account's reads
+and metadata before mounting the new account's views; same-actor expiry refresh
+preserves ordinary interaction. Native sign-in anchors opt out of Solid Router
+with `rel="external noreferrer"` so the server receives the login request.

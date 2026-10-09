@@ -29,10 +29,12 @@ module.exports = {
       },
     },
     {
-      name: 'feature-model-cannot-import-ui-or-api',
+      name: 'feature-model-cannot-import-ui-or-transport',
       severity: 'error',
       from: { path: '^apps/web/src/features/[^/]+/model/' },
-      to: { path: '^apps/web/src/features/[^/]+/(ui|api)/' },
+      to: {
+        path: '^apps/web/src/(features/[^/]+/(ui|api)/|shared/api/|generated/)',
+      },
     },
     {
       name: 'feature-api-cannot-import-ui',
@@ -41,16 +43,40 @@ module.exports = {
       to: { path: '^apps/web/src/features/[^/]+/ui/' },
     },
     {
-      name: 'feature-ui-cannot-import-generated-transport',
+      name: 'feature-ui-cannot-import-generated-or-shared-transport',
       severity: 'error',
       from: { path: '^apps/web/src/features/[^/]+/ui/' },
-      to: { path: '^apps/web/src/generated/' },
+      to: { path: '^apps/web/src/(generated/|shared/api/)' },
     },
     {
       name: 'no-unresolved-package-imports',
       severity: 'error',
       from: { path: '^apps/web/src/' },
       to: { path: '^#', couldNotResolve: true },
+    },
+    {
+      name: 'shared-model-cannot-import-ui-or-transport',
+      severity: 'error',
+      from: { path: '^apps/web/src/shared/model/' },
+      to: { path: '^apps/web/src/(shared/(api|ui)/|generated/)' },
+    },
+    {
+      name: 'external-imports-use-shared-runtime-entry',
+      severity: 'error',
+      from: { path: '^apps/web/src/', pathNot: '^apps/web/src/shared/api/' },
+      to: {
+        path: '^apps/web/src/shared/api/',
+        pathNot: '^apps/web/src/shared/api/index[.]ts$',
+      },
+    },
+    {
+      name: 'external-imports-use-shared-model-entry',
+      severity: 'error',
+      from: { path: '^apps/web/src/', pathNot: '^apps/web/src/shared/model/' },
+      to: {
+        path: '^apps/web/src/shared/model/',
+        pathNot: '^apps/web/src/shared/model/index[.]ts$',
+      },
     },
     {
       name: 'external-imports-use-shared-ui-entry',

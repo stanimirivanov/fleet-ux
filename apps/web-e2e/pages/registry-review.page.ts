@@ -22,7 +22,7 @@ export class RegistryReviewPage {
       name: 'Asset registry & signal mapping',
     });
     this.connectionNotice = page.getByRole('region', {
-      name: 'Asset registry is not connected',
+      name: 'Sign-in unavailable',
     });
     this.catalogue = page.getByRole('region', { name: 'Asset catalogue' });
     this.structure = page.getByRole('region', { name: 'Asset structure' });

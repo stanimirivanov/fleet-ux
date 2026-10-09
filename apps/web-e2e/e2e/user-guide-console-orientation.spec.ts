@@ -1,4 +1,5 @@
-import { expect, test } from '@playwright/test';
+import { mockUnavailableSignIn } from '../fixtures/metadata-api';
+import { expect, test } from '../fixtures/production-test';
 import { AssetsPage } from '../pages/assets.page';
 import { DesignSystemPage } from '../pages/design-system.page';
 import { OverviewPage } from '../pages/overview.page';
@@ -22,6 +23,8 @@ test('orient in the FleetIQ console and choose appearance', {
     title: 'Get oriented in the FleetIQ console',
   });
 
+  await mockUnavailableSignIn(guide.page);
+
   try {
     const shell = new ShellPage(guide.page, guide);
     const overview = new OverviewPage(guide.page, guide);
@@ -44,7 +47,7 @@ test('orient in the FleetIQ console and choose appearance', {
       await shell.goToAssets();
       await expect(assets.heading).toBeVisible();
       await expect(assets.connectionNotice).toContainText(
-        'no approved identity connection or asset data source',
+        'Sign-in unavailable',
       );
       await expect(shell.assetsLink).toHaveAttribute('aria-current', 'page');
       await assets.document();

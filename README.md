@@ -2,13 +2,11 @@
 
 ## TL;DR
 
-This SolidJS operator console has a stable shell, Light/Dark/System theme, and
-development-only sample workspaces for fleet overview, assets, asset inspection,
-a schematic map, read-only registry mapping, and alert triage. The inspector
-includes a
-finite, synthetic signal playback for trying stream and freshness behavior.
-Production routes disclose that fleet data is not connected. The map has no
-geodetic location API, map SDK, or tile service yet.
+FleetIQ's SolidJS operator console connects asset identities, pinned definitions,
+directed relationships, and signal bindings through same-origin operator sessions.
+It retains the approved persistent shell and Light/Dark/System theme. Local
+sample workspaces cover overview, map, inspector, registry, and Alerts while
+location, telemetry, and alert contracts are developed.
 
 ## Start
 
@@ -19,49 +17,56 @@ pnpm install --frozen-lockfile
 pnpm dev
 ```
 
-Open the URL printed by Vite. Development navigation opens labelled sample
-workspaces; direct URLs also allow inspection:
+Vite development opens a labelled sample overview. The sidebar follows that
+sample workspace; **Connected metadata** opens the actual sign-in/tenant flow.
+There is no separate mock server to start. Direct preview URLs are:
 
-- `/` — sample fleet overview in development; unconfigured in production
-- `/map?preview=sample` — illustrative site layout and paired asset list
-- `/assets?preview=sample` — contract-shaped sample asset catalogue
-- `/assets/:assetId?preview=sample` — sample topology and evidence for
-  supported example assets, with optional signal playback in the Overview tab
-- `/alerts?preview=sample` — synthetic alert queue, evidence, trend, and timeline
-- `/assets/registry/review?preview=sample` — read-only relationship and
-  signal-mapping review at effective and known times
-- `/design-system` — synthetic light/dark design specimen
+- `/map?preview=sample` — schematic site canvas and paired asset list.
+- `/assets?preview=sample` — bounded, contract-shaped catalogue.
+- `/assets/:assetId?preview=sample` — sample inspector and finite signal playback.
+- `/assets/registry/review?preview=sample` — relationship and mapping review.
+- `/alerts?preview=sample` — synthetic queue, evidence, and timeline.
+- `/design-system` — synthetic light/dark design specimen.
 
-The ordinary `/map`, `/assets`, `/alerts`, registry, and asset-detail routes remain
-unconfigured without browser-safe backend access. A production build does not
-activate
-sample previews even when the query parameter is present. The schematic map
-uses local percentage coordinates, not real geography or live tracking. The
-inspector playback is a deterministic development example; it is not a fleet
-signal subscription.
+A production build never activates these sample previews or includes their
+fixture payloads. The ordinary overview, map, and Alerts routes show their
+unavailable data state until the corresponding backend contracts exist.
 
-The theme icon in the top bar cycles Light → Dark → System and saves the
-preference when browser storage is available. The
-[backend asset-catalogue contract](contracts/http/README.md) is pinned and
-validated at the UI boundary; additional location and telemetry read models
-are still needed for connected operator views.
+## Connect metadata
+
+Serve the built UI and `/api/v1` backend under **one public HTTPS origin**, with
+browser OIDC configured on the platform. Open `/assets`, choose **Sign in**, and
+enter an authorized tenant ID. The application has no tenant-list endpoint or
+client-side permission authority. A session-service 404 shows **Sign-in unavailable**.
+The contract and deployment expectations are in the
+[HTTP contract guide](contracts/http/README.md).
+
+For development, use an explicitly configured local reverse proxy to route Vite
+and `/api/v1` under one origin. A standalone Vite server has no backend or OIDC
+provider; ordinary metadata routes show the unavailable state. No default proxy,
+provider, workload secret, or pretend authenticated session is shipped.
+
+Connected catalogue, inspector, and registry links preserve tenant and explicit
+review cutoffs in the URL. Search/type filters affect only the current catalogue
+page. Snapshot pages do not claim a complete graph, live readings, or historical
+asset identity. The theme button cycles Light → Dark → System and remembers the
+preference when browser storage is available.
 
 ## Verify
 
-Run `pnpm check` for static and Solid component checks. Install Chromium once
-with `pnpm exec playwright install chromium`, then run `pnpm e2e` for both
-production and development browser suites. `pnpm guide:generate` records six verified chapters: a production shell
-orientation plus development-only sample walkthroughs for overview and asset
-discovery, map, inspector, registry, and Alerts. It creates an ignored static
-guide under `dist/user-guide`; the sample chapters do not represent live fleet
-operations. See the [testing guide](docs/development/testing.md) for
-the separate CI gates and guide publication behavior.
+Run `pnpm check` for types, architecture, contracts, Solid tests, and the production
+build. Install Chromium once with `pnpm exec playwright install chromium`, then
+run `pnpm e2e` for production and development browser suites. Connected browser
+scenarios intercept HTTP with contract-valid test-only responses; deployment
+qualification against an actual OIDC provider remains separate.
+
+`pnpm guide:generate` still records six existing chapters: production shell
+orientation and five labelled development walkthroughs. It creates an ignored
+static guide under `dist/user-guide`. The next guide slice will add connected
+operator procedures. See the [testing guide](docs/development/testing.md).
 
 ## Documentation
 
-Start with [AGENTS.md](AGENTS.md) for the working agreement and
-[docs/README.md](docs/README.md) for the documentation map. The
-[architecture](ARCHITECTURE.md) explains the boundaries, the
-[visual-language decision](docs/design-docs/0001-operational-visual-language.md)
-and [shell decision](docs/design-docs/0002-persistent-shell-theme.md) record
-the design rules, and [docs/PLANS.md](docs/PLANS.md) tracks sequencing.
+Start with [AGENTS.md](AGENTS.md) and [docs/README.md](docs/README.md).
+[ARCHITECTURE.md](ARCHITECTURE.md) explains dependency and lifetime ownership;
+[docs/PLANS.md](docs/PLANS.md) tracks reviewable work.

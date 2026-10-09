@@ -8,7 +8,10 @@ import {
   FleetMapPage,
   FleetOverviewPage,
 } from '#features/assets';
-import { AppShell } from './app/AppShell';
+import {
+  BrowserWorkspace,
+  MetadataAccessBoundary,
+} from './app/BrowserWorkspace';
 import { DesignSystemPage } from './app/DesignSystemPage';
 import { APP_ROUTES } from './app/route-metadata';
 import { NotFoundPage } from './app/WorkspacePages';
@@ -21,15 +24,33 @@ if (!root) {
 
 render(
   () => (
-    <Router root={AppShell}>
+    <Router root={BrowserWorkspace}>
       <Route path={APP_ROUTES.overview.path} component={FleetOverviewPage} />
       <Route path={APP_ROUTES.map.path} component={FleetMapPage} />
-      <Route path={APP_ROUTES.assets.path} component={AssetsPage} />
+      <Route
+        path={APP_ROUTES.assets.path}
+        component={() => (
+          <MetadataAccessBoundary>
+            <AssetsPage />
+          </MetadataAccessBoundary>
+        )}
+      />
       <Route path={APP_ROUTES.alerts.path} component={AlertsPage} />
-      <Route path={APP_ROUTES.registry.path} component={AssetRegistryPage} />
+      <Route
+        path={APP_ROUTES.registry.path}
+        component={() => (
+          <MetadataAccessBoundary>
+            <AssetRegistryPage />
+          </MetadataAccessBoundary>
+        )}
+      />
       <Route
         path={APP_ROUTES.assetInspector.path}
-        component={AssetInspectorPage}
+        component={() => (
+          <MetadataAccessBoundary>
+            <AssetInspectorPage />
+          </MetadataAccessBoundary>
+        )}
       />
       <Route path={APP_ROUTES.designSystem.path} component={DesignSystemPage} />
       <Route path="*" component={NotFoundPage} />

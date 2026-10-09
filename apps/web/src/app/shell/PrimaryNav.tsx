@@ -59,7 +59,8 @@ export function PrimaryNav() {
                     <A
                       href={navigationHref(
                         item.route.path,
-                        import.meta.env.DEV,
+                        isSampleWorkspace(),
+                        location.search,
                       )}
                       end={item.route.path !== APP_ROUTES.assets.path}
                       class="fi-nav-link"
@@ -84,10 +85,21 @@ export function PrimaryNav() {
           )}
         </For>
       </nav>
+      {import.meta.env.DEV && !isSampleWorkspace() && (
+        <div class="fi-sidebar-footnote border-t border-outline px-5 py-3 text-xs text-muted">
+          <span class="mr-2">Development preview</span>
+          <A href="/assets?preview=sample" class="text-accent underline">
+            View sample catalogue
+          </A>
+        </div>
+      )}
       {isSampleWorkspace() && (
         <div class="fi-sidebar-footnote hidden border-t border-outline px-5 py-4 text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-muted md:flex md:items-center md:gap-2">
           <span aria-hidden="true" class="size-1.5 rounded-full bg-accent" />
           Sample workspace
+          <A href="/assets" class="text-accent underline">
+            Connected metadata
+          </A>
         </div>
       )}
     </aside>

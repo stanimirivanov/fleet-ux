@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from '../fixtures/production-test';
 import { AssetInspectorPage } from '../pages/asset-inspector.page';
 import { ShellPage } from '../pages/shell.page';
 
@@ -15,9 +15,7 @@ test('production inspector cannot expose sample topology or readings', async ({
     await shell.open(path);
     await expect(inspector.heading).toHaveText('Asset inspector');
     await expect(inspector.connectionNotice).toBeVisible();
-    await expect(page.getByRole('banner')).toContainText(
-      'Data source unconfigured',
-    );
+    await expect(page.getByRole('banner')).toContainText('Sign-in unavailable');
     await expect(inspector.topology).toHaveCount(0);
     await expect(inspector.componentEvidence).toHaveCount(0);
     await expect(inspector.context).toHaveCount(0);

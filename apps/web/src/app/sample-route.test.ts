@@ -32,3 +32,24 @@ test('primary links opt into only available development previews', () => {
   expect(navigationHref('/alerts', false)).toBe('/alerts');
   expect(navigationHref('/', true)).toBe('/');
 });
+
+test('connected asset navigation preserves review context and never opts into samples', () => {
+  expect(
+    navigationHref(
+      '/assets',
+      false,
+      '?tenant=tenant-a&after=asset-1&q=machine',
+    ),
+  ).toBe('/assets?tenant=tenant-a');
+  expect(navigationHref('/assets', false, '?preview=sample')).toBe('/assets');
+});
+
+test('shell catalogue links preserve both explicit review times but clear selection cursors', () => {
+  expect(
+    navigationHref(
+      '/assets',
+      false,
+      '?tenant=tenant-a&effective_at_ms=1500&known_at_ms=2500&source_after=binding-1',
+    ),
+  ).toBe('/assets?tenant=tenant-a&effective_at_ms=1500&known_at_ms=2500');
+});

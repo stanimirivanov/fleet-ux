@@ -162,7 +162,7 @@ test('explore the sample fleet overview and bounded asset catalogue', {
         assets.exitSampleLink,
         {
           title: 'Leave sample mode',
-          body: 'Exit sample returns to the honest unconfigured catalogue. A production build cannot activate this development preview.',
+          body: 'Exit sample returns to the connected catalogue entry. This local walkthrough has no sign-in service, so the unavailable sign-in state is explicit. A production build cannot activate this development preview.',
         },
         async () => assets.exitSampleLink.click(),
       );
@@ -170,8 +170,8 @@ test('explore the sample fleet overview and bounded asset catalogue', {
       await expect(assets.connectionNotice).toBeVisible();
       await expect(assets.samplePreview).toHaveCount(0);
       await guide.result(assets.connectionNotice, {
-        title: 'Understand the unconfigured state',
-        body: 'The absence of an approved browser data source is not an empty fleet. FleetIQ displays the connection state instead of synthetic rows.',
+        title: 'Recognize unavailable sign-in',
+        body: 'This walkthrough has no configured browser sign-in service. The unavailable sign-in message does not mean the fleet is empty; connected identities require an authenticated operator session.',
       });
     });
 

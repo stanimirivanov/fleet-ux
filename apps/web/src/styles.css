@@ -182,3 +182,35 @@ textarea {
     grid-template-columns: minmax(0, 1fr) minmax(16rem, 28rem) minmax(0, 1fr);
   }
 }
+
+@layer components {
+  .fi-action-button {
+    display: inline-flex;
+    min-height: 2.5rem;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--fi-control-outline);
+    border-radius: 0.375rem;
+    padding: 0.5rem 0.875rem;
+    background: var(--fi-surface);
+    color: var(--fi-accent);
+    font-size: 0.8rem;
+    font-weight: 650;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .fi-action-button:hover {
+    background: var(--fi-nav-hover-bg);
+  }
+
+  .fi-header-icon:not(:disabled) {
+    opacity: 1;
+    cursor: pointer;
+  }
+
+  .fi-header-icon:not(:disabled):hover {
+    background: var(--fi-nav-hover-bg);
+    color: var(--fi-foreground);
+  }
+}

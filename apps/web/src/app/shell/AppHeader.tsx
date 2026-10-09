@@ -1,14 +1,18 @@
 import { A, useLocation } from '@solidjs/router';
 import { Show } from 'solid-js';
+import {
+  OperatorAccountControl,
+  operatorConnectionLabel,
+  useOperatorSession,
+} from '#features/identity';
 import { isDevelopmentSampleRoute } from '../sample-route';
 import { ThemeButton } from '../theme/ThemeButton';
 import { useThemePreference } from '../theme/use-theme-preference';
 
-function HeaderIcon(props: { kind: 'search' | 'bell' | 'user' | 'language' }) {
+function HeaderIcon(props: { kind: 'search' | 'bell' | 'language' }) {
   const paths = {
     search: 'M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14z M16 16l4 4',
     bell: 'M12 3a6 6 0 0 0-6 6v4l-2 3h16l-2-3V9a6 6 0 0 0-6-6z M10 20h4',
-    user: 'M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8z M4 20a8 8 0 0 1 16 0',
     language:
       'M3 5h11 M8 3v2 M12 5c-.4 5.2-3.3 8.6-8 11 M5 9c1.4 2.6 3.8 4.7 7 6 M14 20l4-10 4 10 M15 17h6',
   } as const;
@@ -32,6 +36,7 @@ function HeaderIcon(props: { kind: 'search' | 'bell' | 'user' | 'language' }) {
 /** Persistent product header and its locally owned theme preference. */
 export function AppHeader() {
   const theme = useThemePreference();
+  const operator = useOperatorSession();
   const location = useLocation();
   const sampleMode = () =>
     isDevelopmentSampleRoute(
@@ -40,7 +45,9 @@ export function AppHeader() {
       import.meta.env.DEV,
     );
   const sourceStatus = () =>
-    sampleMode() ? 'Sample data · development' : 'Data source unconfigured';
+    sampleMode()
+      ? 'Sample data · development'
+      : operatorConnectionLabel(operator.state());
 
   return (
     <header class="fi-app-header sticky top-0 z-20 flex h-14 xl:grid items-center gap-3 border-b border-outline bg-surface px-3 sm:px-5">
@@ -114,15 +121,7 @@ export function AppHeader() {
           >
             <HeaderIcon kind="bell" />
           </button>
-          <button
-            type="button"
-            disabled
-            aria-label="User account planned"
-            title="User account is planned"
-            class="fi-header-icon"
-          >
-            <HeaderIcon kind="user" />
-          </button>
+          <OperatorAccountControl />
         </div>
       </div>
     </header>

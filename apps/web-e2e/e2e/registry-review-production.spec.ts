@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from '../fixtures/production-test';
 import { RegistryReviewPage } from '../pages/registry-review.page';
 import { ShellPage } from '../pages/shell.page';
 
@@ -15,9 +15,7 @@ test('production registry cannot activate sample graph or binding evidence', asy
     await shell.open(path);
     await expect(registry.heading).toBeVisible();
     await expect(registry.connectionNotice).toBeVisible();
-    await expect(page.getByRole('banner')).toContainText(
-      'Data source unconfigured',
-    );
+    await expect(page.getByRole('banner')).toContainText('Sign-in unavailable');
     for (const panel of [
       registry.catalogue,
       registry.structure,

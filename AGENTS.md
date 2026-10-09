@@ -36,6 +36,10 @@ component, reactivity, and presentation review criteria.
 - Pin backend-owned contracts at an exact revision. Validate unknown payloads
   before constructing feature models; never use the platform workload bearer
   secret in the browser.
+- Connected HTTP runs through the app-owned shared managed runtime. No raw
+  fetch/Effect execution in views, token storage, or implicit sample fallback.
+  Read [browser identity rules](docs/design-docs/0004-browser-safe-semantic-metadata.md)
+  when changing auth, transport, or semantic snapshot scope.
 - Keep shareable filter and selection state in the URL. Keep server-owned data
   behind a validated API boundary; the backend remains authoritative for
   tenancy and permissions.

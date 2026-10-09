@@ -1,22 +1,20 @@
-import { lazy, Suspense } from 'solid-js';
+import { useLocation } from '@solidjs/router';
+import { lazy, Show, Suspense } from 'solid-js';
 import { ConnectionNotice } from '#shared/ui';
+import { isAssetSamplePreview } from '../model/asset-preview-url';
+import { ConnectedCatalogueView } from './connected/ConnectedCatalogueView';
 
 const DevelopmentAssetsContent = import.meta.env.DEV
   ? lazy(() => import('./DevelopmentAssetsContent'))
   : undefined;
+const SampleContent = DevelopmentAssetsContent ?? (() => null);
 
-function AssetConnectionNotice() {
-  return (
-    <ConnectionNotice heading="The asset catalogue is not connected">
-      A tenant-scoped catalogue contract is available, but this browser has no
-      approved identity connection or asset data source. This is a connection
-      state, not a claim that the fleet contains no assets.
-    </ConnectionNotice>
-  );
-}
-
-/** Route composition for the asset workspace. Feature views own their own UI. */
+/** Route boundary: only explicit development previews render illustrative data. */
 export function AssetsPage() {
+  const location = useLocation();
+  const showingSample = () =>
+    Boolean(DevelopmentAssetsContent) &&
+    isAssetSamplePreview(location.pathname, location.search);
   return (
     <div class="grid min-w-0 gap-5">
       <header>
@@ -30,11 +28,11 @@ export function AssetsPage() {
           Assets
         </h1>
         <p class="mt-1 text-sm text-muted">
-          Find equipment by stable identity and type. Operational states in
-          sample views are illustrative.
+          Find equipment by stable identity and pinned type. Operational states
+          in sample views are illustrative.
         </p>
       </header>
-      {DevelopmentAssetsContent ? (
+      <Show when={showingSample()} fallback={<ConnectedCatalogueView />}>
         <Suspense
           fallback={
             <p role="status" class="text-sm text-muted">
@@ -42,15 +40,17 @@ export function AssetsPage() {
             </p>
           }
         >
-          <DevelopmentAssetsContent
-            connectionNotice={<AssetConnectionNotice />}
+          <SampleContent
+            connectionNotice={
+              <ConnectionNotice heading="The asset catalogue is not connected">
+                The explicit development preview uses illustrative identities.
+                Ordinary routes use the approved browser identity and metadata
+                connection.
+              </ConnectionNotice>
+            }
           />
         </Suspense>
-      ) : (
-        <div class="max-w-3xl">
-          <AssetConnectionNotice />
-        </div>
-      )}
+      </Show>
     </div>
   );
 }

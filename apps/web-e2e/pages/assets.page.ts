@@ -21,7 +21,7 @@ export class AssetsPage {
   ) {
     this.heading = page.getByRole('heading', { level: 1, name: 'Assets' });
     this.connectionNotice = page.getByRole('region', {
-      name: 'The asset catalogue is not connected',
+      name: 'Sign-in unavailable',
     });
     this.samplePreview = page.getByRole('region', {
       name: 'Sample asset catalogue',
@@ -40,7 +40,7 @@ export class AssetsPage {
   async document(): Promise<void> {
     await documentResult(this.narrator, this.connectionNotice, {
       title: 'Understand the asset catalogue state',
-      body: 'No asset rows are shown until an approved tenant data source is connected. This does not mean the fleet is empty.',
+      body: 'Browser sign-in is unavailable on this deployment, so protected asset records cannot be opened. This does not mean the fleet is empty.',
     });
   }
 }
