@@ -14,6 +14,7 @@ test('orient in the FleetIQ console and choose appearance', {
 }, async ({ baseURL, browser }) => {
   const guide = await UserGuideSession.start(browser, {
     baseURL: baseURL ?? 'http://127.0.0.1:4173',
+    dataMode: 'production-shell',
     order: 10,
     slug: 'console-orientation',
     summary:
